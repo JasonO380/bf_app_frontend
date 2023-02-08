@@ -32,7 +32,7 @@ const Login = () => {
     const [isValid, setIsValid] = useState(true);
     const [login, setLogin] = useState(true);
     const [inputState, dispatch] = useReducer(inputReducer, {
-        userName: "",
+        username: "",
         password: "",
     });
     const loginRegister = useContext(LoginRegisterContext);
@@ -66,7 +66,7 @@ const Login = () => {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        userName: inputState.userName,
+                        username: inputState.username,
                         password: inputState.password,
                     }),
                 }
@@ -110,7 +110,7 @@ const Login = () => {
                         <Input
                             type="text"
                             color='black'
-                            name="userName"
+                            name="username"
                             value={inputState.userName}
                             placeholder="Enter username"
                             bg="white"
