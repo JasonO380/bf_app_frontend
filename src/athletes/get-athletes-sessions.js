@@ -112,7 +112,7 @@ const GetAthletesSessions = (props) => {
                 );
             })}
         </Stack>
-        {editSession && <UpdateAthleteSession update={update} />}
+        {editSession && <UpdateAthleteSession updateMode={editSession} update={update} />}
         </React.Fragment>
     );
 };

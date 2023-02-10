@@ -62,6 +62,36 @@ const UpdateAthleteSession = (props) => {
         });
     };
 
+    const updateWorkout = async (event) => {
+        console.log(updateSession)
+        event.preventDefault();
+        try {
+            console.log(inputState);
+            const response = await fetch(
+                `http://localhost:5000/api/session/${updateSession}`,
+                {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Issuer " + auth.token,
+                    },
+                    body: JSON.stringify({
+                        exercise: inputState.movement,
+                        weight: inputState.weight,
+                        reps: inputState.reps,
+                        rounds: inputState.rounds,
+                        distance: inputState.distance,
+                        time: inputState.time,
+                    }),
+                }
+            );
+            console.log(response);
+            const responseData = await response.json();
+            console.log(responseData)
+            props.updateMode(false);
+        } catch (err) {}
+    };
+
     useEffect(() => {
         const getSessionToUpdate = async () => {
             try {
@@ -88,8 +118,6 @@ const UpdateAthleteSession = (props) => {
         getSessionToUpdate();
     }, []);
 
-    const updateWorkout = async () => {};
-
     if (update) {
         return (
             <Box>
@@ -99,7 +127,8 @@ const UpdateAthleteSession = (props) => {
                             <FormLabel htmlFor="movement">Movement</FormLabel>
                             <Input
                                 onChange={changeHandler}
-                                value={workoutToUpdate.exercise}
+                                placeholder={workoutToUpdate.exercise}
+                                value={inputState.movement}
                                 name="movement"
                                 type="text"
                                 color="black"
@@ -109,8 +138,8 @@ const UpdateAthleteSession = (props) => {
                             <FormLabel htmlFor="weight">Weight</FormLabel>
                             <Input
                                 onChange={changeHandler}
-                                value={workoutToUpdate.weight}
-                                placeholder={workout.weight}
+                                placeholder={workoutToUpdate.weight}
+                                value={inputState.weight}
                                 name="weight"
                                 type="text"
                                 color="black"
@@ -121,7 +150,7 @@ const UpdateAthleteSession = (props) => {
                             <Input
                                 onChange={changeHandler}
                                 placeholder={workoutToUpdate.reps}
-                                value={workout.reps}
+                                value={inputState.reps}
                                 name="reps"
                                 type="text"
                                 color="black"
@@ -132,7 +161,7 @@ const UpdateAthleteSession = (props) => {
                             <Input
                                 onChange={changeHandler}
                                 placeholder={workoutToUpdate.rounds}
-                                value={workout.rounds}
+                                value={inputState.rounds}
                                 name="rounds"
                                 type="text"
                                 color="black"
@@ -143,7 +172,7 @@ const UpdateAthleteSession = (props) => {
                             <Input
                                 onChange={changeHandler}
                                 placeholder={workoutToUpdate.distance}
-                                value={workout.distance}
+                                value={inputState.distance}
                                 name="distance"
                                 type="text"
                                 color="black"
@@ -154,7 +183,7 @@ const UpdateAthleteSession = (props) => {
                             <Input
                                 onChange={changeHandler}
                                 placeholder={workoutToUpdate.time}
-                                value={workout.time}
+                                value={inputState.time}
                                 name="time"
                                 type="text"
                                 color="black"
