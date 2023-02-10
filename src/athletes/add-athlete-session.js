@@ -14,6 +14,7 @@ import { LoginRegisterContext } from "../authentication/login-register-context";
 
 const AddAthleteSession = () => {
     const auth = useContext(LoginRegisterContext);
+    const user = auth.userID;
     console.log(auth);
     const [newSession, setNewSession] = useState()
     const inputReducer = (state, action) => {
@@ -25,11 +26,14 @@ const AddAthleteSession = () => {
                     [action.name]: action.value,
                 };
             case "CLEAR_FORM":
+                console.log("form cleared")
                 return {
                     movement: "",
                     reps: "",
                     rounds: "",
                     weight: "",
+                    distance:"",
+                    time:""
                 };
             default:
                 return state;
@@ -81,11 +85,11 @@ const AddAthleteSession = () => {
                 }
             );
             const responseData = await response.json();
-            console.log(responseData.userSession);
-            setNewSession(responseData.userSession)
             dispatch({
                 type: "CLEAR_FORM",
             });
+            console.log(responseData.userSession);
+            setNewSession(responseData.userSession)
         } catch (err) {}
     };
 
@@ -98,6 +102,7 @@ const AddAthleteSession = () => {
                         <FormLabel htmlFor="movement">Movement</FormLabel>
                         <Input
                             onChange={changeHandler}
+                            value={inputState.movement}
                             name="movement"
                             type="text"
                             color="black"
@@ -108,6 +113,7 @@ const AddAthleteSession = () => {
                         <FormLabel htmlFor="weight">Weight</FormLabel>
                         <Input
                             onChange={changeHandler}
+                            value={inputState.weight}
                             name="weight"
                             type="text"
                             color="black"
@@ -118,6 +124,7 @@ const AddAthleteSession = () => {
                         <FormLabel htmlFor="reps">Reps</FormLabel>
                         <Input
                             onChange={changeHandler}
+                            value={inputState.reps}
                             name="reps"
                             type="text"
                             color="black"
@@ -128,6 +135,7 @@ const AddAthleteSession = () => {
                         <FormLabel htmlFor="rounds">Rounds</FormLabel>
                         <Input
                             onChange={changeHandler}
+                            value={inputState.rounds}
                             name="rounds"
                             type="text"
                             color="black"
@@ -138,6 +146,7 @@ const AddAthleteSession = () => {
                         <FormLabel htmlFor="distance">Distance</FormLabel>
                         <Input
                             onChange={changeHandler}
+                            value={inputState.distance}
                             name="distance"
                             type="text"
                             color="black"
@@ -148,6 +157,7 @@ const AddAthleteSession = () => {
                         <FormLabel htmlFor="time">Time</FormLabel>
                         <Input
                             onChange={changeHandler}
+                            value={inputState.time}
                             name="time"
                             type="text"
                             color="black"
@@ -166,7 +176,9 @@ const AddAthleteSession = () => {
                 </form>
             </Stack>
         </Box>
-        <GetAthletesSessions newSession={newSession} />
+        <GetAthletesSessions
+        user={user}
+        newSession={newSession} />
         </React.Fragment>
     );
 };

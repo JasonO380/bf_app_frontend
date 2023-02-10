@@ -10,15 +10,22 @@ import {
     FormLabel,
     Input,
 } from "@chakra-ui/react";
+import UpdateAthleteSession from "./update-athlete-session";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
 let user
 const GetAthletesSessions = (props) => {
+    user= props.user;
+    let sessionToDelete;
+    let updateID;
+    console.log(user);
+    const [editSession, setEditSession] = useState(false)
     const newSession = props.newSession;
     const auth = useContext(LoginRegisterContext);
+    const [update, setUpdate] = useState()
     const [workouts, setWorkouts] = useState([]);
     const getSessions = async () => {
-        user = auth.userID;
+        // user = auth.userID;
         console.log(user);
         try {
             const response = await fetch(
@@ -39,7 +46,7 @@ const GetAthletesSessions = (props) => {
 
     const deleteSession = async (event) => {
         console.log(event.target.name)
-        const sessionToDelete = event.target.name;
+        sessionToDelete = event.target.name;
         const userID = auth.userID;
         try {
             const response = await fetch(
@@ -58,6 +65,13 @@ const GetAthletesSessions = (props) => {
             const responseData = await response.json();
             console.log(responseData.message);
         } catch (err) {}
+        getSessions();
+    }
+
+    const updateHandler = (event) => {
+        updateID = event.target.name;
+        setUpdate(event.target.name)
+        setEditSession(true)
     }
 
     useEffect(() => {
@@ -66,10 +80,12 @@ const GetAthletesSessions = (props) => {
     }, [user, newSession]);
 
     return (
+        <React.Fragment>
         <Stack color="black">
             {workouts.map((s) => {
                 return (
-                    <Box mb={5}>
+                    <Box 
+                    mb={5}>
                         <Text>
                             Date: {s.date}
                             Movement: {s.exercise}
@@ -77,8 +93,12 @@ const GetAthletesSessions = (props) => {
                             Reps: {s.reps}
                             Rounds: {s.rounds}
                         </Text>
-                        <Flex mt={2}>
-                            <Button 
+                        <Flex
+                        ml={8} 
+                        mt={2}>
+                            <Button
+                            name={s.id}
+                            onClick={updateHandler} 
                             bg="teal" 
                             mr={2}>
                                 Update
@@ -92,6 +112,8 @@ const GetAthletesSessions = (props) => {
                 );
             })}
         </Stack>
+        {editSession && <UpdateAthleteSession update={update} />}
+        </React.Fragment>
     );
 };
 
