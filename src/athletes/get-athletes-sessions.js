@@ -22,6 +22,7 @@ const GetAthletesSessions = (props) => {
     const [editSession, setEditSession] = useState(false)
     const newSession = props.newSession;
     const auth = useContext(LoginRegisterContext);
+    // user = auth.userID;
     const [update, setUpdate] = useState()
     const [workouts, setWorkouts] = useState([]);
     const getSessions = async () => {
@@ -112,7 +113,11 @@ const GetAthletesSessions = (props) => {
                 );
             })}
         </Stack>
-        {editSession && <UpdateAthleteSession updateMode={editSession} update={update} />}
+        {editSession && 
+        <UpdateAthleteSession
+        getUpdate={getSessions}
+        updateMode={editSession} 
+        update={update} />}
         </React.Fragment>
     );
 };

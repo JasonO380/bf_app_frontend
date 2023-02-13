@@ -13,7 +13,7 @@ const MainRoutes = () => {
             "userData",
             JSON.stringify({
                 userID:uid,
-                token:token,
+                token:token
             })
         )
     }, [])

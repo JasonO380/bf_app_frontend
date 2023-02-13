@@ -89,6 +89,7 @@ const UpdateAthleteSession = (props) => {
             const responseData = await response.json();
             console.log(responseData)
             props.updateMode(false);
+            props.getUpdate();
         } catch (err) {}
     };
 
@@ -112,10 +113,10 @@ const UpdateAthleteSession = (props) => {
                 console.log(workout);
             } catch (err) {}
         };
+        getSessionToUpdate();
         setWorkoutToUpdate(workout);
         console.log(update);
         setUpdate(true);
-        getSessionToUpdate();
     }, []);
 
     if (update) {

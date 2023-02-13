@@ -9,14 +9,12 @@ import {
 } from "@chakra-ui/react";
 import { useMediaQuery } from "@chakra-ui/react";
 import { LoginRegisterContext } from "./login-register-context";
-import CoachLogin from "./coach-login";
 import { useNavigate } from "react-router-dom";
 
 let accessGranted;
-const Login = (props) => {
+const CoachLogin = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState();
-    const [coachLogin, setCoachLogin] = useState(false)
     const [isTabletOrAbove] = useMediaQuery("(min-width: 600px)");
     const inputReducer = (state, action) => {
         console.log("Action:", action);
@@ -34,14 +32,14 @@ const Login = (props) => {
     const [isValid, setIsValid] = useState(true);
     const [login, setLogin] = useState(true);
     const [inputState, dispatch] = useReducer(inputReducer, {
-        username: "",
+        coachname: "",
         password: "",
     });
     const loginRegister = useContext(LoginRegisterContext);
 
-    useEffect(() => {
-        console.log("input state: ", inputState);
-    }, [inputState]);
+    // useEffect(() => {
+    //     console.log("input state: ", inputState);
+    // }, [inputState]);
 
     const changeHandler = (event) => {
         const inputValue = event.target.value;
@@ -61,14 +59,14 @@ const Login = (props) => {
         console.log(inputState);
         try {
             const response = await fetch(
-                "http://localhost:5000/api/users/login",
+                "http://localhost:5000/api/coach/login",
                 {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        username: inputState.username,
+                        coachName: inputState.coachname,
                         password: inputState.password,
                     }),
                 }
@@ -79,13 +77,13 @@ const Login = (props) => {
             console.log(responseData.message);
             console.log("here");
             console.log(accessGranted);
-            loginRegister.login(responseData.userID, responseData.token);
+            loginRegister.login(responseData.coachID, responseData.token);
         } catch (err) {
             console.log(err);
             setLogin(false);
             setErrorMessage(err.message);
         }
-        if (accessGranted !== "Success") {
+        if (accessGranted !== "Coach login successful") {
             setLogin(false);
             setIsLoading(false);
             console.log(login);
@@ -95,19 +93,14 @@ const Login = (props) => {
         }
     };
 
-    const coachLog = () => {
-        setCoachLogin(!coachLogin);
-    }
-
     const logout = () => {
         loginRegister.logout()
         console.log(loginRegister.token)
     }
 
-    if(coachLogin){
-        return(
-            <CoachLogin onSwitch={coachLog} />
-        )
+    const switchToUser = () => {
+        console.log('poop')
+        props.onClick();
     }
 
     return (
@@ -123,13 +116,13 @@ const Login = (props) => {
             >
                 <form onSubmit={loginUser}>
                     <FormControl>
-                        <FormLabel htmlFor="username">Username</FormLabel>
+                        <FormLabel htmlFor="username">Coach name</FormLabel>
                         <Input
                             type="text"
                             color="black"
-                            name="username"
-                            value={inputState.userName}
-                            placeholder="Enter username"
+                            name="coachname"
+                            value={inputState.coachname}
+                            placeholder="Enter coach name"
                             bg="white"
                             onChange={changeHandler}
                         />
@@ -159,12 +152,12 @@ const Login = (props) => {
                 </form>
                 <Button
                     mt={4}
-                    onClick={coachLog}
+                    onClick={props.onSwitch}
                     width="100%"
                     bg="red"
                     color="white"
                 >
-                    Coach login
+                    User Login
                 </Button>
                 <Button
                     mt={4}
@@ -180,4 +173,4 @@ const Login = (props) => {
     );
 };
 
-export default Login;
+export default CoachLogin;

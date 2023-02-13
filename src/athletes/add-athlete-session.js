@@ -12,18 +12,27 @@ import {
 import GetAthletesSessions from "./get-athletes-sessions";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
+let user;
 const AddAthleteSession = () => {
     const auth = useContext(LoginRegisterContext);
-    const user = auth.userID;
+    user = auth.userID;
     console.log(auth);
     const [newSession, setNewSession] = useState()
     const inputReducer = (state, action) => {
+        const dateEntry = new Date();
         console.log("Action:", action);
         switch (action.type) {
             case "INPUT_CHANGE":
                 return {
                     ...state,
                     [action.name]: action.value,
+                    year: dateEntry.getFullYear(),
+                    dayOfWeek: dateEntry.toLocaleString("default", {
+                        weekday: "long",
+                    }),
+                    dayOfMonth:dateEntry.getDate(),
+                    month: dateEntry.toLocaleString("en-US", { month: "long" }),
+                    day: dateEntry.getDate(),
                 };
             case "CLEAR_FORM":
                 console.log("form cleared")
@@ -79,6 +88,10 @@ const AddAthleteSession = () => {
                             rounds: inputState.rounds,
                             distance: inputState.distance,
                             time: inputState.time,
+                            year:inputState.year,
+                            month: inputState.month,
+                            dayOfMonth: inputState.dayOfMonth,
+                            dayOfWeek:inputState.dayOfWeek,
                             athlete: userID
                         }],
                     }),
