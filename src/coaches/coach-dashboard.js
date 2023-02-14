@@ -2,12 +2,15 @@ import React, { useState, useEffect, useContext } from "react";
 import { Select, Box, Heading, Text, Stack } from "@chakra-ui/react";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 import AddClient from "./add-client";
+import ClientSessions from "./get-client-sessions";
 
 
 const CoachDashboard = () => {
     const [clients, setClients] = useState([]);
     const [selectedClient, setSelectedClient] = useState("");
-    const [coach, setCoach] = useState()
+    const [coach, setCoach] = useState();
+    const [clientID, setClientID] = useState()
+    const [showClientSessions, setShowClientSessions] = useState(false)
     // const { coachName } = coach;
     const auth = useContext(LoginRegisterContext);
     console.log(auth.userID);
@@ -55,6 +58,8 @@ const CoachDashboard = () => {
 
     const clientSelect = (event) => {
         console.log(event.target.value)
+        setClientID(event.target.value);
+        setShowClientSessions(true);
     }
 
     useEffect(()=> {
@@ -87,6 +92,7 @@ const CoachDashboard = () => {
             </select>
         </Stack>
         <AddClient />
+        {showClientSessions && <ClientSessions client ={clientID} />}
         </React.Fragment>
     );
 };
