@@ -12,11 +12,12 @@ import {
 } from "@chakra-ui/react";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 import DisplaySessions from "../shared/display-sessions";
+import AddClientSession from "./add-client-sessions";
 
 const ClientSessions = (props) => {
     const clientID = props.client;
     const auth = useContext(LoginRegisterContext);
-    const [workouts, setWorkouts] = useState()
+    const [workouts, setWorkouts] = useState();
     const [client, setClient] = useState(clientID);
     console.log(client);
     const getClientSessions = async () => {
@@ -34,19 +35,33 @@ const ClientSessions = (props) => {
             const responseData = await response.json();
             setWorkouts(responseData.sessions);
             console.log(responseData.sessions);
-        } catch (err) {}
+        } catch (err) {};
     };
 
     useEffect(()=> {
-        getClientSessions()
-    },[]);
+        setClient(clientID)
+    }, [clientID])
 
     useEffect(()=> {
-        console.log(workouts)
-    }, [workouts])
+        console.log(clientID);
+        getClientSessions()
+    },[client, auth.token]);
+
+    useEffect(()=> {
+        console.log(clientID);
+        console.log(workouts);
+    }, [clientID, workouts]);
 
     return (
-        <DisplaySessions workouts={workouts} />
+        workouts ? (
+            <React.Fragment>
+                <DisplaySessions 
+                workouts={workouts} />
+                <AddClientSession 
+                getClientSessions={getClientSessions} 
+                clientID={clientID} />
+            </React.Fragment>
+        ) : null
     )
 };
 

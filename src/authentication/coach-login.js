@@ -36,6 +36,7 @@ const CoachLogin = (props) => {
         password: "",
     });
     const loginRegister = useContext(LoginRegisterContext);
+    console.log(loginRegister);
 
     // useEffect(() => {
     //     console.log("input state: ", inputState);
@@ -51,7 +52,7 @@ const CoachLogin = (props) => {
         });
     };
 
-    const loginUser = async (event) => {
+    const loginCoach = async (event) => {
         setIsLoading(true);
         event.preventDefault();
         const inputName = event.target.name;
@@ -66,25 +67,22 @@ const CoachLogin = (props) => {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        coachName: inputState.coachname,
+                        coachname: inputState.coachname,
                         password: inputState.password,
                     }),
                 }
             );
             const responseData = await response.json();
             accessGranted = responseData.message;
-            console.log(responseData);
-            console.log(responseData.message);
-            console.log("here");
             console.log(accessGranted);
-            loginRegister.login(responseData.coachID, responseData.token);
+            loginRegister.login(responseData.userID, responseData.token);
         } catch (err) {
             console.log(err);
             setLogin(false);
             setErrorMessage(err.message);
         }
         if (accessGranted !== "Coach login successful") {
-            setLogin(false);
+            // setLogin(false);
             setIsLoading(false);
             console.log(login);
         } else {
@@ -99,7 +97,6 @@ const CoachLogin = (props) => {
     }
 
     const switchToUser = () => {
-        console.log('poop')
         props.onClick();
     }
 
@@ -114,7 +111,7 @@ const CoachLogin = (props) => {
                 p={8}
                 backgroundColor="purple.900"
             >
-                <form onSubmit={loginUser}>
+                <form onSubmit={loginCoach}>
                     <FormControl>
                         <FormLabel htmlFor="username">Coach name</FormLabel>
                         <Input
@@ -157,7 +154,7 @@ const CoachLogin = (props) => {
                     bg="red"
                     color="white"
                 >
-                    User Login
+                    Switch to user Login
                 </Button>
                 <Button
                     mt={4}

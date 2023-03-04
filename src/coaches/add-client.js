@@ -9,12 +9,13 @@ import {
     Box,
 } from "@chakra-ui/react";
 
-const AddClient = () => {
+const AddClient = (props) => {
     const auth = useContext(LoginRegisterContext);
-    // console.log(auth.userID);
+    const coachID = auth.userID;
+    const [id, setID] = useState(coachID);
+
     const inputReducer = (state, action) => {
         const dateEntry = new Date();
-        console.log("Action:", action);
         switch (action.type) {
             case "INPUT_CHANGE":
                 return {
@@ -25,11 +26,9 @@ const AddClient = () => {
                         weekday: "long",
                     }),
                     dayOfMonth: dateEntry.getDate(),
-                    month: dateEntry.toLocaleString("en-US", { month: "long" }),
-                    day: dateEntry.getDate(),
+                    month: dateEntry.toLocaleString("en-US", { month: "long" })
                 };
             case "CLEAR_FORM":
-                console.log("form cleared");
                 return {
                     clientName: "",
                 };
@@ -37,9 +36,11 @@ const AddClient = () => {
                 return state;
         }
     };
+
     const [inputState, dispatch] = useReducer(inputReducer, {
         clientName: "",
     });
+
     const changeHandler = (event) => {
         const inputValue = event.target.value;
         const inputName = event.target.name;
@@ -51,11 +52,11 @@ const AddClient = () => {
     };
 
     const addClient = async (event) => {
+        console.log(id);
         event.preventDefault()
-        const coachID = auth.id;
         try {
             const response = await fetch(
-                `http://localhost:5000/api/client/${coachID}`,
+                `http://localhost:5000/api/client/${id}`,
                 {
                     method: "POST",
                     headers: {
@@ -64,16 +65,26 @@ const AddClient = () => {
                     },
                     body: JSON.stringify({
                         clientName: inputState.clientName,
+                        year:inputState.year,
+                        month:inputState.month,
+                        dayOfMonth:inputState.dayOfMonth,
+                        dayOfWeek:inputState.dayOfWeek,
                     }),
                 }
             );
             const responseData = await response.json();
-            // console.log(responseData);
+            console.log(responseData.client);
             dispatch({
                 type: "CLEAR_FORM",
             });
+            props.updateClients();
         } catch (err) {}
     };
+
+    useEffect(()=> {
+        setID(coachID);
+        console.log(id);
+    }, [coachID])
 
     return (
         <Stack>
@@ -81,9 +92,9 @@ const AddClient = () => {
                 <FormControl>
                     <FormLabel htmlFor="addClient">Add client</FormLabel>
                     <Input
-                        name="client"
+                        name="clientName"
                         onChange={changeHandler}
-                        value={inputState.client}
+                        value={inputState.clientName}
                         type="text"
                         color="black"
                         placeholder="Client name"

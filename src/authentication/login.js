@@ -164,7 +164,7 @@ const Login = (props) => {
                     bg="red"
                     color="white"
                 >
-                    Coach login
+                    Switch to Coach login
                 </Button>
                 <Button
                     mt={4}
