@@ -2,12 +2,30 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { Global, css } from "@emotion/core";
 import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+const theme = extendTheme({
+    fonts: {
+        heading: "Montserrat",
+        body: "Montserrat",
+    },
+});
 root.render(
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
+        <Global
+            styles={css`
+                /* Load Montserrat font from Google Fonts */
+                @import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+
+                /* Apply Montserrat font to all elements */
+                body {
+                    font-family: "Montserrat", sans-serif;
+                }
+            `}
+        />
         <App />
     </ChakraProvider>
 );

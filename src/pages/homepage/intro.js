@@ -4,6 +4,7 @@ import me from "../../images/Intro-me.jpeg";
 import { useMediaQuery } from "@chakra-ui/react";
 import Intro2 from "./components/intro2";
 import Description from "./components/description";
+import Services from "./components/services";
 import { Link } from "react-router-dom";
 import { Box, Image, Flex, Button, Heading, Stack } from "@chakra-ui/react";
 
@@ -11,7 +12,7 @@ const Intro = () => {
     const [isTabletOrAbove] = useMediaQuery("(min-width: 600px)");
     return (
         <React.Fragment>
-            <Box bg="#151414" height={isTabletOrAbove ? "100vh" : "100%"}>
+            <Box bg="#151414" height={isTabletOrAbove ? "100vh" : "100vh"}>
                 <Flex
                     align="end"
                     // justify="space-between"
@@ -39,9 +40,17 @@ const Intro = () => {
                     </Button>
                 </Flex>
                 <Intro2 />
-                <Description />
+                <Box 
+                position="absolute"
+                left= "50%"
+                transform= "translateX(-50%)" 
+                width="60%"
+                zIndex={3} 
+                mt={-200}>
+                    <Description />
+                </Box>
+                <Services />
             </Box>
-            {/* <Description /> */}
         </React.Fragment>
     );
 };

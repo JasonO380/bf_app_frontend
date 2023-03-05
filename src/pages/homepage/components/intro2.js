@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "../../../images/logo.jpeg";
 import me from "../../../images/Intro-me.jpeg";
+import Services from "./services";
 import { useMediaQuery } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { Box, Image, Flex, Button, Heading, Stack, Spacer, Text } from "@chakra-ui/react";
@@ -62,6 +63,7 @@ const Intro2 = () => {
                     </Text>
                 </Stack>
             </Flex>
+            {/* <Services /> */}
         </React.Fragment>
     );
 };
