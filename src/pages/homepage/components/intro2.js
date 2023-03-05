@@ -42,7 +42,9 @@ const Intro2 = () => {
                 </Box>
                 <Flex height="100%" position="relative" width="95%" margin="auto">
                 <Box zIndex="3" >
-                    <Image mt={8} marginLeft="12vw" borderRadius="100%" height="6rem" src={logo} />
+                    <Text marginTop={10} marginLeft={15} color="white">
+                        Photo credit Brad French photography
+                    </Text>
                 </Box>
                 <Spacer />
                 <Stack
@@ -58,12 +60,8 @@ const Intro2 = () => {
                     <Heading fontSize="4rem" padding={0} mt={0} color="white">
                         Mobile
                     </Heading>
-                    <Text color="white">
-                        Photo credit Bradley French photography
-                    </Text>
                 </Stack>
             </Flex>
-            {/* <Services /> */}
         </React.Fragment>
     );
 };

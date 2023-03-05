@@ -6,18 +6,22 @@ import Intro2 from "./components/intro2";
 import Description from "./components/description";
 import Services from "./components/services";
 import { Link } from "react-router-dom";
-import { Box, Image, Flex, Button, Heading, Stack } from "@chakra-ui/react";
+import { Box, Image, Flex, Button, Heading, Stack, Spacer } from "@chakra-ui/react";
 
 const Intro = () => {
     const [isTabletOrAbove] = useMediaQuery("(min-width: 600px)");
     return (
         <React.Fragment>
             <Box bg="#151414" height={isTabletOrAbove ? "100vh" : "100vh"}>
+            <Flex width="95%" margin="auto">
+                <Image marginBottom={5} marginTop={5}  borderRadius="100%" height="5rem" src={logo} />
+                <Spacer />
                 <Flex
                     align="end"
                     // justify="space-between"
-                    mt="auto"
-                    mb="10px"
+                    // mt="auto"
+                    // mb="10px"
+                    margin="auto"
                     px="50px"
                 >
                     <Button
@@ -38,6 +42,7 @@ const Intro = () => {
                     >
                         Register
                     </Button>
+                </Flex>
                 </Flex>
                 <Intro2 />
                 <Box 
