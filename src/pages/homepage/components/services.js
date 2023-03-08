@@ -20,7 +20,6 @@ const Services = () => {
             mt={-1}
             bg="#151414"
             position="relative"
-            // height="100%"
             width="100%"
         >
             <Box mt={100} margin="auto" width="95%" justify="space-between">
@@ -62,7 +61,7 @@ const Services = () => {
                         boxShadow="10px 10px 5px black"
                         maxH="100%"
                         maxW="100%"
-                        filter="grayscale(100%) brightness(80%) contrast(150%)"
+                        filter="grayscale(100%) brightness(90%) contrast(120%)"
                         src={weights} />
                         <Heading fontSize="1.5rem" color="white">
                             Programming

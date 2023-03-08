@@ -5,6 +5,8 @@ import { useMediaQuery } from "@chakra-ui/react";
 import Intro2 from "./components/intro2";
 import Description from "./components/description";
 import Services from "./components/services";
+import Tracking from "./components/tracking";
+import Footer from "./components/footer";
 import { Link } from "react-router-dom";
 import { Box, Image, Flex, Button, Heading, Stack, Spacer } from "@chakra-ui/react";
 
@@ -18,9 +20,6 @@ const Intro = () => {
                 <Spacer />
                 <Flex
                     align="end"
-                    // justify="space-between"
-                    // mt="auto"
-                    // mb="10px"
                     margin="auto"
                     px="50px"
                 >
@@ -55,6 +54,8 @@ const Intro = () => {
                     <Description />
                 </Box>
                 <Services />
+                <Tracking />
+                <Footer />
             </Box>
         </React.Fragment>
     );
