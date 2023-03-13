@@ -43,13 +43,13 @@ const Intro2 = () => {
                 <Flex height="100%" position="relative" width="95%" margin="auto">
                 <Box zIndex="3" >
                     <Text marginTop={10} marginLeft={15} color="white">
-                        Photo credit Brad French photography
+                        Brad French photography
                     </Text>
                 </Box>
                 <Spacer />
                 <Stack
                 zIndex="3"
-                marginRight="12vw" 
+                marginRight="6vw" 
                 spacing={-3}>
                     <Heading fontSize="4rem" padding={0} mt={0} color="white">
                         Lean

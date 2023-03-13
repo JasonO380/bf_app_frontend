@@ -6,12 +6,19 @@ import Intro2 from "./components/intro2";
 import Description from "./components/description";
 import Services from "./components/services";
 import Tracking from "./components/tracking";
+import MobileHome from "../mobile-homepage/mobile-home";
 import Footer from "./components/footer";
 import { Link } from "react-router-dom";
 import { Box, Image, Flex, Button, Heading, Stack, Spacer } from "@chakra-ui/react";
 
 const Intro = () => {
     const [isTabletOrAbove] = useMediaQuery("(min-width: 600px)");
+
+    if(!isTabletOrAbove){
+        return (
+            <MobileHome />
+        )
+    }
     return (
         <React.Fragment>
             <Box bg="#151414" height={isTabletOrAbove ? "100vh" : "100vh"}>
