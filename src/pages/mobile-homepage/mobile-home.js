@@ -2,6 +2,7 @@ import React from "react";
 import MainNav from "./components/main-nav";
 import MobileIntro from "./components/mobile-intro";
 import Description from "../homepage/components/description";
+import MobileDescription from "./components/mobile-description";
 import MobileServices from "../mobile-homepage/components/mobile-services";
 import Tracking from "../homepage/components/tracking";
 import Footer from "../homepage/components/footer";
@@ -21,7 +22,7 @@ const MobileHome = () => {
             <MainNav />
             <MobileIntro />
             <Box mt={100}>
-                <Description />
+                <MobileDescription />
             </Box>
             <MobileServices />
             <Tracking />

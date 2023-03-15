@@ -23,13 +23,14 @@ const Description = () => {
         setDescription([]);
         const title = event.target.dataset.name;
         console.log(event.target.dataset.name);
+        // setActiveHeading(title);
         const item = info[0].find((item) => item.title === title);
-        if(active === title){
+        if(activeHeading === title){
             console.log('here')
-            setIsClicked(false)
+            setIsClicked(!isClicked)
             console.log(isClicked);
         } else {
-            active = title;
+            setActiveHeading(title)
             console.log("poop pants")
         }
         if (title === "Jason") {
@@ -44,6 +45,7 @@ const Description = () => {
         }
 
         if (title === "Training") {
+            active = title;
             item.description.map((info) => {
                 data.push(info);
                 console.log(data);
@@ -63,7 +65,7 @@ const Description = () => {
             zIndex={3}
             position="relative"
         >
-            <Tabs variant="enclosed">
+            <Tabs onClick={clickHandler} variant="enclosed">
                 <TabList>
                     <Tab
                         as="h2"
@@ -71,7 +73,7 @@ const Description = () => {
                         color="white"
                         fontSize="xl"
                         fontWeight="bold"
-                        onClick={clickHandler}
+                        // onClick={clickHandler}
                     >
                         Jason Ollada
                     </Tab>
@@ -81,7 +83,7 @@ const Description = () => {
                         color="white"
                         fontSize="xl"
                         fontWeight="bold"
-                        onClick={clickHandler}
+                        // onClick={clickHandler}
                     >
                         Training
                     </Tab>
