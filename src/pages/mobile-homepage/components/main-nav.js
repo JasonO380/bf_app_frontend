@@ -1,11 +1,7 @@
 import React from "react";
 import logo from "../../../images/logo.jpeg";
-import {
-    Image,
-    Flex,
-    Button,
-    Spacer,
-} from "@chakra-ui/react";
+import { NavLink } from "react-router-dom";
+import { Image, Flex, Button, Spacer } from "@chakra-ui/react";
 
 const MainNav = () => {
     return (
@@ -19,24 +15,28 @@ const MainNav = () => {
             />
             <Spacer />
             <Flex align="end" margin="auto">
-                <Button
-                    borderRadius="50"
-                    mt="20px"
-                    fontSize="xs"
-                    color="white"
-                    backgroundColor="transparent"
-                >
-                    Login
-                </Button>
-                <Button
-                    borderRadius="50"
-                    mt="20px"
-                    fontSize="xs"
-                    color="white"
-                    backgroundColor="red"
-                >
-                    Register
-                </Button>
+                <NavLink to="/login">
+                    <Button
+                        borderRadius="50"
+                        mt="20px"
+                        fontSize="xs"
+                        color="white"
+                        backgroundColor="transparent"
+                    >
+                        Login
+                    </Button>
+                </NavLink>
+                <NavLink to="/register">
+                    <Button
+                        borderRadius="50"
+                        mt="20px"
+                        fontSize="xs"
+                        color="white"
+                        backgroundColor="red"
+                    >
+                        Register
+                    </Button>
+                </NavLink>
             </Flex>
         </Flex>
     );

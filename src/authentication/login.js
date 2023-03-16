@@ -30,7 +30,7 @@ const Login = (props) => {
                 return state;
         }
     };
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const [isValid, setIsValid] = useState(true);
     const [login, setLogin] = useState(true);
     const [inputState, dispatch] = useReducer(inputReducer, {
@@ -90,7 +90,7 @@ const Login = (props) => {
             setIsLoading(false);
             console.log(login);
         } else {
-            // navigate("/dashboard");
+            navigate("/athlete");
             setIsLoading(false);
         }
     };
