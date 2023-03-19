@@ -10,6 +10,7 @@ import {
     Input,
 } from "@chakra-ui/react";
 import GetAthletesSessions from "./get-athletes-sessions";
+import ShowTodaysSession from "./show-todays-session";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
 let user;
@@ -20,7 +21,6 @@ const AddAthleteSession = () => {
     const [newSession, setNewSession] = useState()
     const inputReducer = (state, action) => {
         const dateEntry = new Date();
-        console.log("Action:", action);
         switch (action.type) {
             case "INPUT_CHANGE":
                 return {
@@ -31,8 +31,7 @@ const AddAthleteSession = () => {
                         weekday: "long",
                     }),
                     dayOfMonth:dateEntry.getDate(),
-                    month: dateEntry.toLocaleString("en-US", { month: "long" }),
-                    day: dateEntry.getDate(),
+                    month: dateEntry.toLocaleString("en-US", { month: "long" })
                 };
             case "CLEAR_FORM":
                 console.log("form cleared")
@@ -112,68 +111,68 @@ const AddAthleteSession = () => {
             <Stack margin="auto" width="80%">
                 <form onSubmit={addSession}>
                     <FormControl>
-                        <FormLabel htmlFor="movement">Movement</FormLabel>
+                        <FormLabel color="white" htmlFor="movement">Movement</FormLabel>
                         <Input
                             onChange={changeHandler}
                             value={inputState.movement}
                             name="movement"
                             type="text"
-                            color="black"
+                            bg="white"
                             placeholder="Movement"
                         />
                     </FormControl>
                     <FormControl>
-                        <FormLabel htmlFor="weight">Weight</FormLabel>
+                        <FormLabel color="white" htmlFor="weight">Weight</FormLabel>
                         <Input
                             onChange={changeHandler}
                             value={inputState.weight}
                             name="weight"
                             type="text"
-                            color="black"
+                            bg="white"
                             placeholder="Weight"
                         />
                     </FormControl>
                     <FormControl>
-                        <FormLabel htmlFor="reps">Reps</FormLabel>
+                        <FormLabel color="white" htmlFor="reps">Reps</FormLabel>
                         <Input
                             onChange={changeHandler}
                             value={inputState.reps}
                             name="reps"
                             type="text"
-                            color="black"
+                            bg="white"
                             placeholder="Reps"
                         />
                     </FormControl>
                     <FormControl>
-                        <FormLabel htmlFor="rounds">Rounds</FormLabel>
+                        <FormLabel color="white" htmlFor="rounds">Rounds</FormLabel>
                         <Input
                             onChange={changeHandler}
                             value={inputState.rounds}
                             name="rounds"
                             type="text"
-                            color="black"
+                            bg="white"
                             placeholder="Rounds"
                         />
                     </FormControl>
                     <FormControl>
-                        <FormLabel htmlFor="distance">Distance</FormLabel>
+                        <FormLabel color="white" htmlFor="distance">Distance</FormLabel>
                         <Input
                             onChange={changeHandler}
                             value={inputState.distance}
                             name="distance"
                             type="text"
-                            color="black"
+                            bg="white"
                             placeholder="Distance"
                         />
                     </FormControl>
                     <FormControl>
-                        <FormLabel htmlFor="time">Time</FormLabel>
+                        <FormLabel color="white" htmlFor="time">Time</FormLabel>
                         <Input
                             onChange={changeHandler}
                             value={inputState.time}
                             name="time"
                             type="text"
-                            color="black"
+                            bg="white"
                             placeholder="Time"
                         />
                     </FormControl>
@@ -189,9 +188,11 @@ const AddAthleteSession = () => {
                 </form>
             </Stack>
         </Box>
-        <GetAthletesSessions
-        user={user}
-        newSession={newSession} />
+        {user && (
+            <GetAthletesSessions
+            user={user}
+            newSession={newSession} />
+        )}
         </React.Fragment>
     );
 };
