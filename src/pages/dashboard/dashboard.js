@@ -1,15 +1,47 @@
-import React, { useState } from "react";
-import { Box, Image, Flex, Button, Heading, Stack, Spacer } from "@chakra-ui/react";
+import React, { useState, useEffect, useContext } from "react";
+import {
+    Box,
+    Image,
+    Flex,
+    Button,
+    Heading,
+    Stack,
+    Spacer,
+} from "@chakra-ui/react";
 import AddAthleteSession from "../../athletes/add-athlete-session";
+import GetAthletesSessions from "../../athletes/get-athletes-sessions";
+import ShowAthleteSessionsHistory from "../../athletes/show-athletes-history-sessions";
 import { motion } from "framer-motion";
+import { LoginRegisterContext } from "../../authentication/login-register-context";
 
 const Dashboard = () => {
+    const auth = useContext(LoginRegisterContext);
+    const user = auth.userID;
+    console.log(user);
     const [showAddAthleteSession, setShowAddAthleteSession] = useState(false);
+    const [currentDaysWorkouts, setCurrentDaysWorkouts] = useState([]);
+    const [showWorkoutHistory, setShowWorkoutHistory] = useState(false);
+    const [allWorkouts, setAllWorkouts] = useState([]);
+
     const handleStartWorkoutClick = () => {
-        setShowAddAthleteSession(true);
+        if (showWorkoutHistory) {
+            setShowWorkoutHistory(false);
+            setShowAddAthleteSession(true);
+        } else {
+            setShowAddAthleteSession(true);
+        }
     };
     const handleCloseClick = () => {
         setShowAddAthleteSession(false);
+        setShowWorkoutHistory(false);
+    };
+    const handleViewWorkoutHistoryClick = () => {
+        if (showAddAthleteSession) {
+            setShowAddAthleteSession(false);
+            setShowWorkoutHistory(true);
+        } else {
+            setShowWorkoutHistory(true);
+        }
     };
     const variants = {
         hidden: {
@@ -20,7 +52,7 @@ const Dashboard = () => {
             scale: 1,
             opacity: 1,
             transition: {
-                duration: 1,
+                duration: 0.3,
             },
         },
     };
@@ -41,10 +73,20 @@ const Dashboard = () => {
                 zIndex="1"
             >
                 <Flex p="10px">
-                    <Button onClick={handleStartWorkoutClick} borderRadius="50px" colorScheme="blue" mr="4">
+                    <Button
+                        onClick={handleStartWorkoutClick}
+                        borderRadius="50px"
+                        colorScheme="blue"
+                        mr="4"
+                    >
                         Start workout
                     </Button>
-                    <Button borderRadius="50px" colorScheme="blue" mr="4">
+                    <Button
+                        onClick={handleViewWorkoutHistoryClick}
+                        borderRadius="50px"
+                        colorScheme="blue"
+                        mr="4"
+                    >
                         History
                     </Button>
                     <Button borderRadius="50px" colorScheme="blue">
@@ -53,21 +95,44 @@ const Dashboard = () => {
                     <Spacer />
                 </Flex>
             </Box>
-            <motion.div
-                variants={variants}
-                initial="hidden"
-                animate={showAddAthleteSession ? "visible" : "hidden"}
-            >
-                <Box p="15px">
-                    <Button borderRadius="50px" colorScheme="red" onClick={handleCloseClick}>
-                        Close
-                    </Button>
-                    <AddAthleteSession />
-                </Box>
-            </motion.div>
-
+            {showAddAthleteSession && (
+                <motion.div
+                    variants={variants}
+                    initial="hidden"
+                    animate={showAddAthleteSession ? "visible" : "hidden"}
+                >
+                    <Box p="15px">
+                        <Button
+                            borderRadius="50px"
+                            colorScheme="red"
+                            onClick={handleCloseClick}
+                        >
+                            Close
+                        </Button>
+                        <AddAthleteSession />
+                    </Box>
+                </motion.div>
+            )}
+            {showWorkoutHistory && (
+                <motion.div
+                    variants={variants}
+                    initial="hidden"
+                    animate={showWorkoutHistory ? "visible" : "hidden"}
+                >
+                    <Box p="15px">
+                        <Button
+                            borderRadius="50px"
+                            colorScheme="red"
+                            onClick={handleCloseClick}
+                        >
+                            Close
+                        </Button>
+                        <ShowAthleteSessionsHistory user={user} />
+                    </Box>
+                </motion.div>
+            )}
         </Box>
-    )
+    );
 };
 
 export default Dashboard;

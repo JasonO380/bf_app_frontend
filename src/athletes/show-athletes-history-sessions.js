@@ -10,12 +10,11 @@ import {
     FormLabel,
     Input,
 } from "@chakra-ui/react";
-import UpdateAthleteSession from "./update-athlete-session";
 import SessionCard from "../shared/sessions-card";
+import UpdateAthleteSession from "./update-athlete-session";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
-// let user;
-const GetAthletesSessions = (props) => {
+const ShowAthleteSessionsHistory = (props) => {
     const user = props.user;
     const [id, setID] = useState();
     const history = props.history;
@@ -34,7 +33,7 @@ const GetAthletesSessions = (props) => {
         console.log(user);
         try {
             const response = await fetch(
-                `http://localhost:5000/api/users/${id}`,
+                `http://localhost:5000/api/users/${user}`,
                 {
                     method: "GET",
                     headers: {
@@ -98,16 +97,12 @@ const GetAthletesSessions = (props) => {
         setID(user)
         getSessions();
         console.log(auth.userID);
-    }, [user, newSession, history]);
+    }, []);
 
-    if(history){
-        return <SessionCard name={props.name} workouts={allWorkouts} />
-    }
-
-    return (
+    return(
         <React.Fragment>
             <Stack color="black">
-                {workouts.map((s) => {
+                {allWorkouts.map((s) => {
                     return (
                         <Box mb={5}>
                             <Flex>
@@ -157,7 +152,7 @@ const GetAthletesSessions = (props) => {
                 </Box>
             )}
         </React.Fragment>
-    );
+    )
 };
 
-export default GetAthletesSessions;
+export default ShowAthleteSessionsHistory;
