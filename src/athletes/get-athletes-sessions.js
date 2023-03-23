@@ -11,7 +11,6 @@ import {
     Input,
 } from "@chakra-ui/react";
 import UpdateAthleteSession from "./update-athlete-session";
-import SessionCard from "../shared/sessions-card";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
 // let user;
@@ -100,10 +99,6 @@ const GetAthletesSessions = (props) => {
         console.log(auth.userID);
     }, [user, newSession, history]);
 
-    if(history){
-        return <SessionCard name={props.name} workouts={allWorkouts} />
-    }
-
     return (
         <React.Fragment>
             <Stack color="black">
@@ -118,8 +113,18 @@ const GetAthletesSessions = (props) => {
                             </Flex>
                             <Text color="white">
                                 Movement: {s.exercise}
-                                Weight: {s.weight}
-                                Reps: {s.reps}
+                                {s.weight && (
+        <>
+            Weight: {s.weight}
+            Reps: {s.reps}
+        </>
+    )}
+    {s.distance && (
+        <>
+            Distance: {s.distance}
+            Time: {s.time}
+        </>
+    )}
                                 Rounds: {s.rounds}
                             </Text>
                             <Flex ml={8} mt={2}>

@@ -48,17 +48,19 @@ const ShowAthleteSessionsHistory = (props) => {
             allSessions.map((s) => {
                 const date = new Date();
                 const year = date.getFullYear();
-                const month = date.toLocaleString("en-US", { month: "long" })
-                const dayOfWeek = date.toLocaleString("default", { weekday: "long" })
+                const month = date.toLocaleString("en-US", { month: "long" });
+                const dayOfWeek = date.toLocaleString("default", {
+                    weekday: "long",
+                });
                 if (
                     s.year === year &&
                     s.month === month &&
                     s.dayOfWeek === dayOfWeek
-                ){
-                    ses.push(s)
+                ) {
+                    ses.push(s);
                 }
             });
-            setWorkouts(ses)
+            setWorkouts(ses);
             setAllWorkouts(allSessions);
         } catch (err) {}
     };
@@ -94,27 +96,38 @@ const ShowAthleteSessionsHistory = (props) => {
     };
 
     useEffect(() => {
-        setID(user)
+        setID(user);
         getSessions();
         console.log(auth.userID);
     }, []);
 
-    return(
+    return (
         <React.Fragment>
-            <Stack color="black">
+            <SessionCard update={editSession} workouts={allWorkouts} />
+            {/* <Stack color="black" paddingBottom="75px">
                 {allWorkouts.map((s) => {
                     return (
                         <Box mb={5}>
                             <Flex>
                                 <Text color="white">
                                     Year: {s.year} Month: {s.month} Day:{" "}
-                                    {s.dayOfWeek}
+                                    {s.dayOfMonth}
                                 </Text>
                             </Flex>
                             <Text color="white">
                                 Movement: {s.exercise}
-                                Weight: {s.weight}
-                                Reps: {s.reps}
+                                {s.weight && (
+                                    <>
+                                        Weight: {s.weight}
+                                        Reps: {s.reps}
+                                    </>
+                                )}
+                                {s.distance && (
+                                    <>
+                                        Distance: {s.distance}
+                                        Time: {s.time}
+                                    </>
+                                )}
                                 Rounds: {s.rounds}
                             </Text>
                             <Flex ml={8} mt={2}>
@@ -141,18 +154,18 @@ const ShowAthleteSessionsHistory = (props) => {
                         </Box>
                     );
                 })}
-            </Stack>
+            </Stack> */}
             {editSession && (
                 <Box position="absolute" zIndex="3">
-                <UpdateAthleteSession
-                    getUpdate={getSessions}
-                    updateMode={setEditSession}
-                    update={update}
-                />
+                    <UpdateAthleteSession
+                        getUpdate={getSessions}
+                        updateMode={setEditSession}
+                        update={update}
+                    />
                 </Box>
             )}
         </React.Fragment>
-    )
+    );
 };
 
 export default ShowAthleteSessionsHistory;
