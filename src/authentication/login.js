@@ -79,7 +79,7 @@ const Login = (props) => {
             console.log(responseData.message);
             console.log("here");
             console.log(accessGranted);
-            loginRegister.login(responseData.userID, responseData.token);
+            loginRegister.login(responseData.userID, responseData.token, responseData.userName);
         } catch (err) {
             console.log(err);
             setLogin(false);

@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, useState, useEffect } from "react";
+import React, { useContext, useReducer, useState, useEffect, useRef } from "react";
 import {
     Box,
     Image,
@@ -14,6 +14,7 @@ import { LoginRegisterContext } from "../authentication/login-register-context";
 const UpdateSession = (props) => {
     let workout = [];
     const updateSession = props.update;
+    const refPoint = useRef(null);
     const auth = useContext(LoginRegisterContext);
     console.log(updateSession);
     const [update, setUpdate] = useState(false);
@@ -51,6 +52,19 @@ const UpdateSession = (props) => {
         time: "",
         athlete: "",
     });
+
+    const handleClickOutsideDiv = (event) => {
+        const updateDiv = refPoint.current;
+        console.log(updateDiv);
+        if (updateDiv && !updateDiv.contains(event.target)){
+            console.log("clicked outside");
+            props.updateChangeHandler(null);
+        }
+    }
+
+    useEffect(()=> {
+        document.addEventListener("click", handleClickOutsideDiv);
+    }, [updateSession]);
 
     const changeHandler = (event) => {
         const inputValue = event.target.value;
@@ -123,16 +137,16 @@ const UpdateSession = (props) => {
         return (
             <Box>
                 <Stack margin="auto" width="80%">
-                    <form onSubmit={updateWorkout}>
+                    <form onSubmit={updateWorkout} ref={refPoint}>
                         <FormControl>
-                            <FormLabel htmlFor="movement">Movement</FormLabel>
+                            <FormLabel color="white" htmlFor="movement">Movement</FormLabel>
                             <Input
                                 onChange={changeHandler}
                                 placeholder={workoutToUpdate.exercise}
                                 value={inputState.movement}
                                 name="movement"
                                 type="text"
-                                color="black"
+                                color="white"
                             />
                         </FormControl>
                         <FormControl>
@@ -143,7 +157,7 @@ const UpdateSession = (props) => {
                                 value={inputState.weight}
                                 name="weight"
                                 type="text"
-                                color="black"
+                                color="white"
                             />
                         </FormControl>
                         <FormControl>
@@ -154,7 +168,7 @@ const UpdateSession = (props) => {
                                 value={inputState.reps}
                                 name="reps"
                                 type="text"
-                                color="black"
+                                color="white"
                             />
                         </FormControl>
                         <FormControl>
@@ -165,7 +179,7 @@ const UpdateSession = (props) => {
                                 value={inputState.rounds}
                                 name="rounds"
                                 type="text"
-                                color="black"
+                                color="white"
                             />
                         </FormControl>
                         <FormControl>
@@ -176,7 +190,7 @@ const UpdateSession = (props) => {
                                 value={inputState.distance}
                                 name="distance"
                                 type="text"
-                                color="black"
+                                color="white"
                             />
                         </FormControl>
                         <FormControl>
@@ -187,7 +201,7 @@ const UpdateSession = (props) => {
                                 value={inputState.time}
                                 name="time"
                                 type="text"
-                                color="black"
+                                color="white"
                             />
                         </FormControl>
                         <Button

@@ -48,17 +48,19 @@ const GetAthletesSessions = (props) => {
             allSessions.map((s) => {
                 const date = new Date();
                 const year = date.getFullYear();
-                const month = date.toLocaleString("en-US", { month: "long" })
-                const dayOfWeek = date.toLocaleString("default", { weekday: "long" })
+                const month = date.toLocaleString("en-US", { month: "long" });
+                const dayOfWeek = date.toLocaleString("default", {
+                    weekday: "long",
+                });
                 if (
                     s.year === year &&
                     s.month === month &&
                     s.dayOfWeek === dayOfWeek
-                ){
-                    ses.push(s)
+                ) {
+                    ses.push(s);
                 }
             });
-            setWorkouts(ses)
+            setWorkouts(ses);
             setAllWorkouts(allSessions);
         } catch (err) {}
     };
@@ -94,14 +96,14 @@ const GetAthletesSessions = (props) => {
     };
 
     useEffect(() => {
-        setID(user)
+        setID(user);
         getSessions();
         console.log(auth.userID);
     }, [user, newSession, history]);
 
     return (
         <React.Fragment>
-            <Stack color="black">
+            <Stack color="black" >
                 {workouts.map((s) => {
                     return (
                         <Box mb={5}>
@@ -114,17 +116,17 @@ const GetAthletesSessions = (props) => {
                             <Text color="white">
                                 Movement: {s.exercise}
                                 {s.weight && (
-        <>
-            Weight: {s.weight}
-            Reps: {s.reps}
-        </>
-    )}
-    {s.distance && (
-        <>
-            Distance: {s.distance}
-            Time: {s.time}
-        </>
-    )}
+                                    <>
+                                        Weight: {s.weight}
+                                        Reps: {s.reps}
+                                    </>
+                                )}
+                                {s.distance && (
+                                    <>
+                                        Distance: {s.distance}
+                                        Time: {s.time}
+                                    </>
+                                )}
                                 Rounds: {s.rounds}
                             </Text>
                             <Flex ml={8} mt={2}>
@@ -154,11 +156,11 @@ const GetAthletesSessions = (props) => {
             </Stack>
             {editSession && (
                 <Box position="absolute" zIndex="3">
-                <UpdateAthleteSession
-                    getUpdate={getSessions}
-                    updateMode={setEditSession}
-                    update={update}
-                />
+                    <UpdateAthleteSession
+                        getUpdate={getSessions}
+                        updateMode={setEditSession}
+                        update={update}
+                    />
                 </Box>
             )}
         </React.Fragment>

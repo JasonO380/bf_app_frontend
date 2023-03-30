@@ -1,15 +1,21 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect, useCallback } from "react";
+import ReactDOM from "react-dom";
 import { Box, Flex, Text, Heading, Button, Stack } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import UpdateAthleteSession from "../athletes/update-athlete-session";
+import UpdateSession from "./update-session";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
+let updateID;
 const SessionCard = (props) => {
     const auth = useContext(LoginRegisterContext);
     const session = props.workouts;
     const finalSession = [];
     const [update, setUpdate] = useState();
+    const [editSession, setEditSession] = useState(false);
     let sessionToDelete;
-    let updateID;
+    const updateChange = props.updateChange;
+    console.log(updateChange)
     const animation = {
         offscreen: { scale: 0 },
         onscreen: {
@@ -18,7 +24,14 @@ const SessionCard = (props) => {
         },
     };
 
-    //helper finction to create MovementObjects
+    //helper to handle differnt clicks on updateHandler
+    useEffect(()=>{
+        console.log('here')
+        updateID = updateChange
+    },[updateChange])
+    
+
+    //helper function to create MovementObjects
     const generateMovementObjects = (session) => ({
         id: session._id,
         movement: session.exercise,
@@ -93,119 +106,151 @@ const SessionCard = (props) => {
 
     const updateHandler = (event) => {
         updateID = event.target.name;
-        setUpdate(event.target.name);
-        props.update(true);
+        setUpdate(prevUpdate => updateID);
+        console.log(update);
     };
+
+    const updateChangeHandler = (data) => {
+        updateID = data;
+        setUpdate(updateID);
+    }
+
+    useEffect(()=> {
+        // setEditSession(true);
+        // console.log(editSession);
+        console.log(update)
+    },[update])
+
+    const UpdateOverLay = () => {
+        return ( 
+            ReactDOM.createPortal(
+                <UpdateAthleteSession editSession={setEditSession} update={update}/>, 
+                document.getElementById("overlay")) )
+    }
 
     if (finalSession.length > 0) {
         return (
-            <Stack color="black" paddingBottom="75px">
-                {finalSession.map((session) => {
-                    const months = session.months;
-                    return (
-                        <React.Fragment>
-                            {months.map((monthObj) => {
-                                const days = monthObj.days;
-                                const month = monthObj.month;
-                                return (
-                                    <React.Fragment>
-                                        <Flex>
-                                            <Heading as="h1" size="lg" color="white">{month}</Heading>
-                                        </Flex>
-                                        {days.map((dayObj) => {
-                                            const day = dayObj.day;
-                                            const session = dayObj.sessions;
-                                            return (
-                                                <React.Fragment>
-                                                    <Flex>
-                                                        <Text fontSize="25px" color="white">{day}</Text>
-                                                    </Flex>
-                                                    {session.map((s) => {
-                                                        return (
+            <React.Fragment>
+                <Stack width="100%" position="relative" paddingBottom="60px">
+                    {finalSession.map((session) => {
+                        const months = session.months;
+                        return (
+                            <React.Fragment>
+                                {months.map((monthObj) => {
+                                    const days = monthObj.days;
+                                    const month = monthObj.month;
+                                    return (
+                                        <React.Fragment>
+                                            <Flex>
+                                                <Heading
+                                                    as="h1"
+                                                    size="lg"
+                                                    color="white"
+                                                >
+                                                    {month}
+                                                </Heading>
+                                            </Flex>
+                                            {days.map((dayObj) => {
+                                                const day = dayObj.day;
+                                                const session = dayObj.sessions;
+                                                return (
+                                                    <React.Fragment>
+                                                        <Flex>
+                                                            <Text
+                                                                fontSize="25px"
+                                                                color="white"
+                                                            >
+                                                                {day}
+                                                            </Text>
+                                                        </Flex>
+                                                        {session.map((s) => {
+                                                            return (
                                                             <React.Fragment>
-                                                                <Flex>
-                                                                    <Text color="white">
-                                                                        Movement:{" "}
-                                                                        {
-                                                                            s.movement
-                                                                        }
-                                                                        {s.weight && (
-                                                                            <>
-                                                                                Weight:{" "}
-                                                                                {
-                                                                                    s.weight
-                                                                                }{" "}
-                                                                                Reps:{" "}
-                                                                                {
-                                                                                    s.reps
-                                                                                }
-                                                                            </>
-                                                                        )}
-                                                                        {s.distance && (
-                                                                            <>
-                                                                                Distance:{" "}
-                                                                                {
-                                                                                    s.distance
-                                                                                }{" "}
-                                                                                Time:{" "}
-                                                                                {
-                                                                                    s.time
-                                                                                }
-                                                                            </>
-                                                                        )}
-                                                                        Rounds:{" "}
-                                                                        {
-                                                                            s.rounds
-                                                                        }
-                                                                    </Text>
-                                                                </Flex>
-                                                                <Flex
-                                                                    ml={8}
-                                                                    mt={2}
-                                                                >
-                                                                    <Button
-                                                                        color="white"
-                                                                        borderRadius="50"
-                                                                        name={
-                                                                            s._id
-                                                                        }
-                                                                        onClick={
-                                                                            updateHandler
-                                                                        }
-                                                                        bg="teal"
-                                                                        mr={2}
+                                                            {update === s.id ? <UpdateSession updateChangeHandler={updateChangeHandler} update={update} /> : 
+                                                                    <Stack
+                                                                        padding="7px"
+                                                                        borderRadius="10px"
+                                                                        border="1px solid grey"
+                                                                        width="90%"
                                                                     >
-                                                                        Update
-                                                                    </Button>
-                                                                    <Button
-                                                                        color="white"
-                                                                        borderRadius="50"
-                                                                        name={
-                                                                            s._id
-                                                                        }
-                                                                        onClick={
-                                                                            deleteSession
-                                                                        }
-                                                                        bg="red"
+                                                                        <Text color="white">
+                                                                            Movement:
+                                                                            {" " + s.movement}
+                                                                            {s.weight && (
+                                                                                <Text color="white">
+                                                                                    Weight:
+                                                                                    {" " + s.weight}
+                                                                                </Text>
+                                                                            )}
+                                                                            {s.reps && (
+                                                                                <Text color="white">
+                                                                                    Reps:
+                                                                                    {" " + s.reps}
+                                                                                </Text>
+                                                                            )}
+                                                                            {s.distance && (
+                                                                                <Text color="white">
+                                                                                    Distance:
+                                                                                    {" " + s.distance}
+                                                                                </Text>
+                                                                            )}
+                                                                            {s.time && (
+                                                                                <Text color="white">
+                                                                                    Time:
+                                                                                    {" " + s.time}
+                                                                                </Text>
+                                                                            )}
+                                                                            Rounds:
+                                                                            {" " + s.rounds}
+                                                                        </Text>
+                                                                    </Stack> }
+                                                                    <Flex
+                                                                        ml={8}
+                                                                        mt={2}
                                                                     >
-                                                                        Delete
-                                                                    </Button>
-                                                                </Flex>
-                                                            </React.Fragment>
-                                                        );
-                                                    })}
-                                                </React.Fragment>
-                                            );
-                                        })}
-                                    </React.Fragment>
-                                );
-                            })}
-                        </React.Fragment>
-                    );
-                })}
-            </Stack>
+                                                                        <Button
+                                                                            color="white"
+                                                                            borderRadius="50"
+                                                                            name={s.id}
+                                                                            onClick={updateHandler}
+                                                                            bg="teal"
+                                                                            mr={2}
+                                                                        >
+                                                                            Update
+                                                                        </Button>
+                                                                        <Button
+                                                                            color="white"
+                                                                            borderRadius="50"
+                                                                            name={s.id}
+                                                                            onClick={deleteSession}
+                                                                            bg="red"
+                                                                        >
+                                                                            Delete
+                                                                        </Button>
+                                                                    </Flex>
+                                                                </React.Fragment>
+                                                                );
+                                                        })};
+                                                        
+                                                    </React.Fragment>
+                                                );
+                                            })}
+                                        </React.Fragment>
+                                    );
+                                })}
+                            </React.Fragment>
+                        );
+                    })}
+                </Stack>
+            </React.Fragment>
         );
     }
 };
 
 export default SessionCard;
+
+                {/* {editSession && (
+                    <Box zIndex="3">
+                        <UpdateOverLay />
+                    </Box>
+                )} */}

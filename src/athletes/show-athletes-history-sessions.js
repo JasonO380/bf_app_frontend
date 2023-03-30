@@ -104,57 +104,6 @@ const ShowAthleteSessionsHistory = (props) => {
     return (
         <React.Fragment>
             <SessionCard update={editSession} workouts={allWorkouts} />
-            {/* <Stack color="black" paddingBottom="75px">
-                {allWorkouts.map((s) => {
-                    return (
-                        <Box mb={5}>
-                            <Flex>
-                                <Text color="white">
-                                    Year: {s.year} Month: {s.month} Day:{" "}
-                                    {s.dayOfMonth}
-                                </Text>
-                            </Flex>
-                            <Text color="white">
-                                Movement: {s.exercise}
-                                {s.weight && (
-                                    <>
-                                        Weight: {s.weight}
-                                        Reps: {s.reps}
-                                    </>
-                                )}
-                                {s.distance && (
-                                    <>
-                                        Distance: {s.distance}
-                                        Time: {s.time}
-                                    </>
-                                )}
-                                Rounds: {s.rounds}
-                            </Text>
-                            <Flex ml={8} mt={2}>
-                                <Button
-                                    color="white"
-                                    borderRadius="50"
-                                    name={s.id}
-                                    onClick={updateHandler}
-                                    bg="teal"
-                                    mr={2}
-                                >
-                                    Update
-                                </Button>
-                                <Button
-                                    color="white"
-                                    borderRadius="50"
-                                    name={s._id}
-                                    onClick={deleteSession}
-                                    bg="red"
-                                >
-                                    Delete
-                                </Button>
-                            </Flex>
-                        </Box>
-                    );
-                })}
-            </Stack> */}
             {editSession && (
                 <Box position="absolute" zIndex="3">
                     <UpdateAthleteSession

@@ -5,6 +5,7 @@ import {
     Flex,
     Button,
     Heading,
+    Text,
     Stack,
     Spacer,
 } from "@chakra-ui/react";
@@ -16,7 +17,9 @@ import { LoginRegisterContext } from "../../authentication/login-register-contex
 
 const Dashboard = () => {
     const auth = useContext(LoginRegisterContext);
+    console.log(auth);
     const user = auth.userID;
+    const name = auth.userName;
     console.log(user);
     const [showAddAthleteSession, setShowAddAthleteSession] = useState(false);
     const [currentDaysWorkouts, setCurrentDaysWorkouts] = useState([]);
@@ -58,11 +61,14 @@ const Dashboard = () => {
     };
 
     return (
-        <Box width="100%" bg="#151414">
+        <Box width="100%" bottom="0" position="fixed" height="100%" bg="#151414" overflowY="auto">
             <Box p="15px">
                 <Heading as="h1" size="lg" color="white">
                     Dashboard
                 </Heading>
+                <Text color="white">
+                    Welcome, {name}
+                </Text>
             </Box>
             <Box
                 position="fixed"

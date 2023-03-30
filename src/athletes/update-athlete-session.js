@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, useState, useEffect } from "react";
+import React, { useContext, useReducer, useState, useEffect, useRef } from "react";
 import {
     Box,
     Image,
@@ -8,16 +8,20 @@ import {
     FormControl,
     FormLabel,
     Input,
+    background,
 } from "@chakra-ui/react";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
 const UpdateAthleteSession = (props) => {
     let workout = [];
-    const updateSession = props.update;
+    const refPoint = useRef(null);
+    const updateMode = props.updateMode
+    const updateSession = props.updateChange;
     const auth = useContext(LoginRegisterContext);
-    console.log(updateSession);
+    const [updateID, setUpdateID] = useState();
     const [update, setUpdate] = useState(false);
     const [workoutToUpdate, setWorkoutToUpdate] = useState();
+    const [showModal, setShowModal] = useState(true);
 
     const inputReducer = (state, action) => {
         console.log("Action:", action);
@@ -52,6 +56,22 @@ const UpdateAthleteSession = (props) => {
         athlete: "",
     });
 
+    useEffect(() => {
+        document.addEventListener("click", handleClickOutsideDiv);
+    }, [updateSession]);
+
+    const handleClickOutsideDiv = (event) => {
+        const updateDiv = refPoint.current;
+        if (updateDiv && updateDiv.contains(event.target)) {
+            setShowModal(true);
+        } else {
+            props.updateChangeHandler("23");
+            console.log("here")
+            setShowModal(false);
+            document.removeEventListener("click", handleClickOutsideDiv);
+        }
+    };
+
     const changeHandler = (event) => {
         const inputValue = event.target.value;
         const inputName = event.target.name;
@@ -68,7 +88,7 @@ const UpdateAthleteSession = (props) => {
         try {
             console.log(inputState);
             const response = await fetch(
-                `http://localhost:5000/api/session/${updateSession}`,
+                `http://localhost:5000/api/session/${updateID}`,
                 {
                     method: "PATCH",
                     headers: {
@@ -88,12 +108,17 @@ const UpdateAthleteSession = (props) => {
             console.log(response);
             const responseData = await response.json();
             console.log(responseData)
-            props.updateMode(false);
+            // props.updateMode(false);
+            // props.update(null);
             props.getUpdate();
+            console.log(props.updateMode)
         } catch (err) {}
     };
 
     useEffect(() => {
+        console.log(updateSession);
+        setUpdateID(updateSession);
+        console.log(updateID);
         const getSessionToUpdate = async () => {
             try {
                 const response = await fetch(
@@ -109,87 +134,92 @@ const UpdateAthleteSession = (props) => {
                 const responseData = await response.json();
                 setWorkoutToUpdate(responseData.session);
                 workout = responseData.session;
-                console.log(responseData.session);
+                setWorkoutToUpdate(workout);
                 console.log(workout);
             } catch (err) {}
         };
         getSessionToUpdate();
-        setWorkoutToUpdate(workout);
+        // props.updateMode(true);
+        // setWorkoutToUpdate(workout);
         console.log(update);
-        setUpdate(true);
+        console.log(workoutToUpdate);
     }, []);
+    
+    workoutToUpdate.map(w => {
+        console.log(w)
+    })
 
-    if (update) {
+    if (workoutToUpdate) {
         return (
             <Box>
                 <Stack margin="auto" width="80%">
-                    <form onSubmit={updateWorkout}>
+                    <form style={{background:"black"}} ref={refPoint} onSubmit={updateWorkout}>
                         <FormControl>
-                            <FormLabel htmlFor="movement">Movement</FormLabel>
+                            <FormLabel color="white" htmlFor="movement">Movement</FormLabel>
                             <Input
                                 onChange={changeHandler}
                                 placeholder={workoutToUpdate.exercise}
                                 value={inputState.movement}
                                 name="movement"
                                 type="text"
-                                color="black"
+                                color="white"
                             />
                         </FormControl>
-                        <FormControl>
-                            <FormLabel htmlFor="weight">Weight</FormLabel>
+                        {workoutToUpdate.weight && <FormControl>
+                            <FormLabel color="white" htmlFor="weight">Weight</FormLabel>
                             <Input
                                 onChange={changeHandler}
                                 placeholder={workoutToUpdate.weight}
                                 value={inputState.weight}
                                 name="weight"
                                 type="text"
-                                color="black"
+                                color="white"
                             />
-                        </FormControl>
-                        <FormControl>
-                            <FormLabel htmlFor="reps">Reps</FormLabel>
+                        </FormControl>}
+                        {workoutToUpdate.reps && <FormControl>
+                            <FormLabel color="white" htmlFor="reps">Reps</FormLabel>
                             <Input
                                 onChange={changeHandler}
                                 placeholder={workoutToUpdate.reps}
                                 value={inputState.reps}
                                 name="reps"
                                 type="text"
-                                color="black"
+                                color="white"
                             />
-                        </FormControl>
-                        <FormControl>
-                            <FormLabel htmlFor="rounds">Rounds</FormLabel>
+                        </FormControl>}
+                        {workoutToUpdate.rounds && <FormControl>
+                            <FormLabel color="white" htmlFor="rounds">Rounds</FormLabel>
                             <Input
                                 onChange={changeHandler}
                                 placeholder={workoutToUpdate.rounds}
                                 value={inputState.rounds}
                                 name="rounds"
                                 type="text"
-                                color="black"
+                                color="white"
                             />
-                        </FormControl>
-                        <FormControl>
-                            <FormLabel htmlFor="distance">Distance</FormLabel>
+                        </FormControl>}
+                        {workoutToUpdate.distance && <FormControl>
+                            <FormLabel color="white" htmlFor="distance">Distance</FormLabel>
                             <Input
                                 onChange={changeHandler}
                                 placeholder={workoutToUpdate.distance}
                                 value={inputState.distance}
                                 name="distance"
                                 type="text"
-                                color="black"
+                                color="white"
                             />
-                        </FormControl>
-                        <FormControl>
-                            <FormLabel htmlFor="time">Time</FormLabel>
+                        </FormControl>}
+                        {workoutToUpdate.time && <FormControl>
+                            <FormLabel color="white" htmlFor="time">Time</FormLabel>
                             <Input
                                 onChange={changeHandler}
                                 placeholder={workoutToUpdate.time}
                                 value={inputState.time}
                                 name="time"
                                 type="text"
-                                color="black"
+                                color="white"
                             />
-                        </FormControl>
+                        </FormControl>}
                         <Button
                             mt={4}
                             width="100%"
