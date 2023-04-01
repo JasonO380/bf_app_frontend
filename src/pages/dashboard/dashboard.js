@@ -10,7 +10,7 @@ import {
     Spacer,
 } from "@chakra-ui/react";
 import AddAthleteSession from "../../athletes/add-athlete-session";
-import GetAthletesSessions from "../../athletes/get-athletes-sessions";
+import WeeklyWorkoutTotal from "./components/weekly-workout-total";
 import ShowAthleteSessionsHistory from "../../athletes/show-athletes-history-sessions";
 import { motion } from "framer-motion";
 import { LoginRegisterContext } from "../../authentication/login-register-context";
@@ -63,12 +63,15 @@ const Dashboard = () => {
     return (
         <Box width="100%" bottom="0" position="fixed" height="100%" bg="#151414" overflowY="auto">
             <Box p="15px">
-                <Heading as="h1" size="lg" color="white">
-                    Dashboard
-                </Heading>
-                <Text color="white">
-                    Welcome, {name}
-                </Text>
+                <Box>
+                    <Heading as="h1" size="lg" color="white">
+                        Dashboard
+                    </Heading>
+                    <Text color="white">
+                        Welcome, {name}
+                    </Text>
+                </Box>
+                <WeeklyWorkoutTotal />
             </Box>
             <Box
                 position="fixed"

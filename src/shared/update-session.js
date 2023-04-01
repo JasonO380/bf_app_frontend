@@ -138,7 +138,7 @@ const UpdateSession = (props) => {
             <Box>
                 <Stack margin="auto" width="80%">
                     <form onSubmit={updateWorkout} ref={refPoint}>
-                        <FormControl>
+                    <FormControl>
                             <FormLabel color="white" htmlFor="movement">Movement</FormLabel>
                             <Input
                                 onChange={changeHandler}
@@ -149,8 +149,8 @@ const UpdateSession = (props) => {
                                 color="white"
                             />
                         </FormControl>
-                        <FormControl>
-                            <FormLabel htmlFor="weight">Weight</FormLabel>
+                        {workoutToUpdate.weight && <FormControl>
+                            <FormLabel color="white" htmlFor="weight">Weight</FormLabel>
                             <Input
                                 onChange={changeHandler}
                                 placeholder={workoutToUpdate.weight}
@@ -159,9 +159,9 @@ const UpdateSession = (props) => {
                                 type="text"
                                 color="white"
                             />
-                        </FormControl>
-                        <FormControl>
-                            <FormLabel htmlFor="reps">Reps</FormLabel>
+                        </FormControl>}
+                        {workoutToUpdate.reps && <FormControl>
+                            <FormLabel color="white" htmlFor="reps">Reps</FormLabel>
                             <Input
                                 onChange={changeHandler}
                                 placeholder={workoutToUpdate.reps}
@@ -170,9 +170,9 @@ const UpdateSession = (props) => {
                                 type="text"
                                 color="white"
                             />
-                        </FormControl>
-                        <FormControl>
-                            <FormLabel htmlFor="rounds">Rounds</FormLabel>
+                        </FormControl>}
+                        {workoutToUpdate.rounds && <FormControl>
+                            <FormLabel color="white" htmlFor="rounds">Rounds</FormLabel>
                             <Input
                                 onChange={changeHandler}
                                 placeholder={workoutToUpdate.rounds}
@@ -181,9 +181,9 @@ const UpdateSession = (props) => {
                                 type="text"
                                 color="white"
                             />
-                        </FormControl>
-                        <FormControl>
-                            <FormLabel htmlFor="distance">Distance</FormLabel>
+                        </FormControl>}
+                        {workoutToUpdate.distance && <FormControl>
+                            <FormLabel color="white" htmlFor="distance">Distance</FormLabel>
                             <Input
                                 onChange={changeHandler}
                                 placeholder={workoutToUpdate.distance}
@@ -192,9 +192,9 @@ const UpdateSession = (props) => {
                                 type="text"
                                 color="white"
                             />
-                        </FormControl>
-                        <FormControl>
-                            <FormLabel htmlFor="time">Time</FormLabel>
+                        </FormControl>}
+                        {workoutToUpdate.time && <FormControl>
+                            <FormLabel color="white" htmlFor="time">Time</FormLabel>
                             <Input
                                 onChange={changeHandler}
                                 placeholder={workoutToUpdate.time}
@@ -203,7 +203,7 @@ const UpdateSession = (props) => {
                                 type="text"
                                 color="white"
                             />
-                        </FormControl>
+                        </FormControl>}
                         <Button
                             mt={4}
                             width="100%"
