@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext} from "react";
-import { Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
+import { Chart as ChartJS } from "chart.js/auto";
 import { Box, Text } from "@chakra-ui/react";
 import { LoginRegisterContext } from "../../../authentication/login-register-context";
+import BarChart from "../../../shared/bar-chart";
 
 const WeeklyWorkoutTotal = () => {
     const auth = useContext(LoginRegisterContext);
-    const [count, setCount] = useState();
-    const [chartData, setChartData] = useState({});
+    const [count, setCount] = useState([]);
     const uniqueMonth = [];
 
     const getWorkoutData = async () => {
@@ -31,8 +32,6 @@ const WeeklyWorkoutTotal = () => {
     };
 
     const prepChartData = (workoutData) => {
-        let count = 0;
-        // const uniqueMonth = [];
         let monthObj = [];
         let doubles = [];
         const uniqueDays = [];
@@ -54,7 +53,7 @@ const WeeklyWorkoutTotal = () => {
             }
         })
         console.log(uniqueMonth);
-        // Set the count state variable to an array of objects containing month and count properties
+        //Set the count state variable to an array of objects containing month and count properties
         const liftedDaysCount = uniqueMonth.map((m) => ({
             month: m.month,
             count: m.daysLifted.length,
@@ -67,15 +66,16 @@ const WeeklyWorkoutTotal = () => {
         getWorkoutData();
     }, [auth.userID, auth.token]);
 
-    return (
-        <Box>
-            {count.map((m)=> {
-                return (
-                    <Text color="white" key={m.month}>{m.month} {m.count} times lifted</Text>
-                )
-            })}
-        </Box>
-    )
+    if(count){
+        return (
+            <Box color="white">
+                <BarChart
+                data={count}
+                options={{ maintainAspectRatio: false }}
+            />
+            </Box>
+        )
+    }
 }
 
 export default WeeklyWorkoutTotal;

@@ -43,7 +43,7 @@ const ShowAthleteSessionsHistory = (props) => {
                 }
             );
             const responseData = await response.json();
-            allSessions = responseData.sessions;
+            allSessions = responseData.sessions.reverse();
             console.log(allSessions);
             allSessions.map((s) => {
                 const date = new Date();
