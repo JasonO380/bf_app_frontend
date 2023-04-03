@@ -108,7 +108,7 @@ const AddAthleteSession = () => {
     return (
         <React.Fragment>
         <Box bg="offWhite" p={5} width="100%" margin="0 auto">
-            <Stack margin="auto" width="80%">
+            <Stack margin="auto" width="80%" paddingBottom="60px">
                 <form onSubmit={addSession}>
                     <FormControl>
                         <FormLabel color="white" htmlFor="movement">Movement</FormLabel>

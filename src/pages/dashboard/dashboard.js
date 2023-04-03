@@ -12,6 +12,7 @@ import {
 import AddAthleteSession from "../../athletes/add-athlete-session";
 import WeeklyWorkoutTotal from "./components/weekly-workout-total";
 import ShowAthleteSessionsHistory from "../../athletes/show-athletes-history-sessions";
+import AddMacros from "../../macros/addMacros";
 import { motion } from "framer-motion";
 import { LoginRegisterContext } from "../../authentication/login-register-context";
 
@@ -22,30 +23,31 @@ const Dashboard = () => {
     const name = auth.userName;
     console.log(user);
     const [showAddAthleteSession, setShowAddAthleteSession] = useState(false);
+    const [showMacros, setShowMacros] = useState(false);
     const [currentDaysWorkouts, setCurrentDaysWorkouts] = useState([]);
     const [showWorkoutHistory, setShowWorkoutHistory] = useState(false);
     const [allWorkouts, setAllWorkouts] = useState([]);
 
     const handleStartWorkoutClick = () => {
-        if (showWorkoutHistory) {
-            setShowWorkoutHistory(false);
-            setShowAddAthleteSession(true);
-        } else {
-            setShowAddAthleteSession(true);
-        }
+        handleCloseClick();
+        setShowAddAthleteSession(true);
     };
+
     const handleCloseClick = () => {
         setShowAddAthleteSession(false);
         setShowWorkoutHistory(false);
+        setShowMacros(false);
     };
+
     const handleViewWorkoutHistoryClick = () => {
-        if (showAddAthleteSession) {
-            setShowAddAthleteSession(false);
-            setShowWorkoutHistory(true);
-        } else {
-            setShowWorkoutHistory(true);
-        }
+        handleCloseClick();
+        setShowWorkoutHistory(true);
     };
+
+    const handleMacrosClick = () => {
+        handleCloseClick();
+        setShowMacros(true);
+    }
     const variants = {
         hidden: {
             scale: 0,
@@ -98,12 +100,30 @@ const Dashboard = () => {
                     >
                         History
                     </Button>
-                    <Button borderRadius="50px" colorScheme="blue">
+                    <Button onClick={handleMacrosClick} borderRadius="50px" colorScheme="blue">
                         Add Macros
                     </Button>
                     <Spacer />
                 </Flex>
             </Box>
+            {showMacros && (
+                <motion.div
+                    variants={variants}
+                    initial="hidden"
+                    animate={showMacros ? "visible" : "hidden"}
+                >
+                    <Box p="15px">
+                        <Button
+                            borderRadius="50px"
+                            colorScheme="red"
+                            onClick={handleCloseClick}
+                        >
+                            Close
+                        </Button>
+                        <AddMacros />
+                    </Box>
+                </motion.div>
+            )}
             {showAddAthleteSession && (
                 <motion.div
                     variants={variants}
