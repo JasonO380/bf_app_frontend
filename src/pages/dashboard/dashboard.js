@@ -13,6 +13,7 @@ import AddAthleteSession from "../../athletes/add-athlete-session";
 import WeeklyWorkoutTotal from "./components/weekly-workout-total";
 import ShowAthleteSessionsHistory from "../../athletes/show-athletes-history-sessions";
 import AddMacros from "../../macros/addMacros";
+import GetMacros from "../../macros/getMacros";
 import { motion } from "framer-motion";
 import { LoginRegisterContext } from "../../authentication/login-register-context";
 
@@ -28,15 +29,15 @@ const Dashboard = () => {
     const [showWorkoutHistory, setShowWorkoutHistory] = useState(false);
     const [allWorkouts, setAllWorkouts] = useState([]);
 
-    const handleStartWorkoutClick = () => {
-        handleCloseClick();
-        setShowAddAthleteSession(true);
-    };
-
     const handleCloseClick = () => {
         setShowAddAthleteSession(false);
         setShowWorkoutHistory(false);
         setShowMacros(false);
+    };
+
+    const handleStartWorkoutClick = () => {
+        handleCloseClick();
+        setShowAddAthleteSession(true);
     };
 
     const handleViewWorkoutHistoryClick = () => {
@@ -156,6 +157,7 @@ const Dashboard = () => {
                         >
                             Close
                         </Button>
+                        <GetMacros />
                         <ShowAthleteSessionsHistory user={user} />
                     </Box>
                 </motion.div>

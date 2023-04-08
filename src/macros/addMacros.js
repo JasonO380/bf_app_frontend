@@ -108,22 +108,22 @@ const AddMacros = () => {
                         />
                     </FormControl>
                     <FormControl>
-                        <FormLabel color="white" htmlFor="weight">Protein</FormLabel>
+                        <FormLabel color="white" htmlFor="protein">Protein</FormLabel>
                         <Input
                             onChange={changeHandler}
                             value={inputState.protein}
-                            name="weight"
+                            name="protein"
                             type="text"
                             bg="white"
                             placeholder="Protein"
                         />
                     </FormControl>
                     <FormControl>
-                        <FormLabel color="white" htmlFor="reps">Carbs</FormLabel>
+                        <FormLabel color="white" htmlFor="fats">Fats</FormLabel>
                         <Input
                             onChange={changeHandler}
-                            value={inputState.carbs}
-                            name="reps"
+                            value={inputState.fats}
+                            name="fats"
                             type="text"
                             bg="white"
                             placeholder="Carbs"
