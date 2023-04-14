@@ -118,12 +118,12 @@ const GetMacros = () => {
     const canMoveNext = startIndex + 2 < allMacros?.length;
     const canMovePrev = startIndex > 0;
 
-    if (allMacros) {
+    if (cData) {
         return (
             <React.Fragment>
-            <Flex>
+            <Flex justifyContent="center" gap="10px" height="12rem">
                 {cData.slice(startIndex, startIndex + 2).map((data, index) => (
-                    <Box key={index} width="30%">
+                    <Box key={index} width="50%">
                         <DonutChart
                             data={data}
                             options={cOptions[startIndex + index]}
@@ -131,7 +131,7 @@ const GetMacros = () => {
                     </Box>
                 ))}
             </Flex>
-            <Flex>
+            <Flex justifyContent="center" gap="25px">
                 {canMovePrev && (
                     <IconButton
                         icon={<ChevronLeftIcon />}

@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
 import ReactDOM from "react-dom";
 import { Box, Flex, Text, Heading, Button, Stack } from "@chakra-ui/react";
+import RemoveDuplicates from "./unique-session";
 import { motion } from "framer-motion";
 import UpdateAthleteSession from "../athletes/update-athlete-session";
 import UpdateSession from "./update-session";
@@ -116,17 +117,9 @@ const SessionCard = (props) => {
     }
 
     useEffect(()=> {
-        // setEditSession(true);
-        // console.log(editSession);
         console.log(update)
     },[update])
 
-    const UpdateOverLay = () => {
-        return ( 
-            ReactDOM.createPortal(
-                <UpdateAthleteSession editSession={setEditSession} update={update}/>, 
-                document.getElementById("overlay")) )
-    }
 
     if (finalSession.length > 0) {
         return (
@@ -153,6 +146,7 @@ const SessionCard = (props) => {
                                             {days.map((dayObj) => {
                                                 const day = dayObj.day;
                                                 const session = dayObj.sessions;
+                                                const uniqueSessions = RemoveDuplicates(session);
                                                 return (
                                                     <React.Fragment>
                                                         <Flex>

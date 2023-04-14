@@ -1,17 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
-import {
-    Box,
-    Image,
-    Flex,
-    Text,
-    Button,
-    Stack,
-    FormControl,
-    FormLabel,
-    Input,
-} from "@chakra-ui/react";
 import SessionCard from "../shared/sessions-card";
-import UpdateAthleteSession from "./update-athlete-session";
+import AthletesTopSets from "./athletes-top-sets";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
 const ShowAthleteSessionsHistory = (props) => {
@@ -101,20 +90,8 @@ const ShowAthleteSessionsHistory = (props) => {
         console.log(auth.userID);
     }, []);
 
-    return (
-        <React.Fragment>
-            <SessionCard update={editSession} workouts={allWorkouts} />
-            {editSession && (
-                <Box position="absolute" zIndex="3">
-                    <UpdateAthleteSession
-                        getUpdate={getSessions}
-                        updateMode={setEditSession}
-                        update={update}
-                    />
-                </Box>
-            )}
-        </React.Fragment>
-    );
+    // return <SessionCard update={editSession} workouts={allWorkouts} />;
+    return <AthletesTopSets session={allWorkouts} />
 };
 
 export default ShowAthleteSessionsHistory;
