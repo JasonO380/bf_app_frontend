@@ -1,10 +1,12 @@
 import React, { useEffect, useContext, useState } from "react";
 import SessionCard from "../shared/sessions-card";
+import { Box, Button } from "@chakra-ui/react";
 import AthletesTopSets from "./athletes-top-sets";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
 const ShowAthleteSessionsHistory = (props) => {
     const user = props.user;
+    const showEditWorkouts = props.edit;
     const [id, setID] = useState();
     const history = props.history;
     let sessionToDelete;
@@ -12,7 +14,7 @@ const ShowAthleteSessionsHistory = (props) => {
     let ses = [];
     let allSessions;
     console.log(user);
-    const [editSession, setEditSession] = useState(false);
+    const [editWorkouts, setEditWorkouts] = useState(false);
     const newSession = props.newSession;
     const auth = useContext(LoginRegisterContext);
     const [update, setUpdate] = useState();
@@ -54,35 +56,36 @@ const ShowAthleteSessionsHistory = (props) => {
         } catch (err) {}
     };
 
-    const deleteSession = async (event) => {
-        console.log(event.target.name);
-        sessionToDelete = event.target.name;
-        const userID = auth.userID;
-        try {
-            const response = await fetch(
-                `http://localhost:5000/api/users/${userID}`,
-                {
-                    method: "DELETE",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Issuer " + auth.token,
-                    },
-                    body: JSON.stringify({
-                        session: sessionToDelete,
-                    }),
-                }
-            );
-            const responseData = await response.json();
-            console.log(responseData.message);
-        } catch (err) {}
-        getSessions();
-    };
 
-    const updateHandler = (event) => {
-        updateID = event.target.name;
-        setUpdate(event.target.name);
-        setEditSession(true);
-    };
+    // const deleteSession = async (event) => {
+    //     console.log(event.target.name);
+    //     sessionToDelete = event.target.name;
+    //     const userID = auth.userID;
+    //     try {
+    //         const response = await fetch(
+    //             `http://localhost:5000/api/users/${userID}`,
+    //             {
+    //                 method: "DELETE",
+    //                 headers: {
+    //                     "Content-Type": "application/json",
+    //                     Authorization: "Issuer " + auth.token,
+    //                 },
+    //                 body: JSON.stringify({
+    //                     session: sessionToDelete,
+    //                 }),
+    //             }
+    //         );
+    //         const responseData = await response.json();
+    //         console.log(responseData.message);
+    //     } catch (err) {}
+    //     getSessions();
+    // };
+
+    // const updateHandler = (event) => {
+    //     updateID = event.target.name;
+    //     setUpdate(event.target.name);
+    //     setEditSession(true);
+    // };
 
     useEffect(() => {
         setID(user);
@@ -90,8 +93,9 @@ const ShowAthleteSessionsHistory = (props) => {
         console.log(auth.userID);
     }, []);
 
+
     // return <SessionCard update={editSession} workouts={allWorkouts} />;
-    return <AthletesTopSets session={allWorkouts} />
+    return showEditWorkouts ? <SessionCard workouts={allWorkouts} /> :  <AthletesTopSets session={allWorkouts} />;
 };
 
 export default ShowAthleteSessionsHistory;

@@ -45,24 +45,24 @@ const AthletesTopSets = (props) => {
                                                 const totalVolume = CalculateDailyVolume(session)
                                                 return (
                                                     <React.Fragment>
-                                                        <Flex>
+                                                    <Box
+                                                        padding="7px"
+                                                        borderRadius="10px"
+                                                        border="1px solid grey"
+                                                        width="90%">
+                                                        <Stack>
                                                             <Text
                                                                 fontSize="25px"
                                                                 color="white"
                                                             >
                                                                 {day}
                                                             </Text>
-                                                        </Flex>
+                                                            <Text color="white">Total volume: {totalVolume}</Text>
+                                                        </Stack>
                                                         {topSets.map((s) => {
                                                             return (
                                                             <React.Fragment> 
-                                                                    <Stack
-                                                                        padding="7px"
-                                                                        borderRadius="10px"
-                                                                        border="1px solid grey"
-                                                                        width="90%"
-                                                                    >
-                                                                        <Text color="white">Total volume: {totalVolume}</Text>
+                                                                    <Stack>
                                                                         <Text color="white">
                                                                             Movement:
                                                                             {" " + s.movement}
@@ -97,7 +97,7 @@ const AthletesTopSets = (props) => {
                                                                 </React.Fragment>
                                                                 );
                                                         })};
-                                                        
+                                                    </Box>    
                                                     </React.Fragment>
                                                 );
                                             })}

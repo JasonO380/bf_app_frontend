@@ -25,6 +25,8 @@ const Dashboard = () => {
     console.log(user);
     const [showAddAthleteSession, setShowAddAthleteSession] = useState(false);
     const [showMacros, setShowMacros] = useState(false);
+    const [showWorkoutEdit, setShowWorkoutEdit] = useState(false);
+    const [showMacrosEdit, setShowMacrosEdit] = useState(false);
     const [currentDaysWorkouts, setCurrentDaysWorkouts] = useState([]);
     const [showWorkoutHistory, setShowWorkoutHistory] = useState(false);
     const [allWorkouts, setAllWorkouts] = useState([]);
@@ -33,6 +35,8 @@ const Dashboard = () => {
         setShowAddAthleteSession(false);
         setShowWorkoutHistory(false);
         setShowMacros(false);
+        setShowWorkoutEdit(false);
+        setShowMacrosEdit(false);
     };
 
     const handleStartWorkoutClick = () => {
@@ -48,7 +52,18 @@ const Dashboard = () => {
     const handleMacrosClick = () => {
         handleCloseClick();
         setShowMacros(true);
-    }
+    };
+
+    const handleEditWorkoutsClick = () => {
+        handleCloseClick();
+        setShowWorkoutEdit(true);
+    };
+
+    const handleEditMacrosClick = () => {
+        handleCloseClick();
+        setShowMacrosEdit(true);
+    };
+
     const variants = {
         hidden: {
             scale: 0,
@@ -64,15 +79,20 @@ const Dashboard = () => {
     };
 
     return (
-        <Box width="100%" bottom="0" position="fixed" height="100%" bg="#151414" overflowY="auto">
+        <Box
+            width="100%"
+            bottom="0"
+            position="fixed"
+            height="100%"
+            bg="#151414"
+            overflowY="auto"
+        >
             <Box p="15px">
                 <Box>
                     <Heading as="h1" size="lg" color="white">
                         Dashboard
                     </Heading>
-                    <Text color="white">
-                        Welcome, {name}
-                    </Text>
+                    <Text color="white">Welcome, {name}</Text>
                 </Box>
                 <WeeklyWorkoutTotal />
             </Box>
@@ -101,7 +121,11 @@ const Dashboard = () => {
                     >
                         History
                     </Button>
-                    <Button onClick={handleMacrosClick} borderRadius="50px" colorScheme="blue">
+                    <Button
+                        onClick={handleMacrosClick}
+                        borderRadius="50px"
+                        colorScheme="blue"
+                    >
                         Add Macros
                     </Button>
                     <Spacer />
@@ -113,7 +137,7 @@ const Dashboard = () => {
                     initial="hidden"
                     animate={showMacros ? "visible" : "hidden"}
                 >
-                    <Box p="15px">
+                    <Box p="10px">
                         <Button
                             borderRadius="50px"
                             colorScheme="red"
@@ -131,7 +155,7 @@ const Dashboard = () => {
                     initial="hidden"
                     animate={showAddAthleteSession ? "visible" : "hidden"}
                 >
-                    <Box p="15px">
+                    <Box p="10px">
                         <Button
                             borderRadius="50px"
                             colorScheme="red"
@@ -149,16 +173,72 @@ const Dashboard = () => {
                     initial="hidden"
                     animate={showWorkoutHistory ? "visible" : "hidden"}
                 >
-                    <Box p="15px">
-                        <Button
-                            borderRadius="50px"
-                            colorScheme="red"
-                            onClick={handleCloseClick}
-                        >
-                            Close
-                        </Button>
+                    <Box p="10px">
+                        <Flex
+                        justifyContent="center" 
+                        gap="10px">
+                            <Button
+                                borderRadius="50px"
+                                colorScheme="red"
+                                onClick={handleCloseClick}
+                            >
+                                Close
+                            </Button>
+                            <Button
+                                borderRadius="50px"
+                                colorScheme="blue"
+                                onClick={handleEditWorkoutsClick}
+                            >
+                                <Stack spacing={0} alignItems="center">
+                                    <Box as="span">Edit</Box>
+                                    <Box as="span">Workouts</Box>
+                                </Stack>
+                            </Button>
+                            <Button
+                                borderRadius="50px"
+                                colorScheme="blue"
+                                onClick={handleEditMacrosClick}
+                            >
+                                <Stack spacing={0} alignItems="center">
+                                    <Box as="span">Edit</Box>
+                                    <Box as="span">Macros</Box>
+                                </Stack>
+                            </Button>
+                        </Flex>
                         <GetMacros />
                         <ShowAthleteSessionsHistory user={user} />
+                    </Box>
+                </motion.div>
+            )}
+            {showWorkoutEdit && (
+                <motion.div
+                    variants={variants}
+                    initial="hidden"
+                    animate={showWorkoutEdit ? "visible" : "hidden"}
+                >
+                    <Box p="10px">
+                        <Flex
+                        justifyContent="center" 
+                        gap="10px">
+                            <Button
+                                borderRadius="50px"
+                                colorScheme="red"
+                                onClick={handleCloseClick}
+                            >
+                                Close
+                            </Button>
+                            <Button
+                                borderRadius="50px"
+                                colorScheme="blue"
+                                onClick={handleEditMacrosClick}
+                            >
+                                <Stack spacing={0} alignItems="center">
+                                    <Box as="span">Edit</Box>
+                                    <Box as="span">Macros</Box>
+                                </Stack>
+                            </Button>
+                        </Flex>
+                        <ShowAthleteSessionsHistory edit={showWorkoutEdit}  user={user} />
                     </Box>
                 </motion.div>
             )}

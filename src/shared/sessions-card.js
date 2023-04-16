@@ -120,8 +120,10 @@ const SessionCard = (props) => {
         console.log(update)
     },[update])
 
+    console.log(finalSession);
 
-    if (finalSession.length > 0) {
+
+    if (finalSession) {
         return (
             <React.Fragment>
                 <Stack width="100%" position="relative" paddingBottom="60px">
@@ -146,7 +148,6 @@ const SessionCard = (props) => {
                                             {days.map((dayObj) => {
                                                 const day = dayObj.day;
                                                 const session = dayObj.sessions;
-                                                const uniqueSessions = RemoveDuplicates(session);
                                                 return (
                                                     <React.Fragment>
                                                         <Flex>
