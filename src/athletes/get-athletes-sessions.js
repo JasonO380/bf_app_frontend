@@ -29,11 +29,12 @@ const GetAthletesSessions = (props) => {
     const [update, setUpdate] = useState();
     const [workouts, setWorkouts] = useState([]);
     const [allWorkouts, setAllWorkouts] = useState([]);
+
     const getSessions = async () => {
         console.log(user);
         try {
             const response = await fetch(
-                `http://localhost:5000/api/users/${id}`,
+                `http://localhost:5000/api/users/${user}`,
                 {
                     method: "GET",
                     headers: {
@@ -45,25 +46,29 @@ const GetAthletesSessions = (props) => {
             const responseData = await response.json();
             allSessions = responseData.sessions;
             console.log(allSessions);
-            allSessions.map((s) => {
+            const sessions = responseData.sessions.filter((session) => {
                 const date = new Date();
                 const year = date.getFullYear();
                 const month = date.toLocaleString("en-US", { month: "long" });
                 const dayOfWeek = date.toLocaleString("default", {
                     weekday: "long",
                 });
-                if (
-                    s.year === year &&
-                    s.month === month &&
-                    s.dayOfWeek === dayOfWeek
-                ) {
-                    ses.push(s);
-                }
+                const dayOfMonth = date.getDate();
+                return (
+                    session.year === year &&
+                    session.month === month &&
+                    session.dayOfMonth === dayOfMonth &&
+                    session.dayOfWeek === dayOfWeek
+                );
             });
-            setWorkouts(ses);
+            setWorkouts(sessions);
             setAllWorkouts(allSessions);
         } catch (err) {}
     };
+
+    useEffect(() => {
+        getSessions();
+    }, [user, auth.token]);
 
     const deleteSession = async (event) => {
         console.log(event.target.name);
@@ -101,16 +106,18 @@ const GetAthletesSessions = (props) => {
         console.log(auth.userID);
     }, [user, newSession, history]);
 
+    console.log(workouts);
+
     return (
         <React.Fragment>
-            <Stack color="black" >
-                {workouts.map((s) => {
+            <Stack paddingBottom="60px" color="black">
+                {workouts.reverse().map((s) => {
                     return (
                         <Box mb={5}>
                             <Flex>
                                 <Text color="white">
                                     Year: {s.year} Month: {s.month} Day:{" "}
-                                    {s.dayOfWeek}
+                                    {s.dayOfMonth}
                                 </Text>
                             </Flex>
                             <Text color="white">
