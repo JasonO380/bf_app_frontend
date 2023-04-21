@@ -25,17 +25,4 @@ const RemoveDuplicates = (sessions) => {
     return uniqueSessions;
 };
 
-// const Duplicates = (sessions) => {
-//     sessions.forEach((session) => {
-//         const movementExists = sessions.find((s) => {
-//             if (s.movement === movementExists) return s.movement;
-//         });
-
-//         if (foundSession) {
-//             // Perform the desired action when a matching session is found
-//             console.log("Found a matching session:", foundSession);
-//         }
-//     });
-// };
-
 export default RemoveDuplicates;

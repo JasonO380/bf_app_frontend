@@ -120,6 +120,7 @@ const GetAthletesSessions = (props) => {
                                     {s.dayOfMonth}
                                 </Text>
                             </Flex>
+                            <Stack>
                             <Text color="white">
                                 Movement: {s.exercise}
                                 {s.weight && (
@@ -136,6 +137,7 @@ const GetAthletesSessions = (props) => {
                                 )}
                                 Rounds: {s.rounds}
                             </Text>
+                            </Stack>
                             <Flex ml={8} mt={2}>
                                 <Button
                                     color="white"

@@ -9,6 +9,7 @@ import {
     Stack,
     Spacer,
 } from "@chakra-ui/react";
+import AddMovement from "../../athletes/add-movement";
 import AddAthleteSession from "../../athletes/add-athlete-session";
 import WeeklyWorkoutTotal from "./components/weekly-workout-total";
 import ShowAthleteSessionsHistory from "../../athletes/show-athletes-history-sessions";
@@ -163,7 +164,8 @@ const Dashboard = () => {
                         >
                             Close
                         </Button>
-                        <AddAthleteSession />
+                        <AddMovement />
+                        {/* <AddAthleteSession /> */}
                     </Box>
                 </motion.div>
             )}
