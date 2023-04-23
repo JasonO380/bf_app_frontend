@@ -1,6 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
 import SessionCard from "../shared/sessions-card";
-import { Box, Button } from "@chakra-ui/react";
 import AthletesTopSets from "./athletes-top-sets";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
@@ -56,37 +55,6 @@ const ShowAthleteSessionsHistory = (props) => {
         } catch (err) {}
     };
 
-
-    // const deleteSession = async (event) => {
-    //     console.log(event.target.name);
-    //     sessionToDelete = event.target.name;
-    //     const userID = auth.userID;
-    //     try {
-    //         const response = await fetch(
-    //             `http://localhost:5000/api/users/${userID}`,
-    //             {
-    //                 method: "DELETE",
-    //                 headers: {
-    //                     "Content-Type": "application/json",
-    //                     Authorization: "Issuer " + auth.token,
-    //                 },
-    //                 body: JSON.stringify({
-    //                     session: sessionToDelete,
-    //                 }),
-    //             }
-    //         );
-    //         const responseData = await response.json();
-    //         console.log(responseData.message);
-    //     } catch (err) {}
-    //     getSessions();
-    // };
-
-    // const updateHandler = (event) => {
-    //     updateID = event.target.name;
-    //     setUpdate(event.target.name);
-    //     setEditSession(true);
-    // };
-
     useEffect(() => {
         setID(user);
         getSessions();
@@ -94,7 +62,6 @@ const ShowAthleteSessionsHistory = (props) => {
     }, []);
 
 
-    // return <SessionCard update={editSession} workouts={allWorkouts} />;
     return showEditWorkouts ? <SessionCard workouts={allWorkouts} /> :  <AthletesTopSets session={allWorkouts} />;
 };
 

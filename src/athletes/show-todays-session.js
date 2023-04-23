@@ -1,59 +1,55 @@
-import React from "react";
-import UpdateAthleteSession from "./update-athlete-session";
-import {
-    Box,
-    Image,
-    Flex,
-    Text,
-    Button,
-    Stack,
-    FormControl,
-    FormLabel,
-    Input,
-} from "@chakra-ui/react";
+import React, { useState, useContext, useEffect } from "react";
+import { LoginRegisterContext } from "../authentication/login-register-context";
+import SessionCard from "../shared/sessions-card";
 
 const ShowTodaysSession = (props) => {
-    const session = props.newSession
-    return (
-        <React.Fragment>
-        <Box 
-                    mb={5}>
-                    <Flex>
-                        <Text color="white">Year:{session.year} Month: {session.month} Day: {session.dayOfWeek}</Text>
-                    </Flex>
-                        <Text color="white">
-                            Movement: {session.exercise}
-                            Weight: {session.weight}
-                            Reps: {session.reps}
-                            Rounds: {session.rounds}
-                        </Text>
-                        <Flex
-                        ml={8} 
-                        mt={2}>
-                            <Button
-                            color="white"
-                            borderRadius="50"
-                            name={session.id}
-                            // onClick={updateHandler} 
-                            bg="teal" 
-                            mr={2}>
-                                Update
-                            </Button>
-                            <Button
-                            color="white"
-                            borderRadius="50"
-                            name={session._id}
-                            // onClick={deleteSession}
-                            bg="red">Delete</Button>
-                        </Flex>
-                    </Box>
-        {/* {editSession && 
-        <UpdateAthleteSession
-        getUpdate={getSessions}
-        updateMode={editSession} 
-        update={update} />} */}
-        </React.Fragment>
-    )
+    const newSession = props.newSession
+    const user = props.user;
+    let ses = [];
+    let allSessions;
+    const auth = useContext(LoginRegisterContext);
+    const [workouts, setWorkouts] = useState([]);
+    const getSessions = async () => {
+        console.log(user);
+        try {
+            const response = await fetch(
+                `http://localhost:5000/api/users/${user}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Issuer " + auth.token,
+                    },
+                }
+            );
+            const responseData = await response.json();
+            allSessions = responseData.sessions.reverse();
+            console.log(allSessions);
+            allSessions.map((s) => {
+                const date = new Date();
+                const year = date.getFullYear();
+                const month = date.toLocaleString("en-US", { month: "long" });
+                const dayOfWeek = date.toLocaleString("default", {
+                    weekday: "long",
+                });
+                if (
+                    s.year === year &&
+                    s.month === month &&
+                    s.dayOfWeek === dayOfWeek
+                ) {
+                    ses.push(s);
+                }
+            });
+            setWorkouts(ses);
+        } catch (err) {}
+    };
+
+    useEffect(() => {
+        getSessions();
+        console.log(auth.userID);
+    }, [user, newSession]);
+
+    return (workouts && <SessionCard workouts={workouts} />)
 };
 
 export default ShowTodaysSession;

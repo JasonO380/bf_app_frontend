@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, useState, useEffect } from "react";
+import React, { useContext, useReducer, useState } from "react";
 import {
     Box,
     Text,
@@ -9,14 +9,13 @@ import {
     FormLabel,
     Input,
 } from "@chakra-ui/react";
-import GetSessions from "../http-requests/getSessions";
-import GetAthletesSessions from "./get-athletes-sessions";
 import ShowTodaysSession from "./show-todays-session";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
 const AddRoundsToMovement = (props) => {
     const user = props.user;
     const movement = props.movement;
+    const [sessionID, setSessionID] = useState([]);
     const [currentMovement, setCurrentMovement] = useState("");
     const auth = useContext(LoginRegisterContext);
     const inputReducer = (state, action) => {
@@ -75,8 +74,6 @@ const AddRoundsToMovement = (props) => {
 
     const addSession = async (event) => {
         const userID = auth.userID;
-        const movement = event.target.name;
-        console.log(event.target.name);
         event.preventDefault();
         try {
             const response = await fetch(
@@ -110,7 +107,8 @@ const AddRoundsToMovement = (props) => {
             dispatch({
                 type: "CLEAR_FORM",
             });
-            console.log(responseData.userSession);
+            console.log(responseData.sessionID);
+            setSessionID(responseData.sessionID);
         } catch (err) {}
     };
 
@@ -208,7 +206,6 @@ const AddRoundsToMovement = (props) => {
                                     borderRadius="50px"
                                     width="100%"
                                     onClick={movementHandler}
-                                    // onClick={() => setCurrentMovement(m)}
                                     type="submit"
                                     bg="red"
                                     color="white"
@@ -220,6 +217,7 @@ const AddRoundsToMovement = (props) => {
                     </form>
                 </React.Fragment>
             ))}
+            {sessionID && <ShowTodaysSession user={auth.userID} newSession={sessionID} /> }
         </React.Fragment>
     );
 };
