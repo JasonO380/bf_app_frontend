@@ -17,7 +17,7 @@ import { LoginRegisterContext } from "../authentication/login-register-context";
 const AddRoundsToMovement = (props) => {
     const user = props.user;
     const movement = props.movement;
-    console.log(movement);
+    const [currentMovement, setCurrentMovement] = useState("");
     const auth = useContext(LoginRegisterContext);
     const inputReducer = (state, action) => {
         const dateEntry = new Date();
@@ -67,8 +67,16 @@ const AddRoundsToMovement = (props) => {
         });
     };
 
+    const movementHandler = (event) => {
+        const movementToAdd = event.target.name;
+        const formattedValue = movementToAdd.charAt(0).toUpperCase() + movementToAdd.slice(1).toLowerCase();
+        setCurrentMovement(formattedValue);
+    }
+
     const addSession = async (event) => {
         const userID = auth.userID;
+        const movement = event.target.name;
+        console.log(event.target.name);
         event.preventDefault();
         try {
             const response = await fetch(
@@ -82,7 +90,7 @@ const AddRoundsToMovement = (props) => {
                     body: JSON.stringify({
                         session: [
                             {
-                                exercise: inputState.movement,
+                                exercise: currentMovement,
                                 weight: inputState.weight,
                                 reps: inputState.reps,
                                 rounds: inputState.rounds,
@@ -196,7 +204,11 @@ const AddRoundsToMovement = (props) => {
                             <Box flexGrow={1}>
                                 <Button
                                     mt={4}
+                                    name={m}
+                                    borderRadius="50px"
                                     width="100%"
+                                    onClick={movementHandler}
+                                    // onClick={() => setCurrentMovement(m)}
                                     type="submit"
                                     bg="red"
                                     color="white"

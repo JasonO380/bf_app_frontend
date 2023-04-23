@@ -27,12 +27,6 @@ const AddMovement = () => {
                 return {
                     ...state,
                     [action.name]: action.value,
-                    year: dateEntry.getFullYear(),
-                    dayOfWeek: dateEntry.toLocaleString("default", {
-                        weekday: "long",
-                    }),
-                    dayOfMonth: dateEntry.getDate(),
-                    month: dateEntry.toLocaleString("en-US", { month: "long" }),
                 };
             case "CLEAR_FORM":
                 console.log("form cleared");
@@ -51,10 +45,11 @@ const AddMovement = () => {
     const changeHandler = (event) => {
         const inputValue = event.target.value;
         const inputName = event.target.name;
+        const formattedValue = inputValue.charAt(0).toUpperCase() + inputValue.slice(1).toLowerCase();
         dispatch({
             type: "INPUT_CHANGE",
             name: inputName,
-            value: inputValue,
+            value: formattedValue,
         });
     };
 
