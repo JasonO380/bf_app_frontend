@@ -30,16 +30,4 @@ const CalculateTopSets = (sessions) => {
     return topSets;
 };
 
-// const CalculateTopSets = (sessions) => {
-//     let topSet = sessions[0];  Initialize topSet as the first session in the array
-//     sessions.forEach((ses) => {
-//         if (ses.weight > topSet.weight || ses.time < topSet.time) {
-//             topSet = ses;
-//         }
-//     });
-
-//     console.log(topSet);
-//     return topSet;
-// };
-
 export default CalculateTopSets;

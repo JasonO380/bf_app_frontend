@@ -32,10 +32,11 @@ const ShowTodaysSession = (props) => {
                 const dayOfWeek = date.toLocaleString("default", {
                     weekday: "long",
                 });
+                const dayOfMonth = date.getDate()
                 if (
                     s.year === year &&
                     s.month === month &&
-                    s.dayOfWeek === dayOfWeek
+                    s.dayOfMonth === dayOfMonth
                 ) {
                     ses.push(s);
                 }

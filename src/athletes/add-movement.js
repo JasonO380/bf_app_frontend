@@ -1,7 +1,7 @@
 import React, { useContext, useReducer, useState } from "react";
 import {
     Box,
-    Image,
+    Text,
     Flex,
     Button,
     Stack,
@@ -19,7 +19,9 @@ const AddMovement = () => {
     const user = auth.userID;
     let movementID;
     const [newMovement, setNewMovement] = useState([]);
+    const [isValid, setIsValid] = useState(false);
     const [showAddRounds, setShowAddRounds] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
     const inputReducer = (state, action) => {
         const dateEntry = new Date();
         switch (action.type) {
@@ -42,6 +44,18 @@ const AddMovement = () => {
         athlete: "",
     });
 
+    const validateMovement = (value) => {
+        if (value.length < 3) {
+            setErrorMessage("Movement must be at least 3 characters long");
+            setIsValid(false);
+            console.log('movement too short');
+        } else {
+            console.log("movement valid");
+            setIsValid(true);
+            setErrorMessage("");
+        }
+    };
+
     const changeHandler = (event) => {
         const inputValue = event.target.value;
         const inputName = event.target.name;
@@ -51,15 +65,18 @@ const AddMovement = () => {
             name: inputName,
             value: formattedValue,
         });
+        validateMovement(formattedValue);
     };
 
     const addMovement = (event) => {
-        setNewMovement((prevMovement) => [...prevMovement, inputState.movement]);
-        setShowAddRounds(true);
-        dispatch({
-            type: "CLEAR_FORM",
-        });
         event.preventDefault();
+        if (isValid){
+            setNewMovement((prevMovement) => [...prevMovement, inputState.movement]);
+            setShowAddRounds(true);
+            dispatch({
+                type: "CLEAR_FORM",
+            });
+        }
     };
 
     return (
@@ -85,11 +102,13 @@ const AddMovement = () => {
                                 type="submit"
                                 bg="red"
                                 color="white"
+                                isDisabled={!isValid}
                             >
                                 Add movement
                             </Button>
                         </form>
                     </FormControl>
+                    {!isValid && <Text color="red">{errorMessage}</Text>}
                 </Stack>
             </Box>
             {user && <AddRoundsToMovement movement={newMovement} />}
