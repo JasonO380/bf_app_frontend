@@ -8,6 +8,7 @@ import {
     FormControl,
     FormLabel,
     Input,
+    color,
 } from "@chakra-ui/react";
 import GetAthletesSessions from "./get-athletes-sessions";
 import AddRoundsToMovement from "./add-rounds-to-movement";
@@ -20,6 +21,7 @@ const AddMovement = () => {
     let movementID;
     const [newMovement, setNewMovement] = useState([]);
     const [isValid, setIsValid] = useState(false);
+    const [touched, setTouched] = useState(false);
     const [showAddRounds, setShowAddRounds] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const inputReducer = (state, action) => {
@@ -47,6 +49,7 @@ const AddMovement = () => {
     const validateMovement = (value) => {
         if (value.length < 3) {
             setErrorMessage("Movement must be at least 3 characters long");
+            setTouched(true);
             setIsValid(false);
             console.log('movement too short');
         } else {
@@ -60,17 +63,27 @@ const AddMovement = () => {
         const inputValue = event.target.value;
         const inputName = event.target.name;
         const formattedValue = inputValue.charAt(0).toUpperCase() + inputValue.slice(1).toLowerCase();
+        if(formattedValue.length < 3){
+            setIsValid(false);
+        }
+        if(formattedValue.length > 2){
+            setIsValid(true);
+        };
         dispatch({
             type: "INPUT_CHANGE",
             name: inputName,
             value: formattedValue,
         });
-        validateMovement(formattedValue);
+        
     };
 
     const addMovement = (event) => {
         event.preventDefault();
-        if (isValid){
+        console.log(inputState.movement);
+        validateMovement(inputState.movement);
+        if (!isValid) {
+            setTouched(true);
+        } else {
             setNewMovement((prevMovement) => [...prevMovement, inputState.movement]);
             setShowAddRounds(true);
             dispatch({
@@ -88,6 +101,7 @@ const AddMovement = () => {
                             <FormLabel color="white" htmlFor="movement">
                                 Movement
                             </FormLabel>
+                            <Text paddingBottom="15px" color="white" fontSize="small" fontStyle="italic" fontWeight="bold" >Must be 3 characters</Text>
                             <Input
                                 onChange={changeHandler}
                                 value={inputState.movement}
@@ -100,15 +114,16 @@ const AddMovement = () => {
                                 mt={4}
                                 width="100%"
                                 type="submit"
+                                borderRadius="50px"
                                 bg="red"
                                 color="white"
-                                isDisabled={!isValid}
+                                isDisabled={!isValid && touched} 
                             >
                                 Add movement
                             </Button>
                         </form>
                     </FormControl>
-                    {!isValid && <Text color="red">{errorMessage}</Text>}
+                    {touched && !isValid && <Text color="red">{errorMessage}</Text>}
                 </Stack>
             </Box>
             {user && <AddRoundsToMovement movement={newMovement} />}
