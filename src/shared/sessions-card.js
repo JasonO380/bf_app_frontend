@@ -102,7 +102,7 @@ const SessionCard = (props) => {
             const responseData = await response.json();
             console.log(responseData.message);
         } catch (err) {}
-        props.getSessions();
+        props.onDelete();
     };
 
     const updateHandler = (event) => {
@@ -244,8 +244,3 @@ const SessionCard = (props) => {
 
 export default SessionCard;
 
-                {/* {editSession && (
-                    <Box zIndex="3">
-                        <UpdateOverLay />
-                    </Box>
-                )} */}

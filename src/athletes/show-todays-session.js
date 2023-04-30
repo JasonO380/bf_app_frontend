@@ -50,7 +50,7 @@ const ShowTodaysSession = (props) => {
         console.log(auth.userID);
     }, [user, newSession]);
 
-    return (workouts && <SessionCard workouts={workouts} />)
+    return (workouts && <SessionCard workouts={workouts} onDelete={getSessions} />)
 };
 
 export default ShowTodaysSession;

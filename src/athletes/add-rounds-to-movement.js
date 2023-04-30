@@ -15,6 +15,7 @@ import { LoginRegisterContext } from "../authentication/login-register-context";
 const AddRoundsToMovement = (props) => {
     const user = props.user;
     const movement = props.movement;
+    const movementToRemove = props.removeMovement;
     const [sessionID, setSessionID] = useState([]);
     const [currentMovement, setCurrentMovement] = useState("");
     const auth = useContext(LoginRegisterContext);
@@ -70,7 +71,11 @@ const AddRoundsToMovement = (props) => {
         const movementToAdd = event.target.name;
         const formattedValue = movementToAdd.charAt(0).toUpperCase() + movementToAdd.slice(1).toLowerCase();
         setCurrentMovement(formattedValue);
-    }
+    };
+
+    const removeMovementHandler = (movementToRemove) => {
+        props.removeMovement(movementToRemove);
+    };
 
     const addSession = async (event) => {
         const userID = auth.userID;
@@ -207,7 +212,7 @@ const AddRoundsToMovement = (props) => {
                                     width="100%"
                                     onClick={movementHandler}
                                     type="submit"
-                                    bg="red"
+                                    bg="blue"
                                     color="white"
                                 >
                                     Add round
@@ -215,6 +220,19 @@ const AddRoundsToMovement = (props) => {
                             </Box>
                         </Flex>
                     </form>
+                    <Box flexGrow={1}>
+                    <Button
+                        mt={4}
+                        name={m}
+                        borderRadius="50px"
+                        width="100%"
+                        onClick={() => removeMovementHandler(m)}
+                        bg="red"
+                        color="white"
+                    >
+                        Remove movement
+                    </Button>
+                </Box>
                 </React.Fragment>
             ))}
             {sessionID && <ShowTodaysSession user={auth.userID} newSession={sessionID} /> }
