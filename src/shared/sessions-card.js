@@ -15,8 +15,7 @@ const SessionCard = (props) => {
     const [update, setUpdate] = useState();
     const [editSession, setEditSession] = useState(false);
     let sessionToDelete;
-    const updateChange = props.updateChange;
-    console.log(updateChange)
+    const updateChange = props.onUpdate;
     const animation = {
         offscreen: { scale: 0 },
         onscreen: {
@@ -26,11 +25,10 @@ const SessionCard = (props) => {
     };
 
     //helper to handle differnt clicks on updateHandler
-    useEffect(()=>{
-        console.log('here')
-        updateID = updateChange
-    },[updateChange])
-    
+    useEffect(() => {
+        console.log("here");
+        updateID = updateChange;
+    }, [updateChange]);
 
     //helper function to create MovementObjects
     const generateMovementObjects = (session) => ({
@@ -102,26 +100,30 @@ const SessionCard = (props) => {
             const responseData = await response.json();
             console.log(responseData.message);
         } catch (err) {}
-        props.onDelete();
+        props.getUpdate();
+    };
+
+    const updateDOM = () => {
+        props.getUpdate();
     };
 
     const updateHandler = (event) => {
         updateID = event.target.name;
-        setUpdate(prevUpdate => updateID);
+        setUpdate((prevUpdate) => updateID);
+        props.getUpdate();
         console.log(update);
     };
 
     const updateChangeHandler = (data) => {
         updateID = data;
         setUpdate(updateID);
-    }
+    };
 
-    useEffect(()=> {
-        console.log(update)
-    },[update])
+    useEffect(() => {
+        console.log(update);
+    }, [update]);
 
     console.log(finalSession);
-
 
     if (finalSession) {
         return (
@@ -160,45 +162,71 @@ const SessionCard = (props) => {
                                                         </Flex>
                                                         {session.map((s) => {
                                                             return (
-                                                            <React.Fragment>
-                                                            {update === s.id ? <UpdateSession updateChangeHandler={updateChangeHandler} update={update} /> : 
-                                                                    <Stack
-                                                                        padding="7px"
-                                                                        borderRadius="10px"
-                                                                        border="1px solid grey"
-                                                                        width="90%"
-                                                                    >
-                                                                        <Text color="white">
-                                                                            Movement:
-                                                                            {" " + s.movement}
-                                                                            {s.weight && (
-                                                                                <Text color="white">
-                                                                                    Weight:
-                                                                                    {" " + s.weight}
-                                                                                </Text>
-                                                                            )}
-                                                                            {s.reps && (
-                                                                                <Text color="white">
-                                                                                    Reps:
-                                                                                    {" " + s.reps}
-                                                                                </Text>
-                                                                            )}
-                                                                            {s.distance && (
-                                                                                <Text color="white">
-                                                                                    Distance:
-                                                                                    {" " + s.distance}
-                                                                                </Text>
-                                                                            )}
-                                                                            {s.time && (
-                                                                                <Text color="white">
-                                                                                    Time:
-                                                                                    {" " + s.time}
-                                                                                </Text>
-                                                                            )}
-                                                                            Rounds:
-                                                                            {" " + s.rounds}
-                                                                        </Text>
-                                                                    </Stack> }
+                                                                <React.Fragment>
+                                                                    {update ===
+                                                                    s.id ? (
+                                                                        <UpdateSession
+                                                                            updateChangeHandler={
+                                                                                updateChangeHandler
+                                                                            }
+                                                                            updateMode={
+                                                                                () => setUpdate(null)
+                                                                            }
+                                                                            onUpdate={
+                                                                                updateDOM
+                                                                            }
+                                                                            update={
+                                                                                update
+                                                                            }
+                                                                            handleUpdate={
+                                                                                updateHandler
+                                                                            }
+                                                                        />
+                                                                    ) : (
+                                                                        <Stack
+                                                                            padding="7px"
+                                                                            borderRadius="10px"
+                                                                            border="1px solid grey"
+                                                                            width="90%"
+                                                                        >
+                                                                            <Text color="white">
+                                                                                Movement:
+                                                                                {" " +
+                                                                                    s.movement}
+                                                                                {s.weight && (
+                                                                                    <Text color="white">
+                                                                                        Weight:
+                                                                                        {" " +
+                                                                                            s.weight}
+                                                                                    </Text>
+                                                                                )}
+                                                                                {s.reps && (
+                                                                                    <Text color="white">
+                                                                                        Reps:
+                                                                                        {" " +
+                                                                                            s.reps}
+                                                                                    </Text>
+                                                                                )}
+                                                                                {s.distance && (
+                                                                                    <Text color="white">
+                                                                                        Distance:
+                                                                                        {" " +
+                                                                                            s.distance}
+                                                                                    </Text>
+                                                                                )}
+                                                                                {s.time && (
+                                                                                    <Text color="white">
+                                                                                        Time:
+                                                                                        {" " +
+                                                                                            s.time}
+                                                                                    </Text>
+                                                                                )}
+                                                                                Rounds:
+                                                                                {" " +
+                                                                                    s.rounds}
+                                                                            </Text>
+                                                                        </Stack>
+                                                                    )}
                                                                     <Flex
                                                                         ml={8}
                                                                         mt={2}
@@ -206,27 +234,37 @@ const SessionCard = (props) => {
                                                                         <Button
                                                                             color="white"
                                                                             borderRadius="50"
-                                                                            name={s.id}
-                                                                            onClick={updateHandler}
+                                                                            name={
+                                                                                s.id
+                                                                            }
+                                                                            onClick={
+                                                                                updateHandler
+                                                                            }
                                                                             bg="teal"
-                                                                            mr={2}
+                                                                            mr={
+                                                                                2
+                                                                            }
                                                                         >
                                                                             Update
                                                                         </Button>
                                                                         <Button
                                                                             color="white"
                                                                             borderRadius="50"
-                                                                            name={s.id}
-                                                                            onClick={deleteSession}
+                                                                            name={
+                                                                                s.id
+                                                                            }
+                                                                            onClick={
+                                                                                deleteSession
+                                                                            }
                                                                             bg="red"
                                                                         >
                                                                             Delete
                                                                         </Button>
                                                                     </Flex>
                                                                 </React.Fragment>
-                                                                );
-                                                        })};
-                                                        
+                                                            );
+                                                        })}
+                                                        ;
                                                     </React.Fragment>
                                                 );
                                             })}
@@ -243,4 +281,3 @@ const SessionCard = (props) => {
 };
 
 export default SessionCard;
-

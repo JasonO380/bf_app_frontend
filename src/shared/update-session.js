@@ -1,7 +1,7 @@
 import React, { useContext, useReducer, useState, useEffect, useRef } from "react";
 import {
     Box,
-    Image,
+    Text,
     Flex,
     Button,
     Stack,
@@ -55,6 +55,7 @@ const UpdateSession = (props) => {
 
     const handleClickOutsideDiv = (event) => {
         const updateDiv = refPoint.current;
+        const isInputOrButton = event.target.tagName === 'INPUT' || event.target.tagName === 'BUTTON';
         console.log(updateDiv);
         if (updateDiv && !updateDiv.contains(event.target)){
             console.log("clicked outside");
@@ -81,6 +82,20 @@ const UpdateSession = (props) => {
         event.preventDefault();
         try {
             console.log(inputState);
+            let requestBody = {
+                exercise: workoutToUpdate.movement,
+                rounds: workoutToUpdate.rounds,
+                reps: workoutToUpdate.reps,
+                weight: workoutToUpdate.weight,
+                distance: workoutToUpdate.distance,
+                time: workoutToUpdate.time,
+            };
+            requestBody.exercise = workoutToUpdate.exercise;
+            if (inputState.weight) requestBody.weight = inputState.weight;
+            if (inputState.reps) requestBody.reps = inputState.reps;
+            if (inputState.rounds) requestBody.rounds = inputState.rounds;
+            if (inputState.distance) requestBody.distance = inputState.distance;
+            if (inputState.time) requestBody.time = inputState.time;
             const response = await fetch(
                 `http://localhost:5000/api/session/${updateSession}`,
                 {
@@ -89,22 +104,14 @@ const UpdateSession = (props) => {
                         "Content-Type": "application/json",
                         Authorization: "Issuer " + auth.token,
                     },
-                    body: JSON.stringify({
-                        exercise: inputState.movement,
-                        weight: inputState.weight,
-                        reps: inputState.reps,
-                        rounds: inputState.rounds,
-                        distance: inputState.distance,
-                        time: inputState.time,
-                    }),
+                    body: JSON.stringify(requestBody),
                 }
             );
             console.log(response);
             const responseData = await response.json();
             console.log(responseData)
-            props.updateMode(false);
-            props.getClientSessions();
-            setUpdate(false);
+            props.onUpdate();
+            props.updateChangeHandler(null);
         } catch (err) {}
     };
 
@@ -140,14 +147,7 @@ const UpdateSession = (props) => {
                     <form onSubmit={updateWorkout} ref={refPoint}>
                     <FormControl>
                             <FormLabel color="white" htmlFor="movement">Movement</FormLabel>
-                            <Input
-                                onChange={changeHandler}
-                                placeholder={workoutToUpdate.exercise}
-                                value={inputState.movement}
-                                name="movement"
-                                type="text"
-                                color="white"
-                            />
+                            <Text color="white">{workoutToUpdate.exercise}</Text>
                         </FormControl>
                         {workoutToUpdate.weight && <FormControl>
                             <FormLabel color="white" htmlFor="weight">Weight</FormLabel>
