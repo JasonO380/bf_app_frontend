@@ -11,6 +11,7 @@ import {
     Stack,
     Spacer,
 } from "@chakra-ui/react";
+import MacroDonutChart from "./macro-donut-chart";
 import DonutChart from "../shared/donut-chart";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
@@ -120,31 +121,14 @@ const GetMacros = () => {
 
     if (cData) {
         return (
-            <React.Fragment>
-            <Flex justifyContent="center" gap="10px" height="12rem">
-                {cData.slice(startIndex, startIndex + 2).map((data, index) => (
-                    <Box key={index} width="50%">
-                        <DonutChart
-                            data={data}
-                            options={cOptions[startIndex + index]}
-                        />
-                    </Box>
-                ))}
-            </Flex>
-            <Flex justifyContent="center" gap="25px">
-                {canMovePrev && (
-                    <IconButton
-                        icon={<ChevronLeftIcon />}
-                        onClick={handlePrevClick}
-                    />
-                )}
-                <IconButton
-                    icon={<ChevronRightIcon />}
-                    onClick={handleNextClick}
-                    disabled={!canMoveNext}
-                />
-            </Flex>
-            </React.Fragment>
+            <MacroDonutChart
+            cData={cData}
+            cOptions={cOptions}
+            startIndex={startIndex}
+            canMovePrev={canMovePrev}
+            canMoveNext={canMoveNext}
+            handlePrevClick={handlePrevClick}
+            handleNextClick={handleNextClick} />
         );
     }
 };
