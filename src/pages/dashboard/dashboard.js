@@ -12,6 +12,7 @@ import {
 import AddMovement from "../../athletes/add-movement";
 import AddAthleteSession from "../../athletes/add-athlete-session";
 import WeeklyWorkoutTotal from "./components/weekly-workout-total";
+import GetAndAddTodaysMacros from "../../macros/get-and-add-todays-macros";
 import ShowAthleteSessionsHistory from "../../athletes/show-athletes-history-sessions";
 import AddMacros from "../../macros/addMacros";
 import GetMacros from "../../macros/getMacros";
@@ -146,7 +147,8 @@ const Dashboard = () => {
                         >
                             Close
                         </Button>
-                        <AddMacros />
+                        <GetAndAddTodaysMacros />
+                        {/* <AddMacros /> */}
                     </Box>
                 </motion.div>
             )}
