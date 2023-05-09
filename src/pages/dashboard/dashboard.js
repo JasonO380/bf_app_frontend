@@ -14,6 +14,7 @@ import AddAthleteSession from "../../athletes/add-athlete-session";
 import WeeklyWorkoutTotal from "./components/weekly-workout-total";
 import GetAndAddTodaysMacros from "../../macros/get-and-add-todays-macros";
 import ShowAthleteSessionsHistory from "../../athletes/show-athletes-history-sessions";
+import EditMacros from "../../macros/editMacros";
 import AddMacros from "../../macros/addMacros";
 import GetMacros from "../../macros/getMacros";
 import { motion } from "framer-motion";
@@ -243,6 +244,38 @@ const Dashboard = () => {
                             </Button>
                         </Flex>
                         <ShowAthleteSessionsHistory edit={showWorkoutEdit}  user={user} />
+                    </Box>
+                </motion.div>
+            )}
+            {showMacrosEdit && (
+                <motion.div
+                    variants={variants}
+                    initial="hidden"
+                    animate={showMacrosEdit ? "visible" : "hidden"}
+                >
+                    <Box p="10px">
+                        <Flex
+                        justifyContent="center" 
+                        gap="10px">
+                            <Button
+                                borderRadius="50px"
+                                colorScheme="red"
+                                onClick={handleCloseClick}
+                            >
+                                Close
+                            </Button>
+                            <Button
+                                borderRadius="50px"
+                                colorScheme="blue"
+                                onClick={handleEditWorkoutsClick}
+                            >
+                                <Stack spacing={0} alignItems="center">
+                                    <Box as="span">Edit</Box>
+                                    <Box as="span">Workouts</Box>
+                                </Stack>
+                            </Button>
+                        </Flex>
+                        <EditMacros />
                     </Box>
                 </motion.div>
             )}

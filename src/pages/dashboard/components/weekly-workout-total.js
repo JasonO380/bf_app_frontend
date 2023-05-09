@@ -58,7 +58,6 @@ const WeeklyWorkoutTotal = () => {
             month: m.month,
             count: m.daysLifted.length,
             }));
-            console.log(liftedDaysCount);
             setCount(liftedDaysCount);
     }
 
@@ -68,7 +67,7 @@ const WeeklyWorkoutTotal = () => {
 
     if(count){
         return (
-            <Box color="white">
+            <Box color="white" paddingBottom="60px">
                 <BarChart
                 data={count}
                 options={{ maintainAspectRatio: false }}

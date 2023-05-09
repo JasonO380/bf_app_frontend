@@ -14,6 +14,13 @@ const FormComponent = (props) => {
     const changeHandler = props.changeHandler;
     const fields = props.fields;
     const buttonText = props. buttonText;
+    const allData= props.allData;
+    const renderPlaceholder = (fieldName, dataKey) => {
+        if (allData && allData[dataKey]) {
+            return allData[dataKey][fieldName] || "";
+        }
+        return "";
+    };
 
     return (
         <Box bg="offWhite" p={5} width="100%" margin="0 auto">
@@ -30,7 +37,7 @@ const FormComponent = (props) => {
                                 name={field.name}
                                 type={field.type || "text"}
                                 bg="white"
-                                placeholder={field.placeholder}
+                                placeholder={allData ? renderPlaceholder(field.name, field.dataKey) : field.placeholder}
                             />
                         </FormControl>
                     ))}

@@ -71,7 +71,7 @@ const GetMacros = () => {
             labels: [
                 "Carbs " + " " + macro.carbs,
                 "Protein" + " " + macro.protein,
-                "Fats" + " " + macro.protein,
+                "Fats" + " " + macro.fats,
             ],
             datasets: [
                 {
