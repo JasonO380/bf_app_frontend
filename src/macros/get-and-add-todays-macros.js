@@ -1,18 +1,9 @@
 import React, { useContext, useEffect, useState, useReducer } from "react";
-import { ChevronRightIcon } from "@chakra-ui/icons";
-import { ChevronLeftIcon } from "@chakra-ui/icons";
 import {
     Box,
-    Text,
-    Image,
-    Flex,
-    IconButton,
     Button,
-    Stack,
-    Spacer,
 } from "@chakra-ui/react";
 import FormComponent from "../shared/form-component";
-import MacroDonutChart from "./macro-donut-chart";
 import DonutChart from "../shared/donut-chart";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
@@ -22,7 +13,6 @@ const GetAndAddTodaysMacros = (props) => {
     const [cData, setCData] = useState();
     const [cOptions, setCOptions] = useState();
     const [newMacros, setNewMacros] = useState();
-    // let macros;
     const inputReducer = (state, action) => {
         const dateEntry = new Date();
         switch (action.type) {
@@ -75,7 +65,6 @@ const GetAndAddTodaysMacros = (props) => {
     const fetchMacros = async () => {
         const userID = auth.userID;
         let macros;
-        // const macrosArray = [];
         try {
             const response = await fetch(
                 `http://localhost:5000/api/macros/${userID}`,
@@ -151,7 +140,7 @@ const GetAndAddTodaysMacros = (props) => {
                 );
                 const responseData = await response.json();
                 console.log(responseData.macros);
-                setNewMacros(responseData.macros);
+                setTodaysMacros(responseData.macros);
             } else {
                 // Create new macros
                 const response = await fetch(
@@ -176,7 +165,7 @@ const GetAndAddTodaysMacros = (props) => {
                 );
                 const responseData = await response.json();
                 console.log(responseData.macros);
-                setNewMacros(responseData.macros);
+                setTodaysMacros(responseData.macros);
                 prepChartData(responseData.macros);
             }
             dispatch({ type: "CLEAR_FORM" });
@@ -185,41 +174,60 @@ const GetAndAddTodaysMacros = (props) => {
         }
     };
 
+    const deleteMacros = async (event) => {
+        const mid = event.target.name;
+        try {
+            const response = await fetch(
+                `http://localhost:5000/api/macros/${mid}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Issuer " + auth.token,
+                    },
+                }
+            );
+            const responseData = await response.json();
+            console.log(responseData.message);
+        } catch (err) {}
+        fetchMacros();
+    };
+
     const prepChartData = (macroData) => {
         const chartData = {
             carbs: macroData.carbs,
-            protein:macroData.protein,
-            fats:macroData.fats,
-            month:macroData.month,
-            dayOfMonth:macroData.dayOfMonth
+            protein: macroData.protein,
+            fats: macroData.fats,
+            month: macroData.month,
+            dayOfMonth: macroData.dayOfMonth,
         };
         const data = {
             labels: [
                 "Carbs" + " " + chartData.carbs,
                 "Protein" + " " + chartData.protein,
-                "Fats" + " " + chartData.fats
+                "Fats" + " " + chartData.fats,
             ],
             datasets: [
                 {
                     data: [chartData.carbs, chartData.protein, chartData.fats],
                     backgroundColor: ["#257ff5", "#F06B2D", "#f8df00"],
-                }
-            ]
+                },
+            ],
         };
         const options = {
             plugins: {
                 legend: {
-                    position: "top"
+                    position: "top",
                 },
                 title: {
-                    display:true,
+                    display: true,
                     text: `${chartData.month}, ${chartData.dayOfMonth}`,
                     font: {
                         size: "30",
                         family: "Montserrat",
-                    }
-                }
-            }
+                    },
+                },
+            },
         };
         setCData(data);
         setCOptions(options);
@@ -233,17 +241,27 @@ const GetAndAddTodaysMacros = (props) => {
     return (
         <React.Fragment>
             <FormComponent
-            onSubmit={postMacros}
-            inputState={inputState}
-            changeHandler={changeHandler}
-            fields={fields}
-            buttonText="Add macros" />
-            {todaysMacros && 
-            <Box paddingBottom="60px">
-                <DonutChart data={cData} options={cOptions} /> 
-            </Box>}
+                onSubmit={postMacros}
+                inputState={inputState}
+                changeHandler={changeHandler}
+                fields={fields}
+                buttonText="Add macros"
+            />
+            {todaysMacros && (
+                <Box paddingBottom="60px">
+                    <DonutChart data={cData} options={cOptions} />
+                    <Button
+                        name={todaysMacros._id}
+                        color="white"
+                        borderRadius="50px"
+                        backgroundColor="red"
+                        onClick={deleteMacros}
+                    >
+                        Delete
+                    </Button>
+                </Box>
+            )}
         </React.Fragment>
-        
     );
 };
 

@@ -113,18 +113,6 @@ const EditMacros = () => {
         });
     };
 
-    const getMonthAndYear = (date) => {
-        const dateEntry = new Date(date);
-        const month = dateEntry.toLocaleString("en-US", { month: "long" });
-        const year = dateEntry.getFullYear();
-        return { month, year };
-    };
-
-    const getDayOfMonth = (date) => {
-        const dateEntry = new Date(date);
-        return dateEntry.getDate();
-    };
-
     useEffect(() => {
         fetchMacros();
     }, [auth.userID, auth.token]);
@@ -143,11 +131,11 @@ const EditMacros = () => {
                     return (
                         <Box key={macros._id}>
                             {isNewMonth && (
-                                <Heading color="white">
+                                <Heading as="h1" size="lg" width="76%" margin="auto" color="white">
                                     {month}
                                 </Heading>
                             )}
-                            <Text color="white">{macros.dayOfMonth}</Text>
+                            <Text fontSize="25px" width="76%" margin="auto" color="white">{macros.dayOfMonth}</Text>
                             <FormComponent
                                 onSubmit={editMacros}
                                 inputState={inputState}

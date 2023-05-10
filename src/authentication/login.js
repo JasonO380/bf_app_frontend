@@ -4,13 +4,16 @@ import {
     FormLabel,
     Input,
     Button,
+    Heading,
     Stack,
     Box,
 } from "@chakra-ui/react";
 import { useMediaQuery } from "@chakra-ui/react";
 import { LoginRegisterContext } from "./login-register-context";
 import CoachLogin from "./coach-login";
+import LoadingSpinner from "../shared/loading-spinner";
 import { useNavigate } from "react-router-dom";
+import { FaUser } from "react-icons/fa";
 
 let accessGranted;
 const Login = (props) => {
@@ -111,16 +114,22 @@ const Login = (props) => {
     }
 
     return (
-        <Box bg="offWhite" p={5} width="100%" margin="0 auto">
+        <Box bg="#151414" p={5} height="100vh" width="100%" margin="0 auto">
             <Stack
                 margin="auto"
                 width={isTabletOrAbove ? "50%" : "80%"}
                 color="white"
                 borderRadius="12"
+                height="100%"
+                justifyContent="center"
                 spacing={8}
                 p={8}
-                backgroundColor="purple.900"
+                // backgroundColor="purple.900"
             >
+            <Heading display="flex" alignItems="center" justifyContent="center" fontSize="60px">
+                <FaUser />
+            </Heading>
+            <LoadingSpinner />
                 <form onSubmit={loginUser}>
                     <FormControl>
                         <FormLabel htmlFor="username">Username</FormLabel>
