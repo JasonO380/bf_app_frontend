@@ -16,7 +16,7 @@ const GetSessionByID = (props) => {
             for (const sID of sessionIDs) {
                 try {
                     const response = await fetch(
-                        `http://localhost:5000/api/session/${sID}`,
+                        `https://bf-backend.onrender.com/api/session/${sID}`,
                         {
                             method: "GET",
                             headers: {

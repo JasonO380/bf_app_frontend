@@ -97,7 +97,7 @@ const UpdateSession = (props) => {
             if (inputState.distance) requestBody.distance = inputState.distance;
             if (inputState.time) requestBody.time = inputState.time;
             const response = await fetch(
-                `http://localhost:5000/api/session/${updateSession}`,
+                `https://bf-backend.onrender.com/api/session/${updateSession}`,
                 {
                     method: "PATCH",
                     headers: {
@@ -119,7 +119,7 @@ const UpdateSession = (props) => {
         const getSessionToUpdate = async () => {
             try {
                 const response = await fetch(
-                    `http://localhost:5000/api/session/${updateSession}`,
+                    `https://bf-backend.onrender.com/api/session/${updateSession}`,
                     {
                         method: "GET",
                         headers: {

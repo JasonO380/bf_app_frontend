@@ -27,7 +27,7 @@ const DisplaySessions = (props) => {
         const userID = auth.userID;
         try {
             const response = await fetch(
-                `http://localhost:5000/api/users/${userID}`,
+                `https://bf-backend.onrender.com/api/users/${userID}`,
                 {
                     method: "DELETE",
                     headers: {
