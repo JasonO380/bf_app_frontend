@@ -90,8 +90,6 @@ const AthletesTopSets = (props) => {
                                                                                     {" " + s.time}
                                                                                 </Text>
                                                                             )}
-                                                                            {/* Rounds:
-                                                                            {" " + s.rounds} */}
                                                                         </Text>
                                                                     </Stack> 
                                                                 </React.Fragment>

@@ -88,7 +88,7 @@ const UpdateAthleteSession = (props) => {
         try {
             console.log(inputState);
             const response = await fetch(
-                `http://localhost:5000/api/session/${updateID}`,
+                `https://bf-backend.onrender.com/api/session/${updateID}`,
                 {
                     method: "PATCH",
                     headers: {
@@ -108,8 +108,6 @@ const UpdateAthleteSession = (props) => {
             console.log(response);
             const responseData = await response.json();
             console.log(responseData)
-            // props.updateMode(false);
-            // props.update(null);
             props.getUpdate();
             console.log(props.updateMode)
         } catch (err) {}
@@ -122,7 +120,7 @@ const UpdateAthleteSession = (props) => {
         const getSessionToUpdate = async () => {
             try {
                 const response = await fetch(
-                    `http://localhost:5000/api/session/${updateSession}`,
+                    `https://bf-backend.onrender.com/api/session/${updateSession}`,
                     {
                         method: "GET",
                         headers: {
@@ -139,15 +137,10 @@ const UpdateAthleteSession = (props) => {
             } catch (err) {}
         };
         getSessionToUpdate();
-        // props.updateMode(true);
-        // setWorkoutToUpdate(workout);
         console.log(update);
         console.log(workoutToUpdate);
     }, []);
     
-    workoutToUpdate.map(w => {
-        console.log(w)
-    })
 
     if (workoutToUpdate) {
         return (

@@ -23,7 +23,7 @@ const ShowAthleteSessionsHistory = (props) => {
         console.log(user);
         try {
             const response = await fetch(
-                `http://localhost:5000/api/users/${user}`,
+                `https://bf-backend.onrender.com/api/users/${user}`,
                 {
                     method: "GET",
                     headers: {

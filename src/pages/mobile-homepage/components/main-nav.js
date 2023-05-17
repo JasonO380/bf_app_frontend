@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import logo from "../../../images/logo.jpeg";
 import { NavLink } from "react-router-dom";
 import { Image, Flex, Button, Spacer } from "@chakra-ui/react";
+import { LoginRegisterContext } from "../../../authentication/login-register-context";
 
 const MainNav = () => {
+    const auth = useContext(LoginRegisterContext);
+    const isLoggedIn = auth.isLoggedIn;
+    const logout = () => {
+        auth.logout();
+    };
     return (
         <Flex width="95%" margin="auto">
             <Image
@@ -15,7 +21,58 @@ const MainNav = () => {
             />
             <Spacer />
             <Flex align="end" margin="auto">
-                <NavLink to="/login">
+                {!isLoggedIn ? ( // Conditionally render buttons if user is not logged in
+                    <>
+                        <NavLink to="/login">
+                            <Button
+                                borderRadius="50"
+                                mt="20px"
+                                fontSize="xs"
+                                color="white"
+                                backgroundColor="transparent"
+                            >
+                                Login
+                            </Button>
+                        </NavLink>
+                        <NavLink to="/register">
+                            <Button
+                                borderRadius="50"
+                                mt="20px"
+                                fontSize="xs"
+                                color="white"
+                                backgroundColor="red"
+                            >
+                                Register
+                            </Button>
+                        </NavLink>
+                    </>
+                ) : (
+                    // Render dashboard button if user is logged in
+                    <>
+                    <NavLink to="/athlete">
+                        <Button
+                            borderRadius="50"
+                            mt="20px"
+                            fontSize="xs"
+                            color="white"
+                            backgroundColor="transparent"
+                        >
+                            Dashboard
+                        </Button>
+                    </NavLink>
+                    <Button
+                            borderRadius="50"
+                            mt="20px"
+                            fontSize="xs"
+                            onClick={logout}
+                            color="white"
+                            backgroundColor="red"
+                        >
+                            Log Out
+                        </Button>
+                        </>
+                )}
+                {/* <NavLink to="/login">
                     <Button
                         borderRadius="50"
                         mt="20px"
@@ -36,7 +93,7 @@ const MainNav = () => {
                     >
                         Register
                     </Button>
-                </NavLink>
+                </NavLink> */}
             </Flex>
         </Flex>
     );

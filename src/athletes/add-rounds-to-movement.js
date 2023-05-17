@@ -82,7 +82,7 @@ const AddRoundsToMovement = (props) => {
         event.preventDefault();
         try {
             const response = await fetch(
-                `http://localhost:5000/api/users/${userID}`,
+                `https://bf-backend.onrender.com/api/users/${userID}`,
                 {
                     method: "POST",
                     headers: {
@@ -220,7 +220,7 @@ const AddRoundsToMovement = (props) => {
                             </Box>
                         </Flex>
                     </form>
-                    <Box flexGrow={1}>
+                    <Box paddingBottom="60px" flexGrow={1}>
                     <Button
                         mt={4}
                         name={m}

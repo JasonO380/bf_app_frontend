@@ -11,16 +11,16 @@ const LoadingSpinner = (props) => {
                 transition: { type: "spring", bounce: 0.65, duration: 1.8 },
             }}
             exit={{ scale: 0 }}
-            w="150px"
-            h="105px"
+            width="160px"
+            height="55px"
             bg="white"
-            borderRadius="20px"
-            d="flex"
-            m="auto"
+            borderRadius="50px"
+            display="flex"
+            margin="auto"
             flexDirection="column"
         >
             <Box w="100%">
-                <Text textAlign="center" fontStyle="italic" color="black">
+                <Text textAlign="center" fontWeight="bold" fontStyle="italic" color="black">
                     Loading
                 </Text>
             </Box>
@@ -32,11 +32,12 @@ const LoadingSpinner = (props) => {
                             duration: index % 2 === 0 ? 1 : 0.2,
                             ease: "easeInOut",
                             delay: index % 2 === 0 ? 0.2 : 0.1,
-                            yoyo: Infinity,
+                            repeat: Infinity,
+                            repeatType: "reverse"
                         }}
-                        animate={{ y: ["100%", "-100%"] }}
+                        animate={{ y: ["0px", "20px"] }}
                         w="5px"
-                        h="10px"
+                        h={index % 2 === 0 ? "5px" : "10px"}
                         borderRadius="100%"
                         bg={index % 2 === 0 ? "#ff1f06" : "#0000ffe0"}
                         mx={1}

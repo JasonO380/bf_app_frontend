@@ -3,12 +3,17 @@ import {
     FormControl,
     FormLabel,
     Input,
+    Heading,
+    Flex,
+    Text,
     Button,
     Stack,
     Box,
 } from "@chakra-ui/react";
 import { useMediaQuery } from "@chakra-ui/react";
 import { LoginRegisterContext } from "./login-register-context";
+import { FaClipboardList } from "react-icons/fa";
+import LoadingSpinner from "../shared/loading-spinner";
 import { useNavigate } from "react-router-dom";
 
 let accessGranted;
@@ -36,11 +41,7 @@ const CoachLogin = (props) => {
         password: "",
     });
     const loginRegister = useContext(LoginRegisterContext);
-    console.log(loginRegister);
-
-    // useEffect(() => {
-    //     console.log("input state: ", inputState);
-    // }, [inputState]);
+    const navigate = useNavigate();
 
     const changeHandler = (event) => {
         const inputValue = event.target.value;
@@ -60,7 +61,7 @@ const CoachLogin = (props) => {
         console.log(inputState);
         try {
             const response = await fetch(
-                "http://localhost:5000/api/coach/login",
+                "https://bf-backend.onrender.com/api/coach/login",
                 {
                     method: "POST",
                     headers: {
@@ -72,17 +73,26 @@ const CoachLogin = (props) => {
                     }),
                 }
             );
+            if (!response.ok) {
+                const errorData = await response.json();
+                setErrorMessage(errorData.message);
+                console.log(errorData.message);
+                throw new Error(errorData.message);
+            }
             const responseData = await response.json();
             accessGranted = responseData.message;
             console.log(accessGranted);
-            loginRegister.login(responseData.userID, responseData.token);
+            loginRegister.login(
+                responseData.userID,
+                responseData.token,
+                responseData.coachname
+            );
         } catch (err) {
             console.log(err);
             setLogin(false);
             setErrorMessage(err.message);
         }
         if (accessGranted !== "Coach login successful") {
-            // setLogin(false);
             setIsLoading(false);
             console.log(login);
         } else {
@@ -92,16 +102,27 @@ const CoachLogin = (props) => {
     };
 
     const logout = () => {
-        loginRegister.logout()
-        console.log(loginRegister.token)
-    }
+        loginRegister.logout();
+        console.log(loginRegister.token);
+    };
 
     const switchToUser = () => {
         props.onClick();
-    }
+    };
 
     return (
-        <Box bg="offWhite" p={5} width="100%" margin="0 auto">
+        <Box bg="#151414" p={5} height="100vh" width="100%" margin="0 auto">
+            <Flex justifyContent="end">
+                <Button
+                    mt={4}
+                    mr={4}
+                    onClick={() => navigate("/")}
+                    bg="red"
+                    color="white"
+                >
+                    Home
+                </Button>
+            </Flex>
             <Stack
                 margin="auto"
                 width={isTabletOrAbove ? "50%" : "80%"}
@@ -109,8 +130,13 @@ const CoachLogin = (props) => {
                 borderRadius="12"
                 spacing={8}
                 p={8}
-                backgroundColor="purple.900"
+                display="flex"
+                alignItems="center"
             >
+                <Heading fontSize="60px">
+                    <FaClipboardList />
+                </Heading>
+                {isLoading && <LoadingSpinner />}
                 <form onSubmit={loginCoach}>
                     <FormControl>
                         <FormLabel htmlFor="username">Coach name</FormLabel>
@@ -165,6 +191,7 @@ const CoachLogin = (props) => {
                 >
                     Logout
                 </Button>
+                {errorMessage && <Text>{errorMessage}</Text>}
             </Stack>
         </Box>
     );

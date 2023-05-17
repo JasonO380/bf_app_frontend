@@ -13,7 +13,6 @@ import {
     FormControl,
     FormLabel,
     Input,
-    color,
 } from "@chakra-ui/react";
 import GetAthletesSessions from "./get-athletes-sessions";
 import AddRoundsToMovement from "./add-rounds-to-movement";
@@ -66,7 +65,7 @@ const AddMovement = () => {
         }
         try {
             const response = await fetch(
-                `http://localhost:5000/api/movement/search/${query}`,
+                `https://bf-backend.onrender.com/api/movement/search/${query}`,
                 {
                     method: "GET",
                     headers: {
@@ -90,8 +89,6 @@ const AddMovement = () => {
     };
 
     const validateMovement = (value) => {
-        //I think I need to get rid of this
-        // setNewMovement("");
         if (value.length < 1) {
             setShowMenu(false);
         }

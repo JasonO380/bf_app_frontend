@@ -67,7 +67,7 @@ const GetAndAddTodaysMacros = (props) => {
         let macros;
         try {
             const response = await fetch(
-                `http://localhost:5000/api/macros/${userID}`,
+                `https://bf-backend.onrender.com/api/macros/${userID}`,
                 {
                     method: "GET",
                     headers: {
@@ -128,7 +128,7 @@ const GetAndAddTodaysMacros = (props) => {
                 };
 
                 const response = await fetch(
-                    `http://localhost:5000/api/macros/${todaysMacros._id}`,
+                    `https://bf-backend.onrender.com/api/macros/${todaysMacros._id}`,
                     {
                         method: "PATCH",
                         headers: {
@@ -144,7 +144,7 @@ const GetAndAddTodaysMacros = (props) => {
             } else {
                 // Create new macros
                 const response = await fetch(
-                    `http://localhost:5000/api/macros/${userID}`,
+                    `https://bf-backend.onrender.com/api/macros/${userID}`,
                     {
                         method: "POST",
                         headers: {
@@ -178,7 +178,7 @@ const GetAndAddTodaysMacros = (props) => {
         const mid = event.target.name;
         try {
             const response = await fetch(
-                `http://localhost:5000/api/macros/${mid}`,
+                `https://bf-backend.onrender.com/api/macros/${mid}`,
                 {
                     method: "DELETE",
                     headers: {

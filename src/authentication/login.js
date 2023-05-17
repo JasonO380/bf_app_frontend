@@ -3,6 +3,8 @@ import {
     FormControl,
     FormLabel,
     Input,
+    Flex,
+    Text,
     Button,
     Heading,
     Stack,
@@ -19,7 +21,7 @@ let accessGranted;
 const Login = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState();
-    const [coachLogin, setCoachLogin] = useState(false)
+    const [coachLogin, setCoachLogin] = useState(false);
     const [isTabletOrAbove] = useMediaQuery("(min-width: 600px)");
     const inputReducer = (state, action) => {
         console.log("Action:", action);
@@ -64,7 +66,7 @@ const Login = (props) => {
         console.log(inputState);
         try {
             const response = await fetch(
-                "http://localhost:5000/api/users/login",
+                "https://bf-backend.onrender.com/api/users/login",
                 {
                     method: "POST",
                     headers: {
@@ -76,17 +78,25 @@ const Login = (props) => {
                     }),
                 }
             );
+            if (!response.ok) {
+                const errorData = await response.json();
+                setErrorMessage(errorData.message);
+                throw new Error(errorData.message);
+            }
             const responseData = await response.json();
             accessGranted = responseData.message;
             console.log(responseData);
             console.log(responseData.message);
             console.log("here");
             console.log(accessGranted);
-            loginRegister.login(responseData.userID, responseData.token, responseData.userName);
+            loginRegister.login(
+                responseData.userID,
+                responseData.token,
+                responseData.userName
+            );
         } catch (err) {
             console.log(err);
             setLogin(false);
-            setErrorMessage(err.message);
         }
         if (accessGranted !== "Success") {
             setLogin(false);
@@ -100,36 +110,45 @@ const Login = (props) => {
 
     const coachLog = () => {
         setCoachLogin(!coachLogin);
-    }
+    };
 
     const logout = () => {
-        loginRegister.logout()
-        console.log(loginRegister.token)
-    }
+        loginRegister.logout();
+        console.log(loginRegister.token);
+    };
 
-    if(coachLogin){
-        return(
-            <CoachLogin onSwitch={coachLog} />
-        )
+    if (coachLogin) {
+        return <CoachLogin onSwitch={coachLog} />;
     }
 
     return (
         <Box bg="#151414" p={5} height="100vh" width="100%" margin="0 auto">
+            <Flex justifyContent="end">
+                <Button
+                    mt={4}
+                    mr={4}
+                    onClick={() => navigate("/")}
+                    bg="red"
+                    color="white"
+                >
+                    Home
+                </Button>
+            </Flex>
             <Stack
                 margin="auto"
                 width={isTabletOrAbove ? "50%" : "80%"}
                 color="white"
                 borderRadius="12"
-                height="100%"
                 justifyContent="center"
                 spacing={8}
                 p={8}
-                // backgroundColor="purple.900"
+                display="flex"
+                alignItems="center"
             >
-            <Heading display="flex" alignItems="center" justifyContent="center" fontSize="60px">
-                <FaUser />
-            </Heading>
-            <LoadingSpinner />
+                <Heading fontSize="60px">
+                    <FaUser />
+                </Heading>
+                {isLoading && <LoadingSpinner />}
                 <form onSubmit={loginUser}>
                     <FormControl>
                         <FormLabel htmlFor="username">Username</FormLabel>
@@ -157,7 +176,6 @@ const Login = (props) => {
                     </FormControl>
                     <Button
                         mt={4}
-                        // bg="red"
                         width="100%"
                         type="submit"
                         bg="red"
@@ -184,6 +202,9 @@ const Login = (props) => {
                 >
                     Logout
                 </Button>
+                {!login && errorMessage && (
+                    <Text color="white">{errorMessage}</Text>
+                )}
             </Stack>
         </Box>
     );

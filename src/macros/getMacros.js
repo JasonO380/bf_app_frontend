@@ -29,7 +29,7 @@ const GetMacros = () => {
 
         try {
             const response = await fetch(
-                `http://localhost:5000/api/macros/${userID}`,
+                `https://bf-backend.onrender.com/api/macros/${userID}`,
                 {
                     method: "GET",
                     headers: {
@@ -91,7 +91,6 @@ const GetMacros = () => {
                     text: `${macro.month}, ${macro.dayOfMonth}`,
                     font: {
                         size: "30",
-                        // weight: "bold",
                         family: "Montserrat",
                     },
                 },

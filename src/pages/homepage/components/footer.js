@@ -3,12 +3,15 @@ import {
     Box,
     Image,
     Flex,
+    Wrap,
+    WrapItem,
     Button,
     Heading,
     Stack,
     Spacer,
     Text,
     List,
+    Link,
     ListItem,
     ListIcon,
     OrderedList,
@@ -28,51 +31,63 @@ const Footer = () => {
     const year = date.getFullYear();
     return (
         <Box width="100%" bg="gray.600">
-            <Flex paddingTop="10px" margin="auto" width="95%">
+            <Flex
+                paddingTop="10px"
+                alignItems="center"
+                justifyContent="center"
+                marginBottom="10px"
+                margin="auto"
+                width="95%"
+            >
                 <Text mr={5} color="white">
-                    Contact Info
+                    Contact:
                 </Text>
-                <a
-                    style={{
-                        color: "white",
-                        marginRight: "6px",
-                        fontSize: "35px",
-                    }}
+                <Link
+                    color="green.500"
+                    marginRight="6px"
+                    fontSize="25px"
                     href="mailto:JMOllada@gmail.com"
                 >
                     <FaEnvelopeSquare />
-                </a>
-                <a
-                    style={{ color: "white", fontSize: "35px" }}
+                </Link>
+                <Link
+                    color="green.500"
+                    fontSize="25px"
                     href="https://www.instagram.com/jasono380"
                 >
                     <FaInstagram />
-                </a>
+                </Link>
             </Flex>
-            <Stack alignItems="center" width="95%" margin="auto">
-                <List spacing={1} paddingBottom="50px">
-                    <ListItem color="white">
-                        <ListIcon as={FaReact} color="green.500" />
-                        React
-                    </ListItem>
-                    <ListItem color="white">
-                        <ListIcon as={FaJsSquare} color="green.500" />
-                        Express
-                    </ListItem>
-                    <ListItem color="white">
-                        <ListIcon as={FaNodeJs} color="green.500" />
-                        Node.JS
-                    </ListItem>
-                    <ListItem color="white">
-                        <ListIcon as={DiMongodb} color="green.500" />
-                        MongoDB
-                    </ListItem>
-                    <ListItem color="white">
-                        <ListIcon as={FaCalendarCheck} color="green.500" />
-                        Copyright: {year}
-                    </ListItem>
-                </List>
-            </Stack>
+            <Wrap justify="center" width="95%" margin="auto">
+                <WrapItem>
+                    <List spacing={1} paddingBottom="50px" color="white">
+                        <ListItem>
+                            <ListIcon as={FaReact} color="green.500" />
+                            React
+                        </ListItem>
+                        <ListItem>
+                            <ListIcon as={FaJsSquare} color="green.500" />
+                            Express
+                        </ListItem>
+                        <ListItem>
+                            <ListIcon as={FaNodeJs} color="green.500" />
+                            Node.JS
+                        </ListItem>
+                    </List>
+                </WrapItem>
+                <WrapItem>
+                    <List spacing={1} paddingBottom="50px" color="white">
+                        <ListItem>
+                            <ListIcon as={DiMongodb} color="green.500" />
+                            MongoDB
+                        </ListItem>
+                        <ListItem>
+                            <ListIcon as={FaCalendarCheck} color="green.500" />
+                            Copyright: {year}
+                        </ListItem>
+                    </List>
+                </WrapItem>
+            </Wrap>
         </Box>
     );
 };

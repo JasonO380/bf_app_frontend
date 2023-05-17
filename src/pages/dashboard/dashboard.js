@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import {
     Box,
     Image,
@@ -25,6 +26,7 @@ const Dashboard = () => {
     console.log(auth);
     const user = auth.userID;
     const name = auth.userName;
+    const navigate = useNavigate();
     console.log(user);
     const [showAddAthleteSession, setShowAddAthleteSession] = useState(false);
     const [showMacros, setShowMacros] = useState(false);
@@ -90,6 +92,17 @@ const Dashboard = () => {
             bg="#151414"
             overflowY="auto"
         >
+            <Flex justifyContent="end">
+                <Button
+                    mt={4}
+                    mr={4}
+                    onClick={() => navigate("/")}
+                    bg="red"
+                    color="white"
+                >
+                    Home
+                </Button>
+            </Flex>
             <Box p="15px">
                 <Box>
                     <Heading as="h1" size="lg" color="white">

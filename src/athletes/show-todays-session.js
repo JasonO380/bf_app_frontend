@@ -14,7 +14,7 @@ const ShowTodaysSession = (props) => {
         console.log(user);
         try {
             const response = await fetch(
-                `http://localhost:5000/api/users/${user}`,
+                `https://bf-backend.onrender.com/api/users/${user}`,
                 {
                     method: "GET",
                     headers: {
@@ -37,22 +37,6 @@ const ShowTodaysSession = (props) => {
                     s.dayOfMonth === dayOfMonth
                 );
             });
-            // allSessions.map((s) => {
-            //     const date = new Date();
-            //     const year = date.getFullYear();
-            //     const month = date.toLocaleString("en-US", { month: "long" });
-            //     const dayOfWeek = date.toLocaleString("default", {
-            //         weekday: "long",
-            //     });
-            //     const dayOfMonth = date.getDate();
-            //     if (
-            //         s.year === year &&
-            //         s.month === month &&
-            //         s.dayOfMonth === dayOfMonth
-            //     ) {
-            //         ses.push(s);
-            //     }
-            // });
             setWorkouts(sessionsForToday);
         } catch (err) {}
     };
@@ -74,7 +58,6 @@ const ShowTodaysSession = (props) => {
                 getUpdate={getSessions}
                 onDelete={getSessions}
                 update={props.update}
-                // handleUpdate={handleUpdate}
             />
         )
     );

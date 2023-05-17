@@ -1,7 +1,7 @@
 import React, { useContext, useReducer, useState } from "react";
 import {
     Box,
-    Image,
+    Text,
     Flex,
     Button,
     Stack,
@@ -18,7 +18,8 @@ const AddAthleteSession = () => {
     const auth = useContext(LoginRegisterContext);
     user = auth.userID;
     console.log(auth);
-    const [newSession, setNewSession] = useState()
+    const [newSession, setNewSession] = useState();
+    const [errorMessage, setErrorMessage] = useState();
     const inputReducer = (state, action) => {
         const dateEntry = new Date();
         switch (action.type) {
@@ -72,7 +73,7 @@ const AddAthleteSession = () => {
         event.preventDefault();
         try {
             const response = await fetch(
-                `http://localhost:5000/api/users/${userID}`,
+                `https://bf-backend.onrender.com/api/users/${userID}`,
                 {
                     method: "POST",
                     headers: {
@@ -96,6 +97,11 @@ const AddAthleteSession = () => {
                     }),
                 }
             );
+            if (!response.ok) {
+                const errorData = await response.json();
+                setErrorMessage(errorData.message);
+                throw new Error(errorData.message);
+            }
             const responseData = await response.json();
             dispatch({
                 type: "CLEAR_FORM",
@@ -186,6 +192,7 @@ const AddAthleteSession = () => {
                         Add session
                     </Button>
                 </form>
+                {errorMessage && <Text>{errorMessage}</Text>}
             </Stack>
         </Box>
         {user && (

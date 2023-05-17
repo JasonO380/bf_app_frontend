@@ -59,10 +59,9 @@ const EditMacros = () => {
     const fetchMacros = async () => {
         const userID = auth.userID;
         let macros;
-        // const macrosArray = [];
         try {
             const response = await fetch(
-                `http://localhost:5000/api/macros/${userID}`,
+                `https://bf-backend.onrender.com/api/macros/${userID}`,
                 {
                     method: "GET",
                     headers: {
@@ -85,7 +84,7 @@ const EditMacros = () => {
         const user = auth.userID;
         try {
             const response = await fetch(
-                `http://localhost:5000/api/macros/${user}`,
+                `https://bf-backend.onrender.com/api/macros/${user}`,
                 {
                     method: "PATCH",
                     headers: {
