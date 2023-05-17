@@ -14,7 +14,7 @@ const WeeklyWorkoutTotal = () => {
         const id = auth.userID;
         try {
             const response = await fetch(
-                `http://localhost:5000/api/users/${id}`,
+                `https://bf-backend.onrender.com/api/users/${id}`,
                 {
                     method: "GET",
                     headers: {
