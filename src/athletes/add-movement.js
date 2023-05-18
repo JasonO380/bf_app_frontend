@@ -167,6 +167,12 @@ const AddMovement = () => {
 
     return (
         <React.Fragment>
+            {user && (selectedMovement || newMovement.length) && (
+                <AddRoundsToMovement
+                    movement={[...newMovement, ...selectedMovement]}
+                    removeMovement={removeMovementHandler}
+                />
+            )}
             <Box bg="offWhite" p={5} width="100%" margin="0 auto">
                 <Stack margin="auto" width="80%" paddingBottom="60px">
                     <FormControl>
@@ -249,12 +255,12 @@ const AddMovement = () => {
                     )}
                 </Stack>
             </Box>
-            {user && (selectedMovement || newMovement.length) && (
+            {/* {user && (selectedMovement || newMovement.length) && (
                 <AddRoundsToMovement
                     movement={[...newMovement, ...selectedMovement]}
                     removeMovement={removeMovementHandler}
                 />
-            )}
+            )} */}
         </React.Fragment>
     );
 };

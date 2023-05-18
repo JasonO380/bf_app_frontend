@@ -122,13 +122,13 @@ const AddRoundsToMovement = (props) => {
             {movement.map((m, index) => (
                 <React.Fragment key={index}>
                     <Box>
-                        <Text color="white">{m}</Text>
+                        <Text fontSize="xs" color="white">{m}</Text>
                     </Box>
                     <form onSubmit={addSession}>
                         <Flex gap="10px" margin="auto" width="80%" paddingBottom="60px">
                             <FormControl>
                                 <Stack>
-                                    <FormLabel color="white" htmlFor="weight">
+                                    <FormLabel fontSize="xs" color="white" htmlFor="weight">
                                         Weight
                                     </FormLabel>
                                     <Input
@@ -138,12 +138,13 @@ const AddRoundsToMovement = (props) => {
                                         type="text"
                                         bg="white"
                                         placeholder="Weight"
+                                        fontSize="xs"
                                     />
                                 </Stack>
                             </FormControl>
                             <FormControl>
                                 <Stack>
-                                    <FormLabel color="white" htmlFor="reps">
+                                    <FormLabel fontSize="xs" color="white" htmlFor="reps">
                                         Reps
                                     </FormLabel>
                                     <Input
@@ -153,12 +154,13 @@ const AddRoundsToMovement = (props) => {
                                         type="text"
                                         bg="white"
                                         placeholder="Reps"
+                                        fontSize="xs"
                                     />
                                 </Stack>
                             </FormControl>
                             <FormControl>
                                 <Stack>
-                                    <FormLabel color="white" htmlFor="rounds">
+                                    <FormLabel fontSize="xs" color="white" htmlFor="rounds">
                                         Rounds
                                     </FormLabel>
                                     <Input
@@ -168,6 +170,7 @@ const AddRoundsToMovement = (props) => {
                                         type="text"
                                         bg="white"
                                         placeholder="Rounds"
+                                        fontSize="xs"
                                     />
                                 </Stack>
                             </FormControl>
@@ -175,7 +178,7 @@ const AddRoundsToMovement = (props) => {
                         <Flex gap="10px" margin="auto" width="80%" paddingBottom="60px">
                             <FormControl>
                                 <Stack>
-                                    <FormLabel color="white" htmlFor="distance">
+                                    <FormLabel fontSize="xs" color="white" htmlFor="distance">
                                         Distance
                                     </FormLabel>
                                     <Input
@@ -185,12 +188,13 @@ const AddRoundsToMovement = (props) => {
                                         type="text"
                                         bg="white"
                                         placeholder="Distance"
+                                        fontSize="xs"
                                     />
                                 </Stack>
                             </FormControl>
                             <FormControl>
                                 <Stack>
-                                    <FormLabel color="white" htmlFor="time">
+                                    <FormLabel fontSize="xs" color="white" htmlFor="time">
                                         Time
                                     </FormLabel>
                                     <Input
@@ -200,6 +204,7 @@ const AddRoundsToMovement = (props) => {
                                         type="text"
                                         bg="white"
                                         placeholder="Time"
+                                        fontSize="xs"
                                     />
                                 </Stack>
                             </FormControl>
@@ -213,6 +218,7 @@ const AddRoundsToMovement = (props) => {
                                     type="submit"
                                     bg="red"
                                     color="white"
+                                    fontSize="xs"
                                 >
                                     Add round
                                 </Button>
@@ -228,6 +234,7 @@ const AddRoundsToMovement = (props) => {
                         onClick={() => removeMovementHandler(m)}
                         bg="red"
                         color="white"
+                        fontSize="xs"
                     >
                         Remove movement
                     </Button>

@@ -32,6 +32,7 @@ const Dashboard = () => {
     const [showMacros, setShowMacros] = useState(false);
     const [showWorkoutEdit, setShowWorkoutEdit] = useState(false);
     const [showMacrosEdit, setShowMacrosEdit] = useState(false);
+    const [isDefaultScreen, setIsDefaultScreen] = useState(true);
     const [currentDaysWorkouts, setCurrentDaysWorkouts] = useState([]);
     const [showWorkoutHistory, setShowWorkoutHistory] = useState(false);
     const [allWorkouts, setAllWorkouts] = useState([]);
@@ -42,31 +43,37 @@ const Dashboard = () => {
         setShowMacros(false);
         setShowWorkoutEdit(false);
         setShowMacrosEdit(false);
+        setIsDefaultScreen(true);
     };
 
     const handleStartWorkoutClick = () => {
         handleCloseClick();
         setShowAddAthleteSession(true);
+        setIsDefaultScreen(false);
     };
 
     const handleViewWorkoutHistoryClick = () => {
         handleCloseClick();
         setShowWorkoutHistory(true);
+        setIsDefaultScreen(false);
     };
 
     const handleMacrosClick = () => {
         handleCloseClick();
         setShowMacros(true);
+        setIsDefaultScreen(false);
     };
 
     const handleEditWorkoutsClick = () => {
         handleCloseClick();
         setShowWorkoutEdit(true);
+        setIsDefaultScreen(false);
     };
 
     const handleEditMacrosClick = () => {
         handleCloseClick();
         setShowMacrosEdit(true);
+        setIsDefaultScreen(false);
     };
 
     const variants = {
@@ -100,6 +107,7 @@ const Dashboard = () => {
                     bg="red"
                     borderRadius="50px"
                     color="white"
+                    fontSize="xs"
                 >
                     Home
                 </Button>
@@ -111,7 +119,7 @@ const Dashboard = () => {
                     </Heading>
                     <Text color="white">Welcome, {name}</Text>
                 </Box>
-                <WeeklyWorkoutTotal />
+                {isDefaultScreen && <WeeklyWorkoutTotal />}
             </Box>
             <Box
                 position="fixed"
@@ -120,6 +128,8 @@ const Dashboard = () => {
                 bg="rgba(0, 0, 0, 0.4)"
                 backdropFilter="blur(10px)"
                 zIndex="1"
+                display="flex"
+                justifyContent="center"
             >
                 <Flex p="10px">
                     <Button
@@ -127,6 +137,7 @@ const Dashboard = () => {
                         borderRadius="50px"
                         colorScheme="blue"
                         mr="4"
+                        fontSize="xs"
                     >
                         Start workout
                     </Button>
@@ -135,6 +146,7 @@ const Dashboard = () => {
                         borderRadius="50px"
                         colorScheme="blue"
                         mr="4"
+                        fontSize="xs"
                     >
                         History
                     </Button>
@@ -142,6 +154,7 @@ const Dashboard = () => {
                         onClick={handleMacrosClick}
                         borderRadius="50px"
                         colorScheme="blue"
+                        fontSize="xs"
                     >
                         Add Macros
                     </Button>
@@ -163,7 +176,6 @@ const Dashboard = () => {
                             Close
                         </Button>
                         <GetAndAddTodaysMacros />
-                        {/* <AddMacros /> */}
                     </Box>
                 </motion.div>
             )}
@@ -178,11 +190,11 @@ const Dashboard = () => {
                             borderRadius="50px"
                             colorScheme="red"
                             onClick={handleCloseClick}
+                            fontSize="xs"
                         >
                             Close
                         </Button>
                         <AddMovement />
-                        {/* <AddAthleteSession /> */}
                     </Box>
                 </motion.div>
             )}
@@ -200,6 +212,7 @@ const Dashboard = () => {
                                 borderRadius="50px"
                                 colorScheme="red"
                                 onClick={handleCloseClick}
+                                fontSize="xs"
                             >
                                 Close
                             </Button>
@@ -207,6 +220,7 @@ const Dashboard = () => {
                                 borderRadius="50px"
                                 colorScheme="blue"
                                 onClick={handleEditWorkoutsClick}
+                                fontSize="xs"
                             >
                                 <Stack spacing={0} alignItems="center">
                                     <Box as="span">Edit</Box>
@@ -217,6 +231,7 @@ const Dashboard = () => {
                                 borderRadius="50px"
                                 colorScheme="blue"
                                 onClick={handleEditMacrosClick}
+                                fontSize="xs"
                             >
                                 <Stack spacing={0} alignItems="center">
                                     <Box as="span">Edit</Box>
@@ -243,6 +258,7 @@ const Dashboard = () => {
                                 borderRadius="50px"
                                 colorScheme="red"
                                 onClick={handleCloseClick}
+                                fontSize="xs"
                             >
                                 Close
                             </Button>
@@ -250,6 +266,7 @@ const Dashboard = () => {
                                 borderRadius="50px"
                                 colorScheme="blue"
                                 onClick={handleEditMacrosClick}
+                                fontSize="xs"
                             >
                                 <Stack spacing={0} alignItems="center">
                                     <Box as="span">Edit</Box>
@@ -275,6 +292,7 @@ const Dashboard = () => {
                                 borderRadius="50px"
                                 colorScheme="red"
                                 onClick={handleCloseClick}
+                                fontSize="xs"
                             >
                                 Close
                             </Button>
@@ -282,6 +300,7 @@ const Dashboard = () => {
                                 borderRadius="50px"
                                 colorScheme="blue"
                                 onClick={handleEditWorkoutsClick}
+                                fontSize="xs"
                             >
                                 <Stack spacing={0} alignItems="center">
                                     <Box as="span">Edit</Box>
@@ -299,4 +318,4 @@ const Dashboard = () => {
 
 export default Dashboard;
 
-//bg="151414"
+
