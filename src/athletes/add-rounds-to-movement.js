@@ -119,7 +119,6 @@ const AddRoundsToMovement = (props) => {
 
     return (
         <React.Fragment>
-            <Text color="white">Add rounds to movement</Text>
             {movement.map((m, index) => (
                 <React.Fragment key={index}>
                     <Box>
@@ -212,7 +211,7 @@ const AddRoundsToMovement = (props) => {
                                     width="100%"
                                     onClick={movementHandler}
                                     type="submit"
-                                    bg="blue"
+                                    bg="red"
                                     color="white"
                                 >
                                     Add round

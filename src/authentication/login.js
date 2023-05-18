@@ -130,6 +130,8 @@ const Login = (props) => {
                     onClick={() => navigate("/")}
                     bg="red"
                     color="white"
+                    borderRadius="50px"
+                    fontSize="xs"
                 >
                     Home
                 </Button>
@@ -151,24 +153,26 @@ const Login = (props) => {
                 {isLoading && <LoadingSpinner />}
                 <form onSubmit={loginUser}>
                     <FormControl>
-                        <FormLabel htmlFor="username">Username</FormLabel>
+                        <FormLabel fontSize="xs" htmlFor="username">Username</FormLabel>
                         <Input
                             type="text"
                             color="black"
                             name="username"
                             value={inputState.userName}
+                            fontSize="xs"
                             placeholder="Enter username"
                             bg="white"
                             onChange={changeHandler}
                         />
                     </FormControl>
                     <FormControl mt={4}>
-                        <FormLabel htmlFor="password">Password</FormLabel>
+                        <FormLabel fontSize="xs" htmlFor="password">Password</FormLabel>
                         <Input
                             color="black"
                             type="password"
                             name="password"
                             value={inputState.password}
+                            fontSize="xs"
                             placeholder="Enter password"
                             bg="white"
                             onChange={changeHandler}
@@ -180,28 +184,21 @@ const Login = (props) => {
                         type="submit"
                         bg="red"
                         color="white"
+                        fontSize="xs"
                     >
                         Login
                     </Button>
+                    <Button
+                        mt={4}
+                        onClick={coachLog}
+                        width="100%"
+                        bg="red"
+                        color="white"
+                        fontSize="xs"
+                    >
+                        Switch to Coach login
+                    </Button>
                 </form>
-                <Button
-                    mt={4}
-                    onClick={coachLog}
-                    width="100%"
-                    bg="red"
-                    color="white"
-                >
-                    Switch to Coach login
-                </Button>
-                <Button
-                    mt={4}
-                    onClick={logout}
-                    width="100%"
-                    bg="red"
-                    color="white"
-                >
-                    Logout
-                </Button>
                 {!login && errorMessage && (
                     <Text color="white">{errorMessage}</Text>
                 )}

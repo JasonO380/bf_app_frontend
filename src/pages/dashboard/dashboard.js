@@ -98,6 +98,7 @@ const Dashboard = () => {
                     mr={4}
                     onClick={() => navigate("/")}
                     bg="red"
+                    borderRadius="50px"
                     color="white"
                 >
                     Home

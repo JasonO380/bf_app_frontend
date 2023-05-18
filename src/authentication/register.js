@@ -208,6 +208,8 @@ const Register = () => {
                     onClick={() => navigate("/")}
                     bg="red"
                     color="white"
+                    borderRadius="50px"
+                    fontSize="xs"
                 >
                     Home
                 </Button>
@@ -228,7 +230,7 @@ const Register = () => {
                 {isLoading && <LoadingSpinner />}
                 <form onSubmit={registerUser}>
                     <FormControl>
-                        <FormLabel htmlFor="username">Username</FormLabel>
+                        <FormLabel fontSize="xs" htmlFor="username">Username</FormLabel>
                         <Input
                             color="black"
                             type="text"
@@ -237,10 +239,11 @@ const Register = () => {
                             bg="white"
                             onChange={changeHandler}
                             value={inputState.username}
+                            fontSize="xs"
                         />
                     </FormControl>
                     <FormControl mt={4}>
-                        <FormLabel htmlFor="email">Email</FormLabel>
+                        <FormLabel fontSize="xs" htmlFor="email">Email</FormLabel>
                         <Input
                             color="black"
                             type="email"
@@ -249,10 +252,11 @@ const Register = () => {
                             bg="white"
                             onChange={changeHandler}
                             value={inputState.email}
+                            fontSize="xs"
                         />
                     </FormControl>
                     <FormControl mt={4}>
-                        <FormLabel htmlFor="password">Password</FormLabel>
+                        <FormLabel fontSize="xs" htmlFor="password">Password</FormLabel>
                         <Input
                             color="black"
                             type="password"
@@ -261,6 +265,7 @@ const Register = () => {
                             bg="white"
                             onChange={changeHandler}
                             value={inputState.password}
+                            fontSize="xs"
                         />
                     </FormControl>
                     <Button
@@ -271,6 +276,7 @@ const Register = () => {
                         type="submit"
                         bg="red"
                         color="white"
+                        fontSize="xs"
                         isDisabled={
                             (!isPasswordValid && passwordTouched) ||
                             (!isUsernameValid && usernameTouched)
@@ -281,15 +287,15 @@ const Register = () => {
                 </form>
                 {isUsernameValid && <Text>{nameAvailable}</Text>}
                 {usernameTouched && !isUsernameValid && (
-                    <Text>{usernameErrorMessage}</Text>
+                    <Text fontSize="xs">{usernameErrorMessage}</Text>
                 )}
                 {passwordTouched && !isPasswordValid && (
-                    <Text>{passwordErrorMessage}</Text>
+                    <Text fontSize="xs">{passwordErrorMessage}</Text>
                 )}
                 {emailTouched && !isEmailValid && (
-                    <Text>{emailErrorMessage}</Text>
+                    <Text fontSize="xs">{emailErrorMessage}</Text>
                 )}
-                {errorMessage && <Text>{errorMessage}</Text>}
+                {errorMessage && <Text fontSize="xs">{errorMessage}</Text>}
             </Stack>
         </Box>
     );

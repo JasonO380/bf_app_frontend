@@ -13,6 +13,7 @@ const MobileServices = () => {
                     boxShadow="10px 10px 5px black"
                     height="fit-content"
                     maxWidth="50%"
+                    objectFit="contain"
                     src={me2}
                 />
                 <Stack>

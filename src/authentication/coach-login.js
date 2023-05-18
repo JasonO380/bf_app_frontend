@@ -119,6 +119,7 @@ const CoachLogin = (props) => {
                     onClick={() => navigate("/")}
                     bg="red"
                     color="white"
+                    borderRadius="50px"
                 >
                     Home
                 </Button>

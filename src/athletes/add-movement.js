@@ -171,15 +171,15 @@ const AddMovement = () => {
                 <Stack margin="auto" width="80%" paddingBottom="60px">
                     <FormControl>
                         <form onSubmit={addMovement}>
-                            <FormLabel color="white" htmlFor="movement">
+                            <FormLabel fontSize="xs" color="white" htmlFor="movement">
                                 Movement
                             </FormLabel>
                             <Text
                                 paddingBottom="15px"
                                 color="white"
-                                fontSize="small"
                                 fontStyle="italic"
                                 fontWeight="bold"
+                                fontSize="xs"
                             >
                                 Must be 3 characters
                             </Text>
@@ -190,6 +190,7 @@ const AddMovement = () => {
                                 type="text"
                                 bg="white"
                                 placeholder="Movement"
+                                fontSize="xs"
                             />
                             <Button
                                 mt={4}
@@ -199,6 +200,7 @@ const AddMovement = () => {
                                 bg="red"
                                 color="white"
                                 isDisabled={!isValid && touched}
+                                fontSize="xs"
                             >
                                 Add movement
                             </Button>
@@ -216,7 +218,7 @@ const AddMovement = () => {
                             bg="white"
                         >
                             <VStack alignItems="stretch" spacing={0}>
-                                <Box p={2} borderBottomWidth="1px">
+                                <Box fontSize="xs" p={2} borderBottomWidth="1px">
                                     --Select one--
                                 </Box>
                                 {movements.map((movement) => (
@@ -243,7 +245,7 @@ const AddMovement = () => {
                         </Box>
                     )}
                     {touched && !isValid && (
-                        <Text color="red">{errorMessage}</Text>
+                        <Text fontSize="xs" color="red">{errorMessage}</Text>
                     )}
                 </Stack>
             </Box>

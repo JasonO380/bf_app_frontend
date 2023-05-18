@@ -117,10 +117,11 @@ const AddAthleteSession = () => {
             <Stack margin="auto" width="80%" paddingBottom="60px">
                 <form onSubmit={addSession}>
                     <FormControl>
-                        <FormLabel color="white" htmlFor="movement">Movement</FormLabel>
+                        <FormLabel fontSize="xs" color="white" htmlFor="movement">Movement</FormLabel>
                         <Input
                             onChange={changeHandler}
                             value={inputState.movement}
+                            fontSize="xs"
                             name="movement"
                             type="text"
                             bg="white"
@@ -128,7 +129,7 @@ const AddAthleteSession = () => {
                         />
                     </FormControl>
                     <FormControl>
-                        <FormLabel color="white" htmlFor="weight">Weight</FormLabel>
+                        <FormLabel fontSize="xs" color="white" htmlFor="weight">Weight</FormLabel>
                         <Input
                             onChange={changeHandler}
                             value={inputState.weight}
@@ -136,10 +137,11 @@ const AddAthleteSession = () => {
                             type="text"
                             bg="white"
                             placeholder="Weight"
+                            fontSize="xs"
                         />
                     </FormControl>
                     <FormControl>
-                        <FormLabel color="white" htmlFor="reps">Reps</FormLabel>
+                        <FormLabel fontSize="xs" color="white" htmlFor="reps">Reps</FormLabel>
                         <Input
                             onChange={changeHandler}
                             value={inputState.reps}
@@ -147,10 +149,11 @@ const AddAthleteSession = () => {
                             type="text"
                             bg="white"
                             placeholder="Reps"
+                            fontSize="xs"
                         />
                     </FormControl>
                     <FormControl>
-                        <FormLabel color="white" htmlFor="rounds">Rounds</FormLabel>
+                        <FormLabel fontSize="xs" color="white" htmlFor="rounds">Rounds</FormLabel>
                         <Input
                             onChange={changeHandler}
                             value={inputState.rounds}
@@ -158,10 +161,11 @@ const AddAthleteSession = () => {
                             type="text"
                             bg="white"
                             placeholder="Rounds"
+                            fontSize="xs"
                         />
                     </FormControl>
                     <FormControl>
-                        <FormLabel color="white" htmlFor="distance">Distance</FormLabel>
+                        <FormLabel fontSize="xs" color="white" htmlFor="distance">Distance</FormLabel>
                         <Input
                             onChange={changeHandler}
                             value={inputState.distance}
@@ -169,10 +173,11 @@ const AddAthleteSession = () => {
                             type="text"
                             bg="white"
                             placeholder="Distance"
+                            fontSize="xs"
                         />
                     </FormControl>
                     <FormControl>
-                        <FormLabel color="white" htmlFor="time">Time</FormLabel>
+                        <FormLabel fontSize="xs" color="white" htmlFor="time">Time</FormLabel>
                         <Input
                             onChange={changeHandler}
                             value={inputState.time}
@@ -180,6 +185,7 @@ const AddAthleteSession = () => {
                             type="text"
                             bg="white"
                             placeholder="Time"
+                            fontSize="xs"
                         />
                     </FormControl>
                     <Button
@@ -188,11 +194,12 @@ const AddAthleteSession = () => {
                         type="submit"
                         bg="red"
                         color="white"
+                        fontSize="xs"
                     >
                         Add session
                     </Button>
                 </form>
-                {errorMessage && <Text>{errorMessage}</Text>}
+                {errorMessage && <Text fontSize="xs">{errorMessage}</Text>}
             </Stack>
         </Box>
         {user && (
