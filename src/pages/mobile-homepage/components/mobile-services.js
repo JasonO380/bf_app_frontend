@@ -11,7 +11,7 @@ const MobileServices = () => {
             <Flex paddingTop="25px" gap={5} width="95%" margin="auto">
                 <Image
                     boxShadow="10px 10px 5px black"
-                    height="fit-content"
+                    maxHeight="100%"
                     maxWidth="50%"
                     objectFit="contain"
                     src={me2}
