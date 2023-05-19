@@ -188,6 +188,7 @@ const SessionCard = (props) => {
                                                                             borderRadius="10px"
                                                                             border="1px solid grey"
                                                                             width="90%"
+                                                                            fontSize="xs"
                                                                         >
                                                                             <Text color="white">
                                                                                 Movement:
@@ -234,6 +235,7 @@ const SessionCard = (props) => {
                                                                         <Button
                                                                             color="white"
                                                                             borderRadius="50"
+                                                                            fontSize="xs"
                                                                             name={
                                                                                 s.id
                                                                             }
@@ -250,6 +252,7 @@ const SessionCard = (props) => {
                                                                         <Button
                                                                             color="white"
                                                                             borderRadius="50"
+                                                                            fontSize="xs"
                                                                             name={
                                                                                 s.id
                                                                             }

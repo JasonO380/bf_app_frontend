@@ -113,7 +113,7 @@ const GetAthletesSessions = (props) => {
             <Stack paddingBottom="60px" color="black">
                 {workouts.reverse().map((s) => {
                     return (
-                        <Box mb={5}>
+                        <Box fontSize="xs" mb={5}>
                             <Flex>
                                 <Text color="white">
                                     Year: {s.year} Month: {s.month} Day:{" "}
@@ -146,6 +146,7 @@ const GetAthletesSessions = (props) => {
                                     onClick={updateHandler}
                                     bg="teal"
                                     mr={2}
+                                    fontSize="xs"
                                 >
                                     Update
                                 </Button>
@@ -155,6 +156,7 @@ const GetAthletesSessions = (props) => {
                                     name={s._id}
                                     onClick={deleteSession}
                                     bg="red"
+                                    fontSize="xs"
                                 >
                                     Delete
                                 </Button>

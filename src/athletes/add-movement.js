@@ -255,12 +255,6 @@ const AddMovement = () => {
                     )}
                 </Stack>
             </Box>
-            {/* {user && (selectedMovement || newMovement.length) && (
-                <AddRoundsToMovement
-                    movement={[...newMovement, ...selectedMovement]}
-                    removeMovement={removeMovementHandler}
-                />
-            )} */}
         </React.Fragment>
     );
 };

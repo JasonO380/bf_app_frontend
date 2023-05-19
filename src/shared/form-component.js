@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     Box,
     Stack,
@@ -7,6 +7,7 @@ import {
     Input,
     Button,
 } from "@chakra-ui/react";
+import LoadingSpinner from "./loading-spinner";
 
 const FormComponent = (props) => {
     const onSubmit = props.onSubmit;
@@ -15,6 +16,7 @@ const FormComponent = (props) => {
     const fields = props.fields;
     const buttonText = props. buttonText;
     const allData= props.allData;
+    const isLoading = props.isLoading;
     const renderPlaceholder = (fieldName, dataKey) => {
         if (allData && allData[dataKey]) {
             return allData[dataKey][fieldName] || "";
@@ -52,6 +54,7 @@ const FormComponent = (props) => {
                     >
                         {buttonText}
                     </Button>
+                    {isLoading && <LoadingSpinner text="Loading" />}
                 </form>
             </Stack>
         </Box>

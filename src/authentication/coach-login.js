@@ -192,6 +192,7 @@ const CoachLogin = (props) => {
                 >
                     Logout
                 </Button>
+                {isLoading && <LoadingSpinner text="Logging in" />}
                 {errorMessage && <Text>{errorMessage}</Text>}
             </Stack>
         </Box>

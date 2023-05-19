@@ -12,6 +12,7 @@ const GetAndAddTodaysMacros = (props) => {
     const [todaysMacros, setTodaysMacros] = useState();
     const [cData, setCData] = useState();
     const [cOptions, setCOptions] = useState();
+    const [isLoading, setIsLoading] = useState(false);
     const [newMacros, setNewMacros] = useState();
     const inputReducer = (state, action) => {
         const dateEntry = new Date();
@@ -111,6 +112,7 @@ const GetAndAddTodaysMacros = (props) => {
     };
 
     const postMacros = async (event) => {
+        setIsLoading(true);
         const userID = auth.userID;
         event.preventDefault();
         try {
@@ -172,9 +174,11 @@ const GetAndAddTodaysMacros = (props) => {
         } catch (err) {
             console.log(err);
         }
+        setIsLoading(false);
     };
 
     const deleteMacros = async (event) => {
+        setIsLoading(true);
         const mid = event.target.name;
         try {
             const response = await fetch(
@@ -191,6 +195,7 @@ const GetAndAddTodaysMacros = (props) => {
             console.log(responseData.message);
         } catch (err) {}
         fetchMacros();
+        setIsLoading(false);
     };
 
     const prepChartData = (macroData) => {
@@ -236,7 +241,7 @@ const GetAndAddTodaysMacros = (props) => {
 
     useEffect(() => {
         fetchMacros();
-    }, [auth.userID, auth.token, newMacros]);
+    }, [auth.userID, auth.token, todaysMacros]);
 
     return (
         <React.Fragment>
@@ -245,6 +250,7 @@ const GetAndAddTodaysMacros = (props) => {
                 inputState={inputState}
                 changeHandler={changeHandler}
                 fields={fields}
+                isLoading={isLoading}
                 buttonText="Add macros"
             />
             {todaysMacros && (

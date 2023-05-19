@@ -150,7 +150,7 @@ const Login = (props) => {
                 <Heading fontSize="60px">
                     <FaUser />
                 </Heading>
-                {isLoading && <LoadingSpinner />}
+                {isLoading && <LoadingSpinner text="Loggin in" />}
                 <form onSubmit={loginUser}>
                     <FormControl>
                         <FormLabel fontSize="xs" htmlFor="username">Username</FormLabel>

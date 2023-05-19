@@ -45,6 +45,7 @@ const Register = () => {
     const [isValid, setIsValid] = useState(true);
     const [isPasswordValid, setIsPasswordValid] = useState(false);
     const [isUsernameValid, setIsUsernameValid] = useState(false);
+    const [isSearchingUsername, setIsSearchingUsername] = useState(false);
     const [login, setLogin] = useState(true);
     const [inputState, dispatch] = useReducer(inputReducer, {
         email: "",
@@ -125,6 +126,7 @@ const Register = () => {
     };
 
     const searchForUsername = async (query) => {
+        setIsSearchingUsername(true);
         try {
             const response = await fetch(
                 `https://bf-backend.onrender.com/api/users/find/${query}`,
@@ -141,6 +143,7 @@ const Register = () => {
         } catch (err) {
             console.log(err);
         }
+        setIsSearchingUsername(false);
     };
 
     const registerUser = async (event) => {
@@ -227,7 +230,7 @@ const Register = () => {
                 <Heading fontSize="60px">
                     <FaUserPlus />
                 </Heading>
-                {isLoading && <LoadingSpinner />}
+                {isLoading && <LoadingSpinner text="Registering" />}
                 <form onSubmit={registerUser}>
                     <FormControl>
                         <FormLabel fontSize="xs" htmlFor="username">Username</FormLabel>
@@ -285,6 +288,7 @@ const Register = () => {
                         Register
                     </Button>
                 </form>
+                {isSearchingUsername && <LoadingSpinner text="Checking name" />}
                 {isUsernameValid && <Text>{nameAvailable}</Text>}
                 {usernameTouched && !isUsernameValid && (
                     <Text fontSize="xs">{usernameErrorMessage}</Text>
