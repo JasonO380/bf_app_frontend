@@ -27,7 +27,7 @@ const FormComponent = (props) => {
             <Stack margin="auto" width="80%" paddingBottom="60px">
                 <form onSubmit={onSubmit}>
                     {fields.map((field) => (
-                        <FormControl key={field.name}>
+                        <FormControl fontSize="xs" key={field.name}>
                             <FormLabel color="white" htmlFor={field.name}>
                                 {field.label}
                             </FormLabel>
@@ -43,10 +43,12 @@ const FormComponent = (props) => {
                     ))}
                     <Button
                         mt={4}
+                        borderRadius="50px"
                         width="100%"
                         type="submit"
                         bg="red"
                         color="white"
+                        fontSize="xs"
                     >
                         {buttonText}
                     </Button>

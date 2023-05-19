@@ -96,7 +96,7 @@ const AddMacros = () => {
         <Box bg="offWhite" p={5} width="100%" margin="0 auto">
             <Stack margin="auto" width="80%" paddingBottom="60px">
                 <form onSubmit={postMacros}>
-                    <FormControl>
+                    <FormControl fontSize="xs">
                         <FormLabel color="white" htmlFor="carbs">Carbs</FormLabel>
                         <Input
                             onChange={changeHandler}
@@ -105,6 +105,7 @@ const AddMacros = () => {
                             type="text"
                             bg="white"
                             placeholder="Carbs"
+                            fontSize="xs"
                         />
                     </FormControl>
                     <FormControl>
@@ -135,6 +136,7 @@ const AddMacros = () => {
                         type="submit"
                         bg="red"
                         color="white"
+                        borderRadius="50px"
                     >
                         Add macros
                     </Button>
