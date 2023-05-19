@@ -145,12 +145,12 @@ const UpdateSession = (props) => {
             <Box>
                 <Stack margin="auto" width="80%">
                     <form onSubmit={updateWorkout} ref={refPoint}>
-                    <FormControl>
-                            <FormLabel color="white" htmlFor="movement">Movement</FormLabel>
+                    <FormControl fontSize="xs">
+                            <FormLabel fontSize="xs" color="white" htmlFor="movement">Movement</FormLabel>
                             <Text color="white">{workoutToUpdate.exercise}</Text>
                         </FormControl>
                         {workoutToUpdate.weight && <FormControl>
-                            <FormLabel color="white" htmlFor="weight">Weight</FormLabel>
+                            <FormLabel fontSize="xs" color="white" htmlFor="weight">Weight</FormLabel>
                             <Input
                                 onChange={changeHandler}
                                 placeholder={workoutToUpdate.weight}
@@ -158,10 +158,11 @@ const UpdateSession = (props) => {
                                 name="weight"
                                 type="text"
                                 color="white"
+                                fontSize="xs"
                             />
                         </FormControl>}
                         {workoutToUpdate.reps && <FormControl>
-                            <FormLabel color="white" htmlFor="reps">Reps</FormLabel>
+                            <FormLabel fontSize="xs" color="white" htmlFor="reps">Reps</FormLabel>
                             <Input
                                 onChange={changeHandler}
                                 placeholder={workoutToUpdate.reps}
@@ -169,10 +170,11 @@ const UpdateSession = (props) => {
                                 name="reps"
                                 type="text"
                                 color="white"
+                                fontSize="xs"
                             />
                         </FormControl>}
                         {workoutToUpdate.rounds && <FormControl>
-                            <FormLabel color="white" htmlFor="rounds">Rounds</FormLabel>
+                            <FormLabel fontSize="xs" color="white" htmlFor="rounds">Rounds</FormLabel>
                             <Input
                                 onChange={changeHandler}
                                 placeholder={workoutToUpdate.rounds}
@@ -180,10 +182,11 @@ const UpdateSession = (props) => {
                                 name="rounds"
                                 type="text"
                                 color="white"
+                                fontSize="xs"
                             />
                         </FormControl>}
                         {workoutToUpdate.distance && <FormControl>
-                            <FormLabel color="white" htmlFor="distance">Distance</FormLabel>
+                            <FormLabel fontSize="xs" color="white" htmlFor="distance">Distance</FormLabel>
                             <Input
                                 onChange={changeHandler}
                                 placeholder={workoutToUpdate.distance}
@@ -191,10 +194,11 @@ const UpdateSession = (props) => {
                                 name="distance"
                                 type="text"
                                 color="white"
+                                fontSize="xs"
                             />
                         </FormControl>}
                         {workoutToUpdate.time && <FormControl>
-                            <FormLabel color="white" htmlFor="time">Time</FormLabel>
+                            <FormLabel fontSize="xs" color="white" htmlFor="time">Time</FormLabel>
                             <Input
                                 onChange={changeHandler}
                                 placeholder={workoutToUpdate.time}
@@ -202,6 +206,7 @@ const UpdateSession = (props) => {
                                 name="time"
                                 type="text"
                                 color="white"
+                                fontSize="xs"
                             />
                         </FormControl>}
                         <Button
@@ -210,6 +215,7 @@ const UpdateSession = (props) => {
                             type="submit"
                             bg="red"
                             color="white"
+                            fontSize="xs"
                         >
                             Update
                         </Button>

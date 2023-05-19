@@ -38,6 +38,7 @@ const Footer = () => {
                 marginBottom="10px"
                 margin="auto"
                 width="95%"
+                fontSize="xs"
             >
                 <Text mr={5} color="white">
                     Contact:
@@ -58,7 +59,7 @@ const Footer = () => {
                     <FaInstagram />
                 </Link>
             </Flex>
-            <Wrap justify="center" width="95%" margin="auto">
+            <Wrap justify="center" width="95%" margin="auto" fontSize="xs">
                 <WrapItem>
                     <List spacing={1} paddingBottom="50px" color="white">
                         <ListItem>

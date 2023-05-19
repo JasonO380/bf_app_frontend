@@ -254,7 +254,7 @@ const GetAndAddTodaysMacros = (props) => {
                 buttonText="Add macros"
             />
             {todaysMacros && (
-                <Box paddingBottom="60px">
+                <Box paddingBottom="60px" height="15rem" display="flex" justifyContent="center" alignItems="baseline">
                     <DonutChart data={cData} options={cOptions} />
                     <Button
                         name={todaysMacros._id}
@@ -262,6 +262,7 @@ const GetAndAddTodaysMacros = (props) => {
                         borderRadius="50px"
                         backgroundColor="red"
                         onClick={deleteMacros}
+                        fontSize="xs"
                     >
                         Delete
                     </Button>
