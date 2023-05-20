@@ -66,7 +66,7 @@ const ShowAthleteSessionsHistory = (props) => {
     }, []);
 
 
-    return showEditWorkouts ? <SessionCard onUpdate={getSessions} workouts={allWorkouts} /> :  <AthletesTopSets session={allWorkouts} />;
+    return showEditWorkouts ? <SessionCard getUpdate={getSessions} workouts={allWorkouts} /> :  <AthletesTopSets session={allWorkouts} />;
 };
 
 export default ShowAthleteSessionsHistory;

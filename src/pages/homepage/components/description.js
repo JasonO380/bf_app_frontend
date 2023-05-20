@@ -73,7 +73,6 @@ const Description = () => {
                         color="white"
                         fontSize="xl"
                         fontWeight="bold"
-                        // onClick={clickHandler}
                     >
                         Jason Ollada
                     </Tab>
@@ -83,7 +82,6 @@ const Description = () => {
                         color="white"
                         fontSize="xl"
                         fontWeight="bold"
-                        // onClick={clickHandler}
                     >
                         Training
                     </Tab>

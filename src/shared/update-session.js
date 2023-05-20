@@ -110,9 +110,11 @@ const UpdateSession = (props) => {
             console.log(response);
             const responseData = await response.json();
             console.log(responseData)
-            props.onUpdate();
-            props.updateChangeHandler(null);
+            // props.onUpdate();
+            // props.updateChangeHandler(null);
         } catch (err) {}
+        props.onUpdate();
+        props.updateChangeHandler(null);
     };
 
     useEffect(() => {
