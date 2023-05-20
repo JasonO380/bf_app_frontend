@@ -182,7 +182,7 @@ const AddMovement = () => {
     return (
         <React.Fragment>
             <Box bg="offWhite" p={5} width="100%" margin="0 auto">
-                <Stack margin="auto" width="80%" paddingBottom="60px">
+                <Stack margin="auto" width="100%" paddingBottom="60px">
                     {!isCreateMovement ? (
                         <Button
                             mt={4}

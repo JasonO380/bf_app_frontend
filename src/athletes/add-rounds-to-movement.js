@@ -33,6 +33,22 @@ const AddRoundsToMovement = (props) => {
                     dayOfMonth: dateEntry.getDate(),
                     month: dateEntry.toLocaleString("en-US", { month: "long" }),
                 };
+            case "CONVERT_TO_KG":
+                const weightKG = Math.round(
+                    parseFloat(state.weight) * 0.45359237
+                );
+                return {
+                    ...state,
+                    weight: weightKG.toString(),
+                };
+            case "CONVERT_TO_POUNDS":
+                const weightPounds = Math.round(
+                    parseFloat(state.weight) * 2.20462
+                );
+                return {
+                    ...state,
+                    weight: weightPounds.toString(),
+                };
             case "CLEAR_FORM":
                 console.log("form cleared");
                 return {
@@ -69,12 +85,22 @@ const AddRoundsToMovement = (props) => {
 
     const movementHandler = (event) => {
         const movementToAdd = event.target.name;
-        const formattedValue = movementToAdd.charAt(0).toUpperCase() + movementToAdd.slice(1).toLowerCase();
+        const formattedValue =
+            movementToAdd.charAt(0).toUpperCase() +
+            movementToAdd.slice(1).toLowerCase();
         setCurrentMovement(formattedValue);
     };
 
     const removeMovementHandler = (movementToRemove) => {
         props.removeMovement(movementToRemove);
+    };
+
+    const convertToKG = () => {
+        dispatch({ type: "CONVERT_TO_KG" });
+    };
+
+    const convertToPounds = () => {
+        dispatch({ type: "CONVERT_TO_POUNDS" });
     };
 
     const addSession = async (event) => {
@@ -127,13 +153,24 @@ const AddRoundsToMovement = (props) => {
             {movement.map((m, index) => (
                 <React.Fragment key={index}>
                     <Box>
-                        <Text fontSize="xs" color="white">{m}</Text>
+                        <Text fontSize="xs" color="white">
+                            {m}
+                        </Text>
                     </Box>
                     <form onSubmit={addSession}>
-                        <Flex gap="10px" margin="auto" width="80%" paddingBottom="60px">
+                        <Flex
+                            gap="10px"
+                            margin="auto"
+                            width="100%"
+                            paddingBottom="5px"
+                        >
                             <FormControl>
                                 <Stack>
-                                    <FormLabel fontSize="xs" color="white" htmlFor="weight">
+                                    <FormLabel
+                                        fontSize="xs"
+                                        color="white"
+                                        htmlFor="weight"
+                                    >
                                         Weight
                                     </FormLabel>
                                     <Input
@@ -149,7 +186,11 @@ const AddRoundsToMovement = (props) => {
                             </FormControl>
                             <FormControl>
                                 <Stack>
-                                    <FormLabel fontSize="xs" color="white" htmlFor="reps">
+                                    <FormLabel
+                                        fontSize="xs"
+                                        color="white"
+                                        htmlFor="reps"
+                                    >
                                         Reps
                                     </FormLabel>
                                     <Input
@@ -165,7 +206,11 @@ const AddRoundsToMovement = (props) => {
                             </FormControl>
                             <FormControl>
                                 <Stack>
-                                    <FormLabel fontSize="xs" color="white" htmlFor="rounds">
+                                    <FormLabel
+                                        fontSize="xs"
+                                        color="white"
+                                        htmlFor="rounds"
+                                    >
                                         Rounds
                                     </FormLabel>
                                     <Input
@@ -180,10 +225,54 @@ const AddRoundsToMovement = (props) => {
                                 </Stack>
                             </FormControl>
                         </Flex>
-                        <Flex gap="10px" margin="auto" width="80%" paddingBottom="60px">
+                        <Flex
+                            gap="10px"
+                            margin="auto"
+                            width="100%"
+                            paddingBottom="5px"
+                        >
+                            <Button
+                                mt={4}
+                                name={m}
+                                border="1px solid white"
+                                borderRadius="50px"
+                                width="fit-content"
+                                onClick={convertToKG}
+                                type="submit"
+                                bg="transparent"
+                                color="white"
+                                fontSize="xs"
+                            >
+                                Convert KG
+                            </Button>
+                            <Button
+                                mt={4}
+                                name={m}
+                                border="1px solid white"
+                                borderRadius="50px"
+                                width="fit-content"
+                                onClick={convertToPounds}
+                                type="submit"
+                                bg="transparent"
+                                color="white"
+                                fontSize="xs"
+                            >
+                                Convert pounds
+                            </Button>
+                        </Flex>
+                        <Flex
+                            gap="10px"
+                            margin="auto"
+                            width="100%"
+                            paddingBottom="5px"
+                        >
                             <FormControl>
                                 <Stack>
-                                    <FormLabel fontSize="xs" color="white" htmlFor="distance">
+                                    <FormLabel
+                                        fontSize="xs"
+                                        color="white"
+                                        htmlFor="distance"
+                                    >
                                         Distance
                                     </FormLabel>
                                     <Input
@@ -199,7 +288,11 @@ const AddRoundsToMovement = (props) => {
                             </FormControl>
                             <FormControl>
                                 <Stack>
-                                    <FormLabel fontSize="xs" color="white" htmlFor="time">
+                                    <FormLabel
+                                        fontSize="xs"
+                                        color="white"
+                                        htmlFor="time"
+                                    >
                                         Time
                                     </FormLabel>
                                     <Input
@@ -213,40 +306,42 @@ const AddRoundsToMovement = (props) => {
                                     />
                                 </Stack>
                             </FormControl>
-                            <Box flexGrow={1}>
-                                <Button
-                                    mt={4}
-                                    name={m}
-                                    borderRadius="50px"
-                                    width="100%"
-                                    onClick={movementHandler}
-                                    type="submit"
-                                    bg="red"
-                                    color="white"
-                                    fontSize="xs"
-                                >
-                                    Add round
-                                </Button>
-                            </Box>
                         </Flex>
+                        <Box flexGrow={1}>
+                            <Button
+                                mt={4}
+                                name={m}
+                                borderRadius="50px"
+                                width="100%"
+                                onClick={movementHandler}
+                                type="submit"
+                                bg="red"
+                                color="white"
+                                fontSize="xs"
+                            >
+                                Add round
+                            </Button>
+                        </Box>
                     </form>
                     <Box paddingBottom="60px" flexGrow={1}>
-                    <Button
-                        mt={4}
-                        name={m}
-                        borderRadius="50px"
-                        width="100%"
-                        onClick={() => removeMovementHandler(m)}
-                        bg="red"
-                        color="white"
-                        fontSize="xs"
-                    >
-                        Remove movement
-                    </Button>
-                </Box>
+                        <Button
+                            mt={4}
+                            name={m}
+                            borderRadius="50px"
+                            width="100%"
+                            onClick={() => removeMovementHandler(m)}
+                            bg="red"
+                            color="white"
+                            fontSize="xs"
+                        >
+                            Remove movement
+                        </Button>
+                    </Box>
                 </React.Fragment>
             ))}
-            {sessionID && <ShowTodaysSession user={auth.userID} newSession={sessionID} /> }
+            {sessionID && (
+                <ShowTodaysSession user={auth.userID} newSession={sessionID} />
+            )}
         </React.Fragment>
     );
 };
