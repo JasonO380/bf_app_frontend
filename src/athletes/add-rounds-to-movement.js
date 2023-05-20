@@ -108,6 +108,11 @@ const AddRoundsToMovement = (props) => {
                     }),
                 }
             );
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.log(errorData.message);
+                throw new Error(errorData.message);
+            }
             const responseData = await response.json();
             dispatch({
                 type: "CLEAR_FORM",

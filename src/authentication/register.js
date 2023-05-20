@@ -121,6 +121,8 @@ const Register = () => {
             }
             if (value.length < 1) {
                 setEmailTouched(false);
+                setEmailErrorMessage("");
+                setErrorMessage("");
             }
         }
     };
@@ -172,14 +174,11 @@ const Register = () => {
                 const errorResponse = await response.json();
                 console.log(errorResponse.message);
                 setErrorMessage(errorResponse.message);
+                setLogin(false);
                 throw new Error(errorResponse.message);
             }
             const responseData = await response.json();
             accessGranted = responseData.message;
-            console.log(responseData);
-            console.log(responseData.message);
-            console.log("here");
-            console.log(accessGranted);
             auth.login(
                 responseData.userID,
                 responseData.token,
@@ -188,7 +187,6 @@ const Register = () => {
             console.log(auth.login);
         } catch (err) {
             console.log(err);
-            setLogin(false);
         }
         if (accessGranted === "Email already in use") {
             setEmailErrorMessage("Email already in use");
@@ -251,7 +249,7 @@ const Register = () => {
                             color="black"
                             type="email"
                             name="email"
-                            placeholder="Enter email"
+                            placeholder="Email (not required)"
                             bg="white"
                             onChange={changeHandler}
                             value={inputState.email}

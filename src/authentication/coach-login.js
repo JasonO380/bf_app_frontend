@@ -76,12 +76,10 @@ const CoachLogin = (props) => {
             if (!response.ok) {
                 const errorData = await response.json();
                 setErrorMessage(errorData.message);
-                console.log(errorData.message);
                 throw new Error(errorData.message);
             }
             const responseData = await response.json();
             accessGranted = responseData.message;
-            console.log(accessGranted);
             loginRegister.login(
                 responseData.userID,
                 responseData.token,

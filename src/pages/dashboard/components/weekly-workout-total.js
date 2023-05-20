@@ -23,6 +23,11 @@ const WeeklyWorkoutTotal = () => {
                     },
                 }
             );
+            if (!response.ok) {
+                const errorResponse = await response.json();
+                console.log(errorResponse.message);
+                throw new Error(errorResponse.message);
+            }
             const responseData = await response.json();
             const workoutData = responseData.sessions;
             prepChartData(workoutData);

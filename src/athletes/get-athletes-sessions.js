@@ -88,6 +88,11 @@ const GetAthletesSessions = (props) => {
                     }),
                 }
             );
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.log(errorData.message);
+                throw new Error(errorData.message);
+            }
             const responseData = await response.json();
             console.log(responseData.message);
         } catch (err) {}

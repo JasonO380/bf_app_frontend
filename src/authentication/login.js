@@ -17,12 +17,12 @@ import LoadingSpinner from "../shared/loading-spinner";
 import { useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 
-let accessGranted;
 const Login = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState();
     const [coachLogin, setCoachLogin] = useState(false);
     const [isTabletOrAbove] = useMediaQuery("(min-width: 600px)");
+    let accessGranted;
     const inputReducer = (state, action) => {
         console.log("Action:", action);
         switch (action.type) {
@@ -80,6 +80,7 @@ const Login = (props) => {
             );
             if (!response.ok) {
                 const errorData = await response.json();
+                setLogin(false);
                 setErrorMessage(errorData.message);
                 throw new Error(errorData.message);
             }

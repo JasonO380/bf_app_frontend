@@ -105,7 +105,11 @@ const UpdateAthleteSession = (props) => {
                     }),
                 }
             );
-            console.log(response);
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.log(errorData.message);
+                throw new Error(errorData.message);
+            }
             const responseData = await response.json();
             console.log(responseData)
             props.getUpdate();

@@ -32,9 +32,13 @@ const ShowAthleteSessionsHistory = (props) => {
                     },
                 }
             );
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.log(errorData.message);
+                throw new Error(errorData.message);
+            }
             const responseData = await response.json();
             allSessions = responseData.sessions.reverse();
-            console.log(allSessions);
             allSessions.map((s) => {
                 const date = new Date();
                 const year = date.getFullYear();
