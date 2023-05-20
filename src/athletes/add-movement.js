@@ -27,6 +27,7 @@ const AddMovement = () => {
     const [isValid, setIsValid] = useState(false);
     const [touched, setTouched] = useState(false);
     const [movements, setMovements] = useState([]);
+    const [isCreateMovement, setIsCreateMovement] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
     const [selectedMovement, setSelectedMovement] = useState([]);
     const [showAddRounds, setShowAddRounds] = useState(false);
@@ -130,6 +131,7 @@ const AddMovement = () => {
             movement.movement,
         ]);
         setShowMenu(false);
+        setIsCreateMovement(false);
         dispatch({ type: "CLEAR_FORM" });
     };
 
@@ -142,11 +144,22 @@ const AddMovement = () => {
         );
     };
 
+    const createMovementClick = () => {
+        setIsCreateMovement(true);
+        setShowMenu(false);
+    };
+
     const addMovement = (event) => {
         event.preventDefault();
         console.log(inputState.movement);
         setShowMenu(false);
         validateMovement(inputState.movement);
+        if (inputState.movement.trim() === "") {
+            setErrorMessage("Movement must be at least 3 characters long");
+            setTouched(true);
+            setIsValid(false);
+            return;
+        }
         if (!isValid) {
             setTouched(true);
         } else {
@@ -156,6 +169,7 @@ const AddMovement = () => {
             ]);
             setShowAddRounds(true);
             setShowMenu(false);
+            setIsCreateMovement(false);
             dispatch({
                 type: "CLEAR_FORM",
             });
@@ -167,51 +181,65 @@ const AddMovement = () => {
 
     return (
         <React.Fragment>
-            {user && (selectedMovement || newMovement.length) && (
-                <AddRoundsToMovement
-                    movement={[...newMovement, ...selectedMovement]}
-                    removeMovement={removeMovementHandler}
-                />
-            )}
             <Box bg="offWhite" p={5} width="100%" margin="0 auto">
                 <Stack margin="auto" width="80%" paddingBottom="60px">
-                    <FormControl>
-                        <form onSubmit={addMovement}>
-                            <FormLabel fontSize="xs" color="white" htmlFor="movement">
-                                Movement
-                            </FormLabel>
-                            <Text
-                                paddingBottom="15px"
-                                color="white"
-                                fontStyle="italic"
-                                fontWeight="bold"
-                                fontSize="xs"
-                            >
-                                Must be 3 characters
-                            </Text>
-                            <Input
-                                onChange={changeHandler}
-                                value={inputState.movement}
-                                name="movement"
-                                type="text"
-                                bg="white"
-                                placeholder="Movement"
-                                fontSize="xs"
-                            />
-                            <Button
-                                mt={4}
-                                width="100%"
-                                type="submit"
-                                borderRadius="50px"
-                                bg="red"
-                                color="white"
-                                isDisabled={!isValid && touched}
-                                fontSize="xs"
-                            >
-                                Add movement
-                            </Button>
-                        </form>
-                    </FormControl>
+                    {!isCreateMovement ? (
+                        <Button
+                            mt={4}
+                            width="100%"
+                            type="submit"
+                            borderRadius="50px"
+                            bg="red"
+                            color="white"
+                            onClick={createMovementClick}
+                            fontSize="xs"
+                        >
+                            Create movement
+                        </Button>
+                    ) : (
+                        <FormControl>
+                            <form onSubmit={addMovement}>
+                                <FormLabel
+                                    fontSize="xs"
+                                    color="white"
+                                    htmlFor="movement"
+                                >
+                                    Movement
+                                </FormLabel>
+                                <Text
+                                    paddingBottom="15px"
+                                    color="white"
+                                    fontStyle="italic"
+                                    fontWeight="bold"
+                                    fontSize="xs"
+                                >
+                                    Must be 3 characters
+                                </Text>
+                                <Input
+                                    onChange={changeHandler}
+                                    value={inputState.movement}
+                                    name="movement"
+                                    type="text"
+                                    bg="white"
+                                    placeholder="Movement"
+                                    fontSize="xs"
+                                />
+                                <Button
+                                    mt={4}
+                                    width="100%"
+                                    type="submit"
+                                    borderRadius="50px"
+                                    bg="red"
+                                    onClick={createMovementClick}
+                                    color="white"
+                                    isDisabled={!isValid && touched}
+                                    fontSize="xs"
+                                >
+                                    Add movement
+                                </Button>
+                            </form>
+                        </FormControl>
+                    )}
                     {showMenu && movements.length > 0 && (
                         <Box
                             borderWidth="1px"
@@ -224,7 +252,11 @@ const AddMovement = () => {
                             bg="white"
                         >
                             <VStack alignItems="stretch" spacing={0}>
-                                <Box fontSize="xs" p={2} borderBottomWidth="1px">
+                                <Box
+                                    fontSize="xs"
+                                    p={2}
+                                    borderBottomWidth="1px"
+                                >
                                     --Select one--
                                 </Box>
                                 {movements.map((movement) => (
@@ -251,7 +283,15 @@ const AddMovement = () => {
                         </Box>
                     )}
                     {touched && !isValid && (
-                        <Text fontSize="xs" color="red">{errorMessage}</Text>
+                        <Text fontSize="xs" color="red">
+                            {errorMessage}
+                        </Text>
+                    )}
+                    {user && (selectedMovement || newMovement.length) && (
+                        <AddRoundsToMovement
+                            movement={[...newMovement, ...selectedMovement]}
+                            removeMovement={removeMovementHandler}
+                        />
                     )}
                 </Stack>
             </Box>
