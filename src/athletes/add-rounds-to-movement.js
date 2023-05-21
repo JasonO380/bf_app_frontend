@@ -25,61 +25,58 @@ const AddRoundsToMovement = (props) => {
             case "INPUT_CHANGE":
                 return {
                     ...state,
-                    [action.name]: action.value,
-                    year: dateEntry.getFullYear(),
-                    dayOfWeek: dateEntry.toLocaleString("default", {
-                        weekday: "long",
-                    }),
-                    dayOfMonth: dateEntry.getDate(),
-                    month: dateEntry.toLocaleString("en-US", { month: "long" }),
+                    [action.movement]: {
+                        ...state[action.movement],
+                        [action.name]: action.value,
+                        year: dateEntry.getFullYear(),
+                        dayOfWeek: dateEntry.toLocaleString("default", {
+                            weekday: "long",
+                        }),
+                        dayOfMonth: dateEntry.getDate(),
+                        month: dateEntry.toLocaleString("en-US", {
+                            month: "long",
+                        }),
+                    },
                 };
             case "CONVERT_TO_KG":
-                const weightKG = Math.round(
-                    parseFloat(state.weight) * 0.45359237
-                );
                 return {
                     ...state,
-                    weight: weightKG.toString(),
+                    [action.movement]: {
+                        ...state[action.movement],
+                        weight: Math.round(
+                            parseFloat(state[action.movement].weight) *
+                                0.45359237
+                        ).toString(),
+                    },
                 };
             case "CONVERT_TO_POUNDS":
-                const weightPounds = Math.round(
-                    parseFloat(state.weight) * 2.20462
-                );
                 return {
                     ...state,
-                    weight: weightPounds.toString(),
+                    [action.movement]: {
+                        ...state[action.movement],
+                        weight: Math.round(
+                            parseFloat(state[action.movement].weight) * 2.20462
+                        ).toString(),
+                    },
                 };
             case "CLEAR_FORM":
-                console.log("form cleared");
-                return {
-                    movement: "",
-                    reps: "",
-                    rounds: "",
-                    weight: "",
-                    distance: "",
-                    time: "",
-                };
+                const newState = { ...state };
+                delete newState[action.movement];
+                return newState;
             default:
                 return state;
         }
     };
-    const [inputState, dispatch] = useReducer(inputReducer, {
-        movement: "",
-        weight: "",
-        reps: "",
-        rounds: "",
-        distance: "",
-        time: "",
-        athlete: "",
-    });
+    const [inputState, dispatch] = useReducer(inputReducer, {});
 
-    const changeHandler = (event) => {
+    const changeHandler = (event, movement) => {
         const inputValue = event.target.value;
         const inputName = event.target.name;
         dispatch({
             type: "INPUT_CHANGE",
             name: inputName,
             value: inputValue,
+            movement: movement,
         });
     };
 
@@ -95,12 +92,18 @@ const AddRoundsToMovement = (props) => {
         props.removeMovement(movementToRemove);
     };
 
-    const convertToKG = () => {
-        dispatch({ type: "CONVERT_TO_KG" });
+    const convertToKG = (movement) => {
+        dispatch({
+            type: "CONVERT_TO_KG",
+            movement: movement,
+        });
     };
 
-    const convertToPounds = () => {
-        dispatch({ type: "CONVERT_TO_POUNDS" });
+    const convertToPounds = (movement) => {
+        dispatch({
+            type: "CONVERT_TO_POUNDS",
+            movement: movement,
+        });
     };
 
     const addSession = async (event) => {
@@ -119,15 +122,7 @@ const AddRoundsToMovement = (props) => {
                         session: [
                             {
                                 exercise: currentMovement,
-                                weight: inputState.weight,
-                                reps: inputState.reps,
-                                rounds: inputState.rounds,
-                                distance: inputState.distance,
-                                time: inputState.time,
-                                year: inputState.year,
-                                month: inputState.month,
-                                dayOfMonth: inputState.dayOfMonth,
-                                dayOfWeek: inputState.dayOfWeek,
+                                ...inputState[currentMovement],
                                 athlete: userID,
                             },
                         ],
@@ -142,6 +137,7 @@ const AddRoundsToMovement = (props) => {
             const responseData = await response.json();
             dispatch({
                 type: "CLEAR_FORM",
+                movement: currentMovement,
             });
             console.log(responseData.sessionID);
             setSessionID(responseData.sessionID);
@@ -174,8 +170,8 @@ const AddRoundsToMovement = (props) => {
                                         Weight
                                     </FormLabel>
                                     <Input
-                                        onChange={changeHandler}
-                                        value={inputState.weight}
+                                        onChange={(e) => changeHandler(e, m)}
+                                        value={inputState[m]?.weight || ""}
                                         name="weight"
                                         type="text"
                                         bg="white"
@@ -194,8 +190,8 @@ const AddRoundsToMovement = (props) => {
                                         Reps
                                     </FormLabel>
                                     <Input
-                                        onChange={changeHandler}
-                                        value={inputState.reps}
+                                        onChange={(e) => changeHandler(e, m)}
+                                        value={inputState[m]?.reps || ""}
                                         name="reps"
                                         type="text"
                                         bg="white"
@@ -214,8 +210,8 @@ const AddRoundsToMovement = (props) => {
                                         Rounds
                                     </FormLabel>
                                     <Input
-                                        onChange={changeHandler}
-                                        value={inputState.rounds}
+                                        onChange={(e) => changeHandler(e, m)}
+                                        value={inputState[m]?.rounds || ""}
                                         name="rounds"
                                         type="text"
                                         bg="white"
@@ -237,8 +233,8 @@ const AddRoundsToMovement = (props) => {
                                 border="1px solid white"
                                 borderRadius="50px"
                                 width="fit-content"
-                                onClick={convertToKG}
-                                type="submit"
+                                onClick={() => convertToKG(m)}
+                                type="button"
                                 bg="transparent"
                                 color="white"
                                 fontSize="xs"
@@ -251,8 +247,8 @@ const AddRoundsToMovement = (props) => {
                                 border="1px solid white"
                                 borderRadius="50px"
                                 width="fit-content"
-                                onClick={convertToPounds}
-                                type="submit"
+                                onClick={() => convertToPounds(m)}
+                                type="button"
                                 bg="transparent"
                                 color="white"
                                 fontSize="xs"
@@ -276,8 +272,8 @@ const AddRoundsToMovement = (props) => {
                                         Distance
                                     </FormLabel>
                                     <Input
-                                        onChange={changeHandler}
-                                        value={inputState.distance}
+                                        onChange={(e) => changeHandler(e, m)}
+                                        value={inputState[m]?.distance || ""}
                                         name="distance"
                                         type="text"
                                         bg="white"
@@ -296,8 +292,8 @@ const AddRoundsToMovement = (props) => {
                                         Time
                                     </FormLabel>
                                     <Input
-                                        onChange={changeHandler}
-                                        value={inputState.time}
+                                        onChange={(e) => changeHandler(e, m)}
+                                        value={inputState[m]?.time || ""}
                                         name="time"
                                         type="text"
                                         bg="white"

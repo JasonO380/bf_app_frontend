@@ -160,6 +160,12 @@ const AddMovement = () => {
             setIsValid(false);
             return;
         }
+        if (inputState.movement.length < 3) {
+            setErrorMessage("Movement must be at least 3 characters long");
+            setTouched(true);
+            setIsValid(false);
+            return;
+        }
         if (!isValid) {
             setTouched(true);
         } else {
