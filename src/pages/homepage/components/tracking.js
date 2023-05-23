@@ -11,6 +11,7 @@ import {
     useMediaQuery
 } from "@chakra-ui/react";
 import Beatrix from "../../../images/beatrix.jpeg";
+import Food from "../../../images/healthy-food.jpeg";
 
 const Tracking = () => {
     const [isTabletOrAbove] = useMediaQuery("(min-width: 600px)");
@@ -33,7 +34,7 @@ const Tracking = () => {
                 <Stack width={isTabletOrAbove ? "50%" : "100%"}>
                     <Heading color="white">Macros</Heading>
                     <Text color="white" fontSize="xs">Log your protein, carb and fat intake</Text>
-                    <Image alt="Picure of healthy food" src="https://www.communitydoctor.com.ng/wp-content/uploads/2020/11/shutterstock_300553067-705x470-1.jpg" />
+                    <Image alt="Picure of healthy food" src={Food} />
                 </Stack>
                 <Stack width={isTabletOrAbove ? "50%" : "100%"}>
                     <Heading color="white">Workouts</Heading>
