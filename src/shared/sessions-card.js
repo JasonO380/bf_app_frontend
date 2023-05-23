@@ -169,8 +169,10 @@ const SessionCard = (props) => {
                                                                             updateChangeHandler={
                                                                                 updateChangeHandler
                                                                             }
-                                                                            updateMode={
-                                                                                () => setUpdate(null)
+                                                                            updateMode={() =>
+                                                                                setUpdate(
+                                                                                    null
+                                                                                )
                                                                             }
                                                                             onUpdate={
                                                                                 updateDOM
@@ -194,13 +196,11 @@ const SessionCard = (props) => {
                                                                                 Movement:
                                                                                 {" " +
                                                                                     s.movement}
-                                                                                {s.weight && (
-                                                                                    <Text color="white">
-                                                                                        Weight:
-                                                                                        {" " +
-                                                                                            s.weight}
-                                                                                    </Text>
-                                                                                )}
+                                                                                    {s.weight !== null && s.weight !== undefined && (
+                                                                                        <Text color="white">
+                                                                                            Weight: {s.weight}
+                                                                                        </Text>
+                                                                                    )}
                                                                                 {s.reps && (
                                                                                     <Text color="white">
                                                                                         Reps:

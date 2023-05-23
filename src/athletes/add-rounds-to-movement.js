@@ -10,6 +10,7 @@ import {
     Input,
 } from "@chakra-ui/react";
 import ShowTodaysSession from "./show-todays-session";
+import AddRoundsToMovementForm from "./add-rounds-to-movement-form";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
 const AddRoundsToMovement = (props) => {
@@ -153,186 +154,17 @@ const AddRoundsToMovement = (props) => {
                             {m}
                         </Text>
                     </Box>
-                    <form onSubmit={addSession}>
-                        <Flex
-                            gap="10px"
-                            margin="auto"
-                            width="100%"
-                            paddingBottom="5px"
-                        >
-                            <FormControl>
-                                <Stack>
-                                    <FormLabel
-                                        fontSize="xs"
-                                        color="white"
-                                        htmlFor="weight"
-                                    >
-                                        Weight
-                                    </FormLabel>
-                                    <Input
-                                        onChange={(e) => changeHandler(e, m)}
-                                        value={inputState[m]?.weight || ""}
-                                        name="weight"
-                                        type="text"
-                                        bg="white"
-                                        placeholder="Weight"
-                                        fontSize="xs"
-                                    />
-                                </Stack>
-                            </FormControl>
-                            <FormControl>
-                                <Stack>
-                                    <FormLabel
-                                        fontSize="xs"
-                                        color="white"
-                                        htmlFor="reps"
-                                    >
-                                        Reps
-                                    </FormLabel>
-                                    <Input
-                                        onChange={(e) => changeHandler(e, m)}
-                                        value={inputState[m]?.reps || ""}
-                                        name="reps"
-                                        type="text"
-                                        bg="white"
-                                        placeholder="Reps"
-                                        fontSize="xs"
-                                    />
-                                </Stack>
-                            </FormControl>
-                            <FormControl>
-                                <Stack>
-                                    <FormLabel
-                                        fontSize="xs"
-                                        color="white"
-                                        htmlFor="rounds"
-                                    >
-                                        Rounds
-                                    </FormLabel>
-                                    <Input
-                                        onChange={(e) => changeHandler(e, m)}
-                                        value={inputState[m]?.rounds || ""}
-                                        name="rounds"
-                                        type="text"
-                                        bg="white"
-                                        placeholder="Rounds"
-                                        fontSize="xs"
-                                    />
-                                </Stack>
-                            </FormControl>
-                        </Flex>
-                        <Flex
-                            gap="10px"
-                            margin="auto"
-                            width="100%"
-                            paddingBottom="5px"
-                        >
-                            <Button
-                                mt={4}
-                                name={m}
-                                border="1px solid white"
-                                borderRadius="50px"
-                                width="fit-content"
-                                onClick={() => convertToKG(m)}
-                                type="button"
-                                bg="transparent"
-                                color="white"
-                                fontSize="xs"
-                            >
-                                Convert KG
-                            </Button>
-                            <Button
-                                mt={4}
-                                name={m}
-                                border="1px solid white"
-                                borderRadius="50px"
-                                width="fit-content"
-                                onClick={() => convertToPounds(m)}
-                                type="button"
-                                bg="transparent"
-                                color="white"
-                                fontSize="xs"
-                            >
-                                Convert pounds
-                            </Button>
-                        </Flex>
-                        <Flex
-                            gap="10px"
-                            margin="auto"
-                            width="100%"
-                            paddingBottom="5px"
-                        >
-                            <FormControl>
-                                <Stack>
-                                    <FormLabel
-                                        fontSize="xs"
-                                        color="white"
-                                        htmlFor="distance"
-                                    >
-                                        Distance
-                                    </FormLabel>
-                                    <Input
-                                        onChange={(e) => changeHandler(e, m)}
-                                        value={inputState[m]?.distance || ""}
-                                        name="distance"
-                                        type="text"
-                                        bg="white"
-                                        placeholder="Distance"
-                                        fontSize="xs"
-                                    />
-                                </Stack>
-                            </FormControl>
-                            <FormControl>
-                                <Stack>
-                                    <FormLabel
-                                        fontSize="xs"
-                                        color="white"
-                                        htmlFor="time"
-                                    >
-                                        Time
-                                    </FormLabel>
-                                    <Input
-                                        onChange={(e) => changeHandler(e, m)}
-                                        value={inputState[m]?.time || ""}
-                                        name="time"
-                                        type="text"
-                                        bg="white"
-                                        placeholder="Time"
-                                        fontSize="xs"
-                                    />
-                                </Stack>
-                            </FormControl>
-                        </Flex>
-                        <Box flexGrow={1}>
-                            <Button
-                                mt={4}
-                                name={m}
-                                borderRadius="50px"
-                                width="100%"
-                                onClick={movementHandler}
-                                type="submit"
-                                bg="red"
-                                color="white"
-                                fontSize="xs"
-                            >
-                                Add round
-                            </Button>
-                        </Box>
-                    </form>
-                    <Box paddingBottom="60px" flexGrow={1}>
-                        <Button
-                            mt={4}
-                            name={m}
-                            borderRadius="50px"
-                            width="100%"
-                            onClick={() => removeMovementHandler(m)}
-                            bg="red"
-                            color="white"
-                            fontSize="xs"
-                        >
-                            Remove movement
-                        </Button>
-                    </Box>
+                    <AddRoundsToMovementForm
+                        movement={m}
+                        movementHandler={movementHandler}
+                        inputState={inputState}
+                        changeHandler={changeHandler}
+                        convertToKG={convertToKG}
+                        convertToPounds={convertToPounds}
+                        addSession={addSession}
+                        removeMovementHandler={removeMovementHandler}
+                        m={m}
+                    />
                 </React.Fragment>
             ))}
             {sessionID && (

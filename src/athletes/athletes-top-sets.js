@@ -66,12 +66,11 @@ const AthletesTopSets = (props) => {
                                                                         <Text color="white">
                                                                             Movement:
                                                                             {" " + s.movement}
-                                                                            {s.weight && (
-                                                                                <Text color="white">
-                                                                                    Weight:
-                                                                                    {" " + s.weight}
-                                                                                </Text>
-                                                                            )}
+                                                                            {s.weight !== null && s.weight !== undefined && (
+                                                                                        <Text color="white">
+                                                                                            Weight: {s.weight}
+                                                                                        </Text>
+                                                                                    )}
                                                                             {s.reps && (
                                                                                 <Text color="white">
                                                                                     Reps:
