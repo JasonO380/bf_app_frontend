@@ -21,7 +21,7 @@ const MainNav = () => {
             />
             <Spacer />
             <Flex align="end" margin="auto">
-                {!isLoggedIn ? ( // Conditionally render buttons if user is not logged in
+                {!isLoggedIn ? (
                     <>
                         <NavLink to="/login">
                             <Button
@@ -47,7 +47,6 @@ const MainNav = () => {
                         </NavLink>
                     </>
                 ) : (
-                    // Render dashboard button if user is logged in
                     <>
                     <NavLink to="/athlete">
                         <Button
@@ -72,28 +71,6 @@ const MainNav = () => {
                         </Button>
                         </>
                 )}
-                {/* <NavLink to="/login">
-                    <Button
-                        borderRadius="50"
-                        mt="20px"
-                        fontSize="xs"
-                        color="white"
-                        backgroundColor="transparent"
-                    >
-                        Login
-                    </Button>
-                </NavLink>
-                <NavLink to="/register">
-                    <Button
-                        borderRadius="50"
-                        mt="20px"
-                        fontSize="xs"
-                        color="white"
-                        backgroundColor="red"
-                    >
-                        Register
-                    </Button>
-                </NavLink> */}
             </Flex>
         </Flex>
     );

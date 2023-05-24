@@ -5,6 +5,7 @@ import Register from "../authentication/register";
 import AddAthleteSession from "../athletes/add-athlete-session";
 import Dashboard from "../pages/dashboard/dashboard";
 import CoachDashboard from "../coaches/coach-dashboard";
+import CarbCycling from "../Blogs/CarbCycling";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 
@@ -18,6 +19,7 @@ const AnimatedRoutes = () => {
                 <Route path="/register" element={<Register />} />
                 <Route path="/athlete" element={<Dashboard />} />
                 <Route path="/coach" element={<CoachDashboard />} />
+                <Route path="/carbcycling" element={<CarbCycling />} />
             </Routes>
         </AnimatePresence>
     )

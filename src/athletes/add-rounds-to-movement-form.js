@@ -103,7 +103,7 @@ const AddRoundsToMovementForm = ({
                     color="white"
                     fontSize="xs"
                 >
-                    Convert KG
+                    Convert Pounds
                 </Button>
             </Flex>
             {/* Distance and time fields */}
