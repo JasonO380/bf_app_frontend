@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { FaCheckCircle } from "react-icons/fa";
 import { useMediaQuery } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import {
@@ -9,6 +10,7 @@ import {
     TabPanels,
     Tab,
     TabPanel,
+    Icon,
 } from "@chakra-ui/react";
 
 const MobileDescription = () => {
@@ -28,26 +30,34 @@ const MobileDescription = () => {
                             clients to thrive and see lasting results. Using
                             mindful training I tailor programs for each
                             individuals specific needs while creating a positive
-                            and encouraging environment. The goal is to keep you engaged with training
-                            by focusing on performance to keep you moving efficiently throughout your life span.
+                            and encouraging environment. The goal is to keep you
+                            engaged with training by focusing on performance to
+                            keep you moving efficiently throughout your life
+                            span.
                         </Text>
                     </TabPanel>
                     <TabPanel>
                         <Text>
-                            1. Develop Mobility: Set yourself up for succes by prioritzing a
-                            proper warm up that will optimize performance
+                            <Icon as={FaCheckCircle} color="green.500" />{" "}
+                            Develop Mobility: Set yourself up for succes by
+                            prioritzing a proper warm up that will optimize
+                            performance
                         </Text>
                         <Text>
-                            2. Master the Basics: Mastering fundamental lifts such as the squat,
-                            deadlift, pulling, and pressing movements.
+                            <Icon as={FaCheckCircle} color="green.500" /> Master
+                            the Basics: Mastering fundamental lifts such as the
+                            squat, deadlift, pulling, and pressing movements.
                         </Text>
                         <Text>
-                            3. Metabolic Conditioning: High-intensity interval 
-                            training to elevate your heart rate and boost metabolism
+                            <Icon as={FaCheckCircle} color="green.500" />{" "}
+                            Metabolic Conditioning: High-intensity interval
+                            training to elevate your heart rate and boost
+                            metabolism
                         </Text>
                         <Text>
-                            4. Enhance Speed and Power: Learn the clean and jerk and snatch 
-                            to increase athleticism.
+                            <Icon as={FaCheckCircle} color="green.500" />{" "}
+                            Enhance Speed and Power: Learn the clean and jerk
+                            and snatch to increase athleticism.
                         </Text>
                     </TabPanel>
                     <TabPanel>

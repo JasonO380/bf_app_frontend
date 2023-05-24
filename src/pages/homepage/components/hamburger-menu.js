@@ -10,7 +10,7 @@ const HamburgerMenu = ({ isOpen, toggleMenu }) => {
             pos="relative"
             display="flex"
             flexDirection="column"
-            justifyContent="center"
+            justifyContent="end"
             alignItems="center"
             width="2.5rem"
             height="2.5rem"
@@ -48,6 +48,7 @@ const HamburgerMenu = ({ isOpen, toggleMenu }) => {
                 transform={
                     isOpen ? "rotate(45deg) translate(-4px, -5px)" : "none"
                 }
+                mt="4px"
             ></Box>
         </Box>
     );

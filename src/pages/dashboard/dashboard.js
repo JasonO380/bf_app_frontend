@@ -36,6 +36,26 @@ const Dashboard = () => {
     const [currentDaysWorkouts, setCurrentDaysWorkouts] = useState([]);
     const [showWorkoutHistory, setShowWorkoutHistory] = useState(false);
     const [allWorkouts, setAllWorkouts] = useState([]);
+    const pageVariants = {
+        initial: {
+            opacity: 0,
+            x: "-100%",
+        },
+        in: {
+            opacity: 1,
+            x: 0,
+        },
+        out: {
+            opacity: 0,
+            y: "-100%",
+        },
+    };
+
+    const pageTransition = {
+        type: "tween",
+        ease: "anticipate",
+        duration: 0.4,
+    };
 
     const handleCloseClick = () => {
         setShowAddAthleteSession(false);
@@ -92,6 +112,12 @@ const Dashboard = () => {
 
     return (
         <Box
+            as="motion.div"
+            initial="initial"
+            animate="in"
+            exit="out"
+            variants={pageVariants}
+            transition={pageTransition}
             width="100%"
             bottom="0"
             position="fixed"
