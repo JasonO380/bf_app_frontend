@@ -122,7 +122,7 @@ const Dashboard = () => {
                 width="100%"
                 bottom="0"
                 position="relative"
-                height="100%"
+                minHeight="100vh"
                 bg="#151414"
                 overflowY="auto"
             >
