@@ -55,18 +55,18 @@ const BlogOptions = () => {
                         initial={{ opacity: 0, scaleY: 0 }}
                         animate={{ opacity: 1, scaleY: 1 }}
                     >
-                        <NavLink to="/relative-intensity">
-                            Relative Intensity
+                        <NavLink to="/periodization">
+                            Periodization
                         </NavLink>
                     </MotionBox>
-                    <MotionBox
+                    {/* <MotionBox
                         initial={{ opacity: 0, scaleY: 0 }}
                         animate={{ opacity: 1, scaleY: 1 }}
                     >
                         <NavLink to="/progressive-overload">
                             Progressive Overload
                         </NavLink>
-                    </MotionBox>
+                    </MotionBox> */}
                 </MotionBox>
             )}
         </>

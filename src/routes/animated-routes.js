@@ -6,9 +6,11 @@ import AddAthleteSession from "../athletes/add-athlete-session";
 import Dashboard from "../pages/dashboard/dashboard";
 import CoachDashboard from "../coaches/coach-dashboard";
 import CarbCycling from "../Blogs/CarbCycling";
+import Periodization from "../Blogs/Periodization";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { Box } from "@chakra-ui/react";
+import WelcomeMessage from "../pages/mobile-homepage/components/welcome-message";
 
 const AnimatedRoutes = () => {
     const location = useLocation();
@@ -84,6 +86,17 @@ const AnimatedRoutes = () => {
                             <CoachDashboard />
                         </motion.div>
                 } />
+                <Route path="/welcome" element={
+                    <motion.div 
+                            initial="initial"
+                            animate="in"
+                            exit="out"
+                            variants={pageVariants}
+                            transition={pageTransition}
+                        >
+                            <WelcomeMessage />
+                        </motion.div>
+                } />
                 <Route path="/carbcycling" element={
                     <motion.div 
                             initial="initial"
@@ -93,6 +106,17 @@ const AnimatedRoutes = () => {
                             transition={pageTransition}
                         >
                             <CarbCycling />
+                        </motion.div>
+                } />
+                <Route path="/periodization" element={
+                    <motion.div 
+                            initial="initial"
+                            animate="in"
+                            exit="out"
+                            variants={pageVariants}
+                            transition={pageTransition}
+                        >
+                            <Periodization />
                         </motion.div>
                 } />
             </Routes>

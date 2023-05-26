@@ -119,38 +119,10 @@ const MainNav = () => {
                         alignItems="flex-start"
                         spacing={2}
                     >
-                    <BlogOptions />
-                        {/* <MotionBox>
-                            <Box cursor="pointer">
-                                <Flex alignItems="center" pointerEvents="all">
-                                    <Text onClick={toggleBlogMenu} as="span">Blogs</Text>
-                                    <MotionButton
-                                        bg="transparent"
-                                        border="none"
-                                        p={0}
-                                        animate={{
-                                            rotate: isBlogMenuOpen ? 180 : 0,
-                                        }}
-                                        _focus={{
-                                            outline: "none",
-                                        }}
-                                        onClick={toggleBlogMenu}
-                                    >
-                                        <FaChevronUp w={6} h={6} />
-                                    </MotionButton>
-                                </Flex>
-                            </Box>
-                            {isBlogMenuOpen && <BlogOptions />}
-                        </MotionBox> */}
-                        {/* <Link to="/carbcycling">
-                            Carb Cycling
-                        </Link> */}
-                        {/* <MotionBox>
-                            <NavLink to="/carbcycling">CarbCycling</NavLink>
-                        </MotionBox> */}
-                        <MotionBox>
-                            <NavLink to="/workouts">Workouts</NavLink>
+                    <MotionBox>
+                            <NavLink to="/welcome">Welcome</NavLink>
                         </MotionBox>
+                    <BlogOptions />
                     </MotionVStack>
                 </MotionBox>
             )}
@@ -159,67 +131,3 @@ const MainNav = () => {
 };
 
 export default MainNav;
-
-{
-    /* {isMenuOpen && (
-                <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    style={{
-                        position: "absolute",
-                        top: "calc(100% + 10px)",
-                        left: 0,
-                        right: 0,
-                        borderRadius: "5px",
-                        backgroundColor: "white",
-                        padding: "10px",
-                        zIndex: 3,
-                        width: "fit-content",
-                    }}
-                >
-                    <motion.div>
-                        <NavLink to="/blogs">Blogs</NavLink>
-                        <motion.button
-                            onClick={toggleBlogMenu}
-                            style={{
-                                backgroundColor: "transparent",
-                                border: "none",
-                                padding: 0,
-                            }}
-                        >
-                            <FaChevronDown
-                                w={6}
-                                h={6}
-                                transform={
-                                    isBlogMenuOpen ? "rotate(180deg)" : "none"
-                                }
-                            />
-                        </motion.button>
-                        {isBlogMenuOpen && (
-                            <motion.div
-                                initial={{ opacity: 0, scaleY: 0 }}
-                                animate={{ opacity: 1, scaleY: 1 }}
-                                exit={{ opacity: 0, scaleY: 0 }}
-                            >
-                                <NavLink to="/carb-cycling">
-                                    Carb Cycling
-                                </NavLink>
-                                <NavLink to="/relative-intensity">
-                                    Relative Intensity
-                                </NavLink>
-                                <NavLink to="/progressive-overload">
-                                    Progressive Overload
-                                </NavLink>
-                            </motion.div>
-                        )}
-                    </motion.div>
-                    <motion.div>
-                        <NavLink to="/charts">Charts</NavLink>
-                    </motion.div>
-                    <motion.div>
-                        <NavLink to="/workouts">Workouts</NavLink>
-                    </motion.div>
-                </motion.div>
-            )} */
-}

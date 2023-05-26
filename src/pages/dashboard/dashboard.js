@@ -112,6 +112,7 @@ const Dashboard = () => {
     };
 
     return (
+        <AnimatePresence mode="wait">
         <MotionBox
             initial="initial"
             animate="in"
@@ -336,6 +337,7 @@ const Dashboard = () => {
                 </motion.div>
             )}
         </MotionBox>
+        </AnimatePresence>
     );
 };
 
