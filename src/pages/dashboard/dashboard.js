@@ -112,107 +112,121 @@ const Dashboard = () => {
     };
 
     return (
-        <AnimatePresence mode="wait">
-            <MotionBox
-                initial="initial"
-                animate="in"
-                exit="out"
-                variants={pageVariants}
-                transition={pageTransition}
-                width="100%"
+        <Box
+            width="100%"
+            bottom="0"
+            position="relative"
+            height="100vh"
+            bg="#151414"
+            overflowY="auto"
+        >
+            <Flex justifyContent="end">
+                <Button
+                    mt={4}
+                    mr={4}
+                    onClick={() => navigate("/")}
+                    bg="red"
+                    borderRadius="50px"
+                    color="white"
+                    fontSize="xs"
+                >
+                    Home
+                </Button>
+            </Flex>
+            <Box p="15px">
+                <Box>
+                    <Heading as="h1" size="lg" color="white">
+                        Dashboard
+                    </Heading>
+                    <Text color="white">Welcome, {name}</Text>
+                </Box>
+                {isDefaultScreen && <WeeklyWorkoutTotal />}
+            </Box>
+            <Box
+                position="fixed"
                 bottom="0"
-                position="relative"
-                minHeight="100vh"
-                bg="#151414"
-                overflowY="auto"
+                width="100%"
+                bg="rgba(0, 0, 0, 0.4)"
+                backdropFilter="blur(10px)"
+                zIndex="1"
+                display="flex"
+                justifyContent="center"
             >
-                <Flex justifyContent="end">
+                <Flex p="10px">
                     <Button
-                        mt={4}
-                        mr={4}
-                        onClick={() => navigate("/")}
-                        bg="red"
+                        onClick={handleStartWorkoutClick}
                         borderRadius="50px"
-                        color="white"
+                        colorScheme="blue"
+                        mr="4"
                         fontSize="xs"
                     >
-                        Home
+                        Start workout
                     </Button>
+                    <Button
+                        onClick={handleViewWorkoutHistoryClick}
+                        borderRadius="50px"
+                        colorScheme="blue"
+                        mr="4"
+                        fontSize="xs"
+                    >
+                        History
+                    </Button>
+                    <Button
+                        onClick={handleMacrosClick}
+                        borderRadius="50px"
+                        colorScheme="blue"
+                        fontSize="xs"
+                    >
+                        Add Macros
+                    </Button>
+                    <Spacer />
                 </Flex>
-                <Box p="15px">
-                    <Box>
-                        <Heading as="h1" size="lg" color="white">
-                            Dashboard
-                        </Heading>
-                        <Text color="white">Welcome, {name}</Text>
-                    </Box>
-                    {isDefaultScreen && <WeeklyWorkoutTotal />}
-                </Box>
-                <Box
-                    position="fixed"
-                    bottom="0"
-                    width="100%"
-                    bg="rgba(0, 0, 0, 0.4)"
-                    backdropFilter="blur(10px)"
-                    zIndex="5"
-                    display="flex"
-                    justifyContent="center"
+            </Box>
+            {showMacros && (
+                <motion.div
+                    variants={variants}
+                    initial="hidden"
+                    animate={showMacros ? "visible" : "hidden"}
                 >
-                    <Flex p="10px">
+                    <Box p="10px">
                         <Button
-                            onClick={handleStartWorkoutClick}
                             borderRadius="50px"
-                            colorScheme="blue"
-                            mr="4"
+                            colorScheme="red"
+                            onClick={handleCloseClick}
+                        >
+                            Close
+                        </Button>
+                        <GetAndAddTodaysMacros />
+                    </Box>
+                </motion.div>
+            )}
+            {showAddAthleteSession && (
+                <motion.div
+                    variants={variants}
+                    initial="hidden"
+                    animate={showAddAthleteSession ? "visible" : "hidden"}
+                >
+                    <Box p="10px">
+                        <Button
+                            borderRadius="50px"
+                            colorScheme="red"
+                            onClick={handleCloseClick}
                             fontSize="xs"
                         >
-                            Start workout
+                            Close
                         </Button>
-                        <Button
-                            onClick={handleViewWorkoutHistoryClick}
-                            borderRadius="50px"
-                            colorScheme="blue"
-                            mr="4"
-                            fontSize="xs"
-                        >
-                            History
-                        </Button>
-                        <Button
-                            onClick={handleMacrosClick}
-                            borderRadius="50px"
-                            colorScheme="blue"
-                            fontSize="xs"
-                        >
-                            Add Macros
-                        </Button>
-                        <Spacer />
-                    </Flex>
-                </Box>
-                {showMacros && (
-                    <motion.div
-                        variants={variants}
-                        initial="hidden"
-                        animate={showMacros ? "visible" : "hidden"}
-                    >
-                        <Box p="10px">
-                            <Button
-                                borderRadius="50px"
-                                colorScheme="red"
-                                onClick={handleCloseClick}
-                            >
-                                Close
-                            </Button>
-                            <GetAndAddTodaysMacros />
-                        </Box>
-                    </motion.div>
-                )}
-                {showAddAthleteSession && (
-                    <motion.div
-                        variants={variants}
-                        initial="hidden"
-                        animate={showAddAthleteSession ? "visible" : "hidden"}
-                    >
-                        <Box p="10px">
+                        <AddMovement />
+                    </Box>
+                </motion.div>
+            )}
+            {showWorkoutHistory && (
+                <motion.div
+                    variants={variants}
+                    initial="hidden"
+                    animate={showWorkoutHistory ? "visible" : "hidden"}
+                >
+                    <Box p="10px">
+                        <Flex justifyContent="center" gap="10px">
                             <Button
                                 borderRadius="50px"
                                 colorScheme="red"
@@ -221,123 +235,102 @@ const Dashboard = () => {
                             >
                                 Close
                             </Button>
-                            <AddMovement />
-                        </Box>
-                    </motion.div>
-                )}
-                {showWorkoutHistory && (
-                    <motion.div
-                        variants={variants}
-                        initial="hidden"
-                        animate={showWorkoutHistory ? "visible" : "hidden"}
-                    >
-                        <Box p="10px">
-                            <Flex justifyContent="center" gap="10px">
-                                <Button
-                                    borderRadius="50px"
-                                    colorScheme="red"
-                                    onClick={handleCloseClick}
-                                    fontSize="xs"
-                                >
-                                    Close
-                                </Button>
-                                <Button
-                                    borderRadius="50px"
-                                    colorScheme="blue"
-                                    onClick={handleEditWorkoutsClick}
-                                    fontSize="xs"
-                                >
-                                    <Stack spacing={0} alignItems="center">
-                                        <Box as="span">Edit</Box>
-                                        <Box as="span">Workouts</Box>
-                                    </Stack>
-                                </Button>
-                                <Button
-                                    borderRadius="50px"
-                                    colorScheme="blue"
-                                    onClick={handleEditMacrosClick}
-                                    fontSize="xs"
-                                >
-                                    <Stack spacing={0} alignItems="center">
-                                        <Box as="span">Edit</Box>
-                                        <Box as="span">Macros</Box>
-                                    </Stack>
-                                </Button>
-                            </Flex>
-                            <GetMacros />
-                            <ShowAthleteSessionsHistory user={user} />
-                        </Box>
-                    </motion.div>
-                )}
-                {showWorkoutEdit && (
-                    <motion.div
-                        variants={variants}
-                        initial="hidden"
-                        animate={showWorkoutEdit ? "visible" : "hidden"}
-                    >
-                        <Box p="10px">
-                            <Flex justifyContent="center" gap="10px">
-                                <Button
-                                    borderRadius="50px"
-                                    colorScheme="red"
-                                    onClick={handleCloseClick}
-                                    fontSize="xs"
-                                >
-                                    Close
-                                </Button>
-                                <Button
-                                    borderRadius="50px"
-                                    colorScheme="blue"
-                                    onClick={handleEditMacrosClick}
-                                    fontSize="xs"
-                                >
-                                    <Stack spacing={0} alignItems="center">
-                                        <Box as="span">Edit</Box>
-                                        <Box as="span">Macros</Box>
-                                    </Stack>
-                                </Button>
-                            </Flex>
-                            <ShowAthleteSessionsHistory
-                                edit={showWorkoutEdit}
-                                user={user}
-                            />
-                        </Box>
-                    </motion.div>
-                )}
-                {showMacrosEdit && (
-                    <motion.div
-                        variants={variants}
-                        initial="hidden"
-                        animate={showMacrosEdit ? "visible" : "hidden"}
-                    >
-                        <Box p="10px">
-                            <Flex justifyContent="center" gap="10px">
-                                <Button
-                                    borderRadius="50px"
-                                    colorScheme="red"
-                                    onClick={handleCloseClick}
-                                    fontSize="xs"
-                                >
-                                    Close
-                                </Button>
-                                <Button
-                                    borderRadius="50px"
-                                    colorScheme="blue"
-                                    onClick={handleEditWorkoutsClick}
-                                    fontSize="xs"
-                                >
-                                    <Stack spacing={0} alignItems="center">
-                                        <Box as="span">Edit</Box>
-                                        <Box as="span">Workouts</Box>
-                                    </Stack>
-                                </Button>
-                            </Flex>
-                            <EditMacros />
-                        </Box>
-                    </motion.div>
-                )}
-            </MotionBox>
-        </AnimatePresence>
+                            <Button
+                                borderRadius="50px"
+                                colorScheme="blue"
+                                onClick={handleEditWorkoutsClick}
+                                fontSize="xs"
+                            >
+                                <Stack spacing={0} alignItems="center">
+                                    <Box as="span">Edit</Box>
+                                    <Box as="span">Workouts</Box>
+                                </Stack>
+                            </Button>
+                            <Button
+                                borderRadius="50px"
+                                colorScheme="blue"
+                                onClick={handleEditMacrosClick}
+                                fontSize="xs"
+                            >
+                                <Stack spacing={0} alignItems="center">
+                                    <Box as="span">Edit</Box>
+                                    <Box as="span">Macros</Box>
+                                </Stack>
+                            </Button>
+                        </Flex>
+                        <GetMacros />
+                        <ShowAthleteSessionsHistory user={user} />
+                    </Box>
+                </motion.div>
+            )}
+            {showWorkoutEdit && (
+                <motion.div
+                    variants={variants}
+                    initial="hidden"
+                    animate={showWorkoutEdit ? "visible" : "hidden"}
+                >
+                    <Box p="10px">
+                        <Flex justifyContent="center" gap="10px">
+                            <Button
+                                borderRadius="50px"
+                                colorScheme="red"
+                                onClick={handleCloseClick}
+                                fontSize="xs"
+                            >
+                                Close
+                            </Button>
+                            <Button
+                                borderRadius="50px"
+                                colorScheme="blue"
+                                onClick={handleEditMacrosClick}
+                                fontSize="xs"
+                            >
+                                <Stack spacing={0} alignItems="center">
+                                    <Box as="span">Edit</Box>
+                                    <Box as="span">Macros</Box>
+                                </Stack>
+                            </Button>
+                        </Flex>
+                        <ShowAthleteSessionsHistory
+                            edit={showWorkoutEdit}
+                            user={user}
+                        />
+                    </Box>
+                </motion.div>
+            )}
+            {showMacrosEdit && (
+                <motion.div
+                    variants={variants}
+                    initial="hidden"
+                    animate={showMacrosEdit ? "visible" : "hidden"}
+                >
+                    <Box p="10px">
+                        <Flex justifyContent="center" gap="10px">
+                            <Button
+                                borderRadius="50px"
+                                colorScheme="red"
+                                onClick={handleCloseClick}
+                                fontSize="xs"
+                            >
+                                Close
+                            </Button>
+                            <Button
+                                borderRadius="50px"
+                                colorScheme="blue"
+                                onClick={handleEditWorkoutsClick}
+                                fontSize="xs"
+                            >
+                                <Stack spacing={0} alignItems="center">
+                                    <Box as="span">Edit</Box>
+                                    <Box as="span">Workouts</Box>
+                                </Stack>
+                            </Button>
+                        </Flex>
+                        <EditMacros />
+                    </Box>
+                </motion.div>
+            )}
+        </Box>
     );
 };
 

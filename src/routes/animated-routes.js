@@ -74,7 +74,18 @@ const AnimatedRoutes = () => {
                             <Register />
                         </motion.div>
                 } />
-                <Route path="/athlete" element={<Dashboard />} />
+                {/* <Route path="/athlete" element={<Dashboard />} /> */}
+                <Route path="/athlete" element={
+                    <motion.div 
+                            initial="initial"
+                            animate="in"
+                            exit="out"
+                            variants={pageVariants}
+                            transition={pageTransition}
+                        >
+                            <Dashboard />
+                        </motion.div>
+                } />
                 <Route path="/coach" element={
                     <motion.div 
                             initial="initial"
