@@ -111,7 +111,7 @@ const MainNav = () => {
                     borderRadius="5px"
                     bgColor="white"
                     p={2}
-                    zIndex={3}
+                    zIndex={4}
                     w="fit-content"
                 >
                     <MotionVStack
@@ -142,9 +142,9 @@ const MainNav = () => {
                             </Box>
                             {isBlogMenuOpen && <BlogOptions />}
                         </MotionBox> */}
-                        <Link to="/carbcycling">
+                        {/* <Link to="/carbcycling">
                             Carb Cycling
-                        </Link>
+                        </Link> */}
                         {/* <MotionBox>
                             <NavLink to="/carbcycling">CarbCycling</NavLink>
                         </MotionBox> */}

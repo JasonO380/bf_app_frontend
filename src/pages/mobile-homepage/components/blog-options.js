@@ -45,12 +45,12 @@ const BlogOptions = () => {
                         delayChildren: 0.2,
                     }}
                 >
-                    <MotionButton
+                    <MotionBox
                         initial={{ opacity: 0, scaleY: 0 }}
                         animate={{ opacity: 1, scaleY: 1 }}
                     >
                         <NavLink to="/carbcycling">Carb Cycling</NavLink>
-                    </MotionButton>
+                    </MotionBox>
                     <MotionBox
                         initial={{ opacity: 0, scaleY: 0 }}
                         animate={{ opacity: 1, scaleY: 1 }}
