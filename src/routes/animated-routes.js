@@ -8,9 +8,11 @@ import CoachDashboard from "../coaches/coach-dashboard";
 import CarbCycling from "../Blogs/CarbCycling";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import { Box } from "@chakra-ui/react";
 
 const AnimatedRoutes = () => {
     const location = useLocation();
+    const MotionBox = motion(Box);
     const pageVariants = {
         initial: {
             opacity: 0,
@@ -37,7 +39,7 @@ const AnimatedRoutes = () => {
                 <Route
                     path="/"
                     element={
-                        <motion.div
+                        <MotionBox
                             initial="initial"
                             animate="in"
                             exit="out"
@@ -45,11 +47,11 @@ const AnimatedRoutes = () => {
                             transition={pageTransition}
                         >
                             <Intro />
-                        </motion.div>
+                        </MotionBox>
                     }
                 />
                 <Route path="/login" element={
-                    <motion.div 
+                    <MotionBox
                             initial="initial"
                             animate="in"
                             exit="out"
@@ -57,7 +59,7 @@ const AnimatedRoutes = () => {
                             transition={pageTransition}
                         >
                             <Login />
-                        </motion.div>
+                        </MotionBox>
                 } />
                 <Route path="/register" element={
                     <motion.div 

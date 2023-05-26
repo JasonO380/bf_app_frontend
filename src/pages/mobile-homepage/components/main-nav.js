@@ -1,9 +1,20 @@
 import React, { useContext, useState } from "react";
 import logo from "../../../images/logo.jpeg";
-import HamburgerMenu from "../../homepage/components/hamburger-menu";
-import { NavLink, useNavigate } from "react-router-dom";
-import { FaChevronDown } from "react-icons/fa";
-import { Image, Flex, Box, Button, VStack, Spacer, } from "@chakra-ui/react";
+import HamburgerMenu from "../../../shared/hamburger-menu";
+import { NavLink, useNavigate, Link } from "react-router-dom";
+import { FaChevronUp } from "react-icons/fa";
+import {
+    Image,
+    Flex,
+    Box,
+    Text,
+    Button,
+    VStack,
+    Spacer,
+} from "@chakra-ui/react";
+import { Link as ChakraLink } from "@chakra-ui/react"
+// import { Link as NavLink } from "react-router-dom"
+import BlogOptions from "./blog-options";
 import { LoginRegisterContext } from "../../../authentication/login-register-context";
 import { motion } from "framer-motion";
 
@@ -19,8 +30,7 @@ const MainNav = () => {
     const toggleMenu = () => {
         setMenuOpen(!isMenuOpen);
     };
-    const toggleBlogMenu = (e) => {
-        e.stopPropagation();
+    const toggleBlogMenu = () => {
         setBlogMenuOpen(!isBlogMenuOpen);
     };
     const logout = () => {
@@ -104,53 +114,42 @@ const MainNav = () => {
                     zIndex={3}
                     w="fit-content"
                 >
-                    <MotionVStack display="flex" alignItems="flex-start" spacing={2}>
+                    <MotionVStack
+                        display="flex"
+                        alignItems="flex-start"
+                        spacing={2}
+                    >
+                    <BlogOptions />
+                        {/* <MotionBox>
+                            <Box cursor="pointer">
+                                <Flex alignItems="center" pointerEvents="all">
+                                    <Text onClick={toggleBlogMenu} as="span">Blogs</Text>
+                                    <MotionButton
+                                        bg="transparent"
+                                        border="none"
+                                        p={0}
+                                        animate={{
+                                            rotate: isBlogMenuOpen ? 180 : 0,
+                                        }}
+                                        _focus={{
+                                            outline: "none",
+                                        }}
+                                        onClick={toggleBlogMenu}
+                                    >
+                                        <FaChevronUp w={6} h={6} />
+                                    </MotionButton>
+                                </Flex>
+                            </Box>
+                            {isBlogMenuOpen && <BlogOptions />}
+                        </MotionBox> */}
+                        <Link to="/carbcycling">
+                            Carb Cycling
+                        </Link>
+                        {/* <MotionBox>
+                            <NavLink to="/carbcycling">CarbCycling</NavLink>
+                        </MotionBox> */}
                         <MotionBox>
-                            <NavLink to="/blogs">
-                                Blogs
-                            </NavLink>
-                            <MotionButton
-                                onClick={toggleBlogMenu}
-                                bg="transparent"
-                                border="none"
-                                p={0}
-                                animate={{
-                                    rotate: isBlogMenuOpen ? 180 : 0,
-                                }}
-                                _focus={{
-                                    outline: "none",
-                                }}
-                            >
-                                <FaChevronDown w={6} h={6} />
-                            </MotionButton>
-                            {isBlogMenuOpen && (
-                                <MotionVStack
-                                    initial={{ opacity: 0, scaleY: 0 }}
-                                    animate={{ opacity: 1, scaleY: 1 }}
-                                    exit={{ opacity: 0, scaleY: 0 }}
-                                    spacing={2}
-                                >
-                                    <NavLink to="/carbcycling">
-                                        Carb Cycling
-                                    </NavLink>
-                                    <NavLink to="/relative-intensity">
-                                        Relative Intensity
-                                    </NavLink>
-                                    <NavLink to="/progressive-overload">
-                                        Progressive Overload
-                                    </NavLink>
-                                </MotionVStack>
-                            )}
-                        </MotionBox>
-                        <MotionBox>
-                            <NavLink to="/charts">
-                                Charts
-                            </NavLink>
-                        </MotionBox>
-                        <MotionBox>
-                            <NavLink to="/workouts">
-                                Workouts
-                            </NavLink>
+                            <NavLink to="/workouts">Workouts</NavLink>
                         </MotionBox>
                     </MotionVStack>
                 </MotionBox>
@@ -161,8 +160,8 @@ const MainNav = () => {
 
 export default MainNav;
 
-
-{/* {isMenuOpen && (
+{
+    /* {isMenuOpen && (
                 <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
@@ -222,4 +221,5 @@ export default MainNav;
                         <NavLink to="/workouts">Workouts</NavLink>
                     </motion.div>
                 </motion.div>
-            )} */}
+            )} */
+}

@@ -18,14 +18,14 @@ import ShowAthleteSessionsHistory from "../../athletes/show-athletes-history-ses
 import EditMacros from "../../macros/editMacros";
 import AddMacros from "../../macros/addMacros";
 import GetMacros from "../../macros/getMacros";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { LoginRegisterContext } from "../../authentication/login-register-context";
 
 const Dashboard = () => {
     const auth = useContext(LoginRegisterContext);
     console.log(auth);
     const user = auth.userID;
-    const name = auth.userName;
+    const name = auth.username;
     const navigate = useNavigate();
     console.log(user);
     const [showAddAthleteSession, setShowAddAthleteSession] = useState(false);
@@ -36,6 +36,7 @@ const Dashboard = () => {
     const [currentDaysWorkouts, setCurrentDaysWorkouts] = useState([]);
     const [showWorkoutHistory, setShowWorkoutHistory] = useState(false);
     const [allWorkouts, setAllWorkouts] = useState([]);
+    const MotionBox = motion(Box);
     const pageVariants = {
         initial: {
             opacity: 0,
@@ -111,8 +112,7 @@ const Dashboard = () => {
     };
 
     return (
-        <Box
-            as="motion.div"
+        <MotionBox
             initial="initial"
             animate="in"
             exit="out"
@@ -231,9 +231,7 @@ const Dashboard = () => {
                     animate={showWorkoutHistory ? "visible" : "hidden"}
                 >
                     <Box p="10px">
-                        <Flex
-                        justifyContent="center" 
-                        gap="10px">
+                        <Flex justifyContent="center" gap="10px">
                             <Button
                                 borderRadius="50px"
                                 colorScheme="red"
@@ -277,9 +275,7 @@ const Dashboard = () => {
                     animate={showWorkoutEdit ? "visible" : "hidden"}
                 >
                     <Box p="10px">
-                        <Flex
-                        justifyContent="center" 
-                        gap="10px">
+                        <Flex justifyContent="center" gap="10px">
                             <Button
                                 borderRadius="50px"
                                 colorScheme="red"
@@ -300,7 +296,10 @@ const Dashboard = () => {
                                 </Stack>
                             </Button>
                         </Flex>
-                        <ShowAthleteSessionsHistory edit={showWorkoutEdit}  user={user} />
+                        <ShowAthleteSessionsHistory
+                            edit={showWorkoutEdit}
+                            user={user}
+                        />
                     </Box>
                 </motion.div>
             )}
@@ -311,9 +310,7 @@ const Dashboard = () => {
                     animate={showMacrosEdit ? "visible" : "hidden"}
                 >
                     <Box p="10px">
-                        <Flex
-                        justifyContent="center" 
-                        gap="10px">
+                        <Flex justifyContent="center" gap="10px">
                             <Button
                                 borderRadius="50px"
                                 colorScheme="red"
@@ -338,10 +335,8 @@ const Dashboard = () => {
                     </Box>
                 </motion.div>
             )}
-        </Box>
+        </MotionBox>
     );
 };
 
 export default Dashboard;
-
-
