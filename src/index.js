@@ -6,6 +6,11 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { Global, css } from "@emotion/core";
 import reportWebVitals from "./reportWebVitals";
 
+window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    window._beforeInstallPromptEvent = event;
+});
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const theme = extendTheme({
     fonts: {

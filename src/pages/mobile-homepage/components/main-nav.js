@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import logo from "../../../images/logo.jpeg";
 import HamburgerMenu from "../../../shared/hamburger-menu";
 import { NavLink, useNavigate, Link } from "react-router-dom";
-import { FaChevronUp } from "react-icons/fa";
+import InstallApp from "./install-button";
 import {
     Image,
     Flex,
@@ -50,6 +50,7 @@ const MainNav = () => {
             <Flex align="end" margin="auto">
                 {!isLoggedIn ? (
                     <>
+                        <InstallApp />
                         <NavLink to="/login">
                             <Button
                                 borderRadius="50"
