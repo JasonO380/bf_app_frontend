@@ -6,10 +6,28 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { Global, css } from "@emotion/core";
 import reportWebVitals from "./reportWebVitals";
 
-window.addEventListener('beforeinstallprompt', (event) => {
+window.addEventListener("beforeinstallprompt", (event) => {
     event.preventDefault();
     window._beforeInstallPromptEvent = event;
 });
+
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+        navigator.serviceWorker.register("/service-worker.js").then(
+            function (registration) {
+                // Registration was successful
+                console.log(
+                    "ServiceWorker registration successful with scope: ",
+                    registration.scope
+                );
+            },
+            function (err) {
+                // registration failed :(
+                console.log("ServiceWorker registration failed: ", err);
+            }
+        );
+    });
+}
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const theme = extendTheme({
