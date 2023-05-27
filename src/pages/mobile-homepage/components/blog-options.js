@@ -15,7 +15,7 @@ const BlogOptions = () => {
         <>
             <Box onClick={toggleBlogMenu} cursor="pointer">
                 <Flex alignItems="center">
-                    <Text as="span">
+                    <Text as="span" marginRight="5px">
                         Blogs
                     </Text>
                     <MotionButton
@@ -54,6 +54,7 @@ const BlogOptions = () => {
                     <MotionBox
                         initial={{ opacity: 0, scaleY: 0 }}
                         animate={{ opacity: 1, scaleY: 1 }}
+                        mt="4px"
                     >
                         <NavLink to="/periodization">
                             Periodization

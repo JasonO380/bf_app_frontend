@@ -330,46 +330,6 @@ const Dashboard = () => {
                     </Box>
                 </motion.div>
             )}
-            {/* <Box
-                position="fixed"
-                bottom="0"
-                width="100%"
-                bg="rgba(0, 0, 0, 0.4)"
-                backdropFilter="blur(10px)"
-                zIndex="6"
-                display="flex"
-                justifyContent="center"
-            >
-                <Flex p="10px">
-                    <Button
-                        onClick={handleStartWorkoutClick}
-                        borderRadius="50px"
-                        colorScheme="blue"
-                        mr="4"
-                        fontSize="xs"
-                    >
-                        Start workout
-                    </Button>
-                    <Button
-                        onClick={handleViewWorkoutHistoryClick}
-                        borderRadius="50px"
-                        colorScheme="blue"
-                        mr="4"
-                        fontSize="xs"
-                    >
-                        History
-                    </Button>
-                    <Button
-                        onClick={handleMacrosClick}
-                        borderRadius="50px"
-                        colorScheme="blue"
-                        fontSize="xs"
-                    >
-                        Add Macros
-                    </Button>
-                    <Spacer />
-                </Flex>
-            </Box> */}
         </Box>
     );
 };
