@@ -25,7 +25,7 @@ const Dashboard = () => {
     const auth = useContext(LoginRegisterContext);
     console.log(auth);
     const user = auth.userID;
-    const name = auth.username;
+    const name = auth.userName;
     const navigate = useNavigate();
     console.log(user);
     const [showAddAthleteSession, setShowAddAthleteSession] = useState(false);

@@ -23,7 +23,7 @@ root.render(
                 /* Apply Montserrat font to all elements */
                 body {
                     font-family: "Montserrat", sans-serif;
-                    overflow-anchor: none;
+                    /*overflow-anchor: none;*/
                 }
             `}
         />
