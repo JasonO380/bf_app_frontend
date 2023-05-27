@@ -142,7 +142,7 @@ const Dashboard = () => {
                 </Box>
                 {isDefaultScreen && <WeeklyWorkoutTotal />}
             </Box>
-            {/* <Box
+            <Box
                 position="fixed"
                 bottom="0"
                 width="100%"
@@ -181,7 +181,7 @@ const Dashboard = () => {
                     </Button>
                     <Spacer />
                 </Flex>
-            </Box> */}
+            </Box>
             {showMacros && (
                 <motion.div
                     variants={variants}
@@ -330,7 +330,7 @@ const Dashboard = () => {
                     </Box>
                 </motion.div>
             )}
-            <Box
+            {/* <Box
                 position="fixed"
                 bottom="0"
                 width="100%"
@@ -369,7 +369,7 @@ const Dashboard = () => {
                     </Button>
                     <Spacer />
                 </Flex>
-            </Box>
+            </Box> */}
         </Box>
     );
 };
