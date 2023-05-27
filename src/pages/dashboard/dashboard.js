@@ -336,7 +336,7 @@ const Dashboard = () => {
                 width="100%"
                 bg="rgba(0, 0, 0, 0.4)"
                 backdropFilter="blur(10px)"
-                zIndex="1"
+                zIndex="6"
                 display="flex"
                 justifyContent="center"
             >
