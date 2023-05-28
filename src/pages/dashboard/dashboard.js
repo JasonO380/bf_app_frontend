@@ -152,7 +152,7 @@ const Dashboard = () => {
                 display="flex"
                 justifyContent="center"
             >
-                <Flex p="10px">
+                <Flex p="10px" marginBottom="15px">
                     <Button
                         onClick={handleStartWorkoutClick}
                         borderRadius="50px"
