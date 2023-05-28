@@ -13,7 +13,6 @@ import {
     Spacer,
 } from "@chakra-ui/react";
 import { Link as ChakraLink } from "@chakra-ui/react"
-// import { Link as NavLink } from "react-router-dom"
 import BlogOptions from "./blog-options";
 import { LoginRegisterContext } from "../../../authentication/login-register-context";
 import { motion } from "framer-motion";
