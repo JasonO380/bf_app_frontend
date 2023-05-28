@@ -18,7 +18,7 @@ const AthletesTopSets = (props) => {
     const sessionData = CreateDayObjectSession(session)
     console.log(sessionData);
     return (
-        <Box paddingBottom="60px">
+        <Box paddingBottom="70px">
             <Box>
                 {sessionData.map((s)=> {
                     const months = s.months;
@@ -57,34 +57,34 @@ const AthletesTopSets = (props) => {
                                                             >
                                                                 {day}
                                                             </Text>
-                                                            <Text color="white">Total volume: {totalVolume}</Text>
+                                                            <Text color="white" fontSize="xs">Total volume: {totalVolume}</Text>
                                                         </Stack>
                                                         {topSets.map((s) => {
                                                             return (
                                                             <React.Fragment> 
                                                                     <Stack>
-                                                                        <Text color="white">
+                                                                        <Text color="white" fontSize="xs">
                                                                             Movement:
                                                                             {" " + s.movement}
                                                                             {s.weight !== null && s.weight !== undefined && (
-                                                                                        <Text color="white">
+                                                                                        <Text color="white" fontSize="xs">
                                                                                             Weight: {s.weight}
                                                                                         </Text>
                                                                                     )}
                                                                             {s.reps && (
-                                                                                <Text color="white">
+                                                                                <Text color="white" fontSize="xs">
                                                                                     Reps:
                                                                                     {" " + s.reps}
                                                                                 </Text>
                                                                             )}
                                                                             {s.distance && (
-                                                                                <Text color="white">
+                                                                                <Text color="white" fontSize="xs">
                                                                                     Distance:
                                                                                     {" " + s.distance}
                                                                                 </Text>
                                                                             )}
                                                                             {s.time && (
-                                                                                <Text color="white">
+                                                                                <Text color="white" fontSize="xs">
                                                                                     Time:
                                                                                     {" " + s.time}
                                                                                 </Text>

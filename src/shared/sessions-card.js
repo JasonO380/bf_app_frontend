@@ -128,7 +128,7 @@ const SessionCard = (props) => {
     if (finalSession) {
         return (
             <React.Fragment>
-                <Stack width="100%" position="relative" paddingBottom="60px">
+                <Stack width="100%" position="relative" paddingBottom="70px">
                     {finalSession.map((session) => {
                         const months = session.months;
                         return (
