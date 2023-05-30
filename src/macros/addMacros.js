@@ -9,12 +9,13 @@ import {
     FormLabel,
     Input,
 } from "@chakra-ui/react";
+import MacrosForm from "./MacrosForm";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
 const AddMacros = () => {
     const auth = useContext(LoginRegisterContext);
     console.log(auth);
-    const [newMacros, setNewMacros] = useState()
+    const [newMacros, setNewMacros] = useState();
     const inputReducer = (state, action) => {
         const dateEntry = new Date();
         switch (action.type) {
@@ -26,25 +27,44 @@ const AddMacros = () => {
                     dayOfWeek: dateEntry.toLocaleString("default", {
                         weekday: "long",
                     }),
-                    dayOfMonth:dateEntry.getDate(),
-                    month: dateEntry.toLocaleString("en-US", { month: "long" })
+                    dayOfMonth: dateEntry.getDate(),
+                    month: dateEntry.toLocaleString("en-US", { month: "long" }),
                 };
             case "CLEAR_FORM":
-                console.log("form cleared")
+                console.log("form cleared");
                 return {
                     carbs: "",
                     protein: "",
-                    fats: ""
+                    fats: "",
                 };
             default:
                 return state;
         }
     };
+
+    const fields = [
+        {
+            name: "carbs",
+            label: "Carbs",
+            dataKey: "macros",
+        },
+        {
+            name: "protein",
+            label: "Protein",
+            dataKey: "macros",
+        },
+        {
+            name: "fats",
+            label: "Fats",
+            dataKey: "macros",
+        },
+    ];
+
     const [inputState, dispatch] = useReducer(inputReducer, {
         protein: "",
         carbs: "",
         fats: "",
-        athlete: ""
+        athlete: "",
     });
 
     const changeHandler = (event) => {
@@ -61,7 +81,7 @@ const AddMacros = () => {
         const userID = auth.userID;
         event.preventDefault();
         try {
-            const response = await fetch (
+            const response = await fetch(
                 `https://bf-backend.onrender.com/api/macros/${userID}`,
                 {
                     method: "POST",
@@ -78,7 +98,7 @@ const AddMacros = () => {
                         dayOfMonth: inputState.dayOfMonth,
                         dayOfWeek: inputState.dayOfWeek,
                         athlete: userID,
-                    })
+                    }),
                 }
             );
             const responseData = await response.json();
@@ -86,64 +106,71 @@ const AddMacros = () => {
                 type: "CLEAR_FORM",
             });
             console.log(responseData.macros);
-            setNewMacros(responseData.macros)
+            setNewMacros(responseData.macros);
         } catch (err) {
-            console.log(err)
+            console.log(err);
         }
     };
 
     return (
-        <Box bg="offWhite" p={5} width="100%" margin="0 auto">
-            <Stack margin="auto" width="80%" paddingBottom="60px">
-                <form onSubmit={postMacros}>
-                    <FormControl fontSize="xs">
-                        <FormLabel color="white" htmlFor="carbs">Carbs</FormLabel>
-                        <Input
-                            onChange={changeHandler}
-                            value={inputState.carbs}
-                            name="carbs"
-                            type="text"
-                            bg="white"
-                            placeholder="Carbs"
-                            fontSize="xs"
-                        />
-                    </FormControl>
-                    <FormControl>
-                        <FormLabel color="white" htmlFor="protein">Protein</FormLabel>
-                        <Input
-                            onChange={changeHandler}
-                            value={inputState.protein}
-                            name="protein"
-                            type="text"
-                            bg="white"
-                            placeholder="Protein"
-                        />
-                    </FormControl>
-                    <FormControl>
-                        <FormLabel color="white" htmlFor="fats">Fats</FormLabel>
-                        <Input
-                            onChange={changeHandler}
-                            value={inputState.fats}
-                            name="fats"
-                            type="text"
-                            bg="white"
-                            placeholder="Carbs"
-                        />
-                    </FormControl>
-                    <Button
-                        mt={4}
-                        width="100%"
-                        type="submit"
-                        bg="red"
-                        color="white"
-                        borderRadius="50px"
-                    >
-                        Add macros
-                    </Button>
-                </form>
-            </Stack>
-        </Box>
-    )
+        <MacrosForm
+            onSubmit={postMacros}
+            inputState={inputState}
+            fields={fields}
+            changeHandler={changeHandler}
+            buttonText="Add macros"
+        />
+        // <Box bg="offWhite" p={5} width="100%" margin="0 auto">
+        //     <Stack margin="auto" width="80%" paddingBottom="60px">
+        //         <form onSubmit={postMacros}>
+        //             <FormControl fontSize="xs">
+        //                 <FormLabel color="white" htmlFor="carbs">Carbs</FormLabel>
+        //                 <Input
+        //                     onChange={changeHandler}
+        //                     value={inputState.carbs}
+        //                     name="carbs"
+        //                     type="text"
+        //                     bg="white"
+        //                     placeholder="Carbs"
+        //                     fontSize="xs"
+        //                 />
+        //             </FormControl>
+        //             <FormControl>
+        //                 <FormLabel color="white" htmlFor="protein">Protein</FormLabel>
+        //                 <Input
+        //                     onChange={changeHandler}
+        //                     value={inputState.protein}
+        //                     name="protein"
+        //                     type="text"
+        //                     bg="white"
+        //                     placeholder="Protein"
+        //                 />
+        //             </FormControl>
+        //             <FormControl>
+        //                 <FormLabel color="white" htmlFor="fats">Fats</FormLabel>
+        //                 <Input
+        //                     onChange={changeHandler}
+        //                     value={inputState.fats}
+        //                     name="fats"
+        //                     type="text"
+        //                     bg="white"
+        //                     placeholder="Carbs"
+        //                 />
+        //             </FormControl>
+        //             <Button
+        //                 mt={4}
+        //                 width="100%"
+        //                 type="submit"
+        //                 bg="red"
+        //                 color="white"
+        //                 borderRadius="50px"
+        //             >
+        //                 Add macros
+        //             </Button>
+        //         </form>
+        //     </Stack>
+        // </Box>
+    );
 };
 
 export default AddMacros;

@@ -3,7 +3,7 @@ import {
     Box,
     Button,
 } from "@chakra-ui/react";
-import FormComponent from "../shared/form-component";
+import MacrosForm from "./MacrosForm";
 import DonutChart from "../shared/donut-chart";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
@@ -143,6 +143,7 @@ const GetAndAddTodaysMacros = (props) => {
                 const responseData = await response.json();
                 console.log(responseData.macros);
                 setTodaysMacros(responseData.macros);
+                prepChartData(responseData.macros); //just added
             } else {
                 // Create new macros
                 const response = await fetch(
@@ -241,11 +242,11 @@ const GetAndAddTodaysMacros = (props) => {
 
     useEffect(() => {
         fetchMacros();
-    }, [auth.userID, auth.token, todaysMacros]);
+    }, [auth.userID, auth.token]);
 
     return (
         <React.Fragment>
-            <FormComponent
+            <MacrosForm
                 onSubmit={postMacros}
                 inputState={inputState}
                 changeHandler={changeHandler}

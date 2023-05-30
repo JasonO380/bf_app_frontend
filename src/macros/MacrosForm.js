@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
     Box,
     Stack,
@@ -7,9 +7,9 @@ import {
     Input,
     Button,
 } from "@chakra-ui/react";
-import LoadingSpinner from "./loading-spinner";
+import LoadingSpinner from "../shared/loading-spinner";
 
-const FormComponent = (props) => {
+const MacrosForm = (props) => {
     const onSubmit = props.onSubmit;
     const inputState = props.inputState;
     const changeHandler = props.changeHandler;
@@ -62,4 +62,4 @@ const FormComponent = (props) => {
     );
 };
 
-export default FormComponent;
+export default MacrosForm;

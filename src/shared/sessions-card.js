@@ -1,9 +1,5 @@
-import React, { useContext, useState, useEffect, useCallback } from "react";
-import ReactDOM from "react-dom";
-import { Box, Flex, Text, Heading, Button, Stack } from "@chakra-ui/react";
-import RemoveDuplicates from "./unique-session";
-import { motion } from "framer-motion";
-import UpdateAthleteSession from "../athletes/update-athlete-session";
+import React, { useContext, useState, useEffect } from "react";
+import { Flex, Text, Heading, Button, Stack } from "@chakra-ui/react";
 import UpdateSession from "./update-session";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
