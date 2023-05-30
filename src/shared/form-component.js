@@ -17,6 +17,7 @@ const FormComponent = (props) => {
     const buttonText = props. buttonText;
     const allData= props.allData;
     const isLoading = props.isLoading;
+    const extraButtons = props.extraButtons;
     const renderPlaceholder = (fieldName, dataKey) => {
         if (allData && allData[dataKey]) {
             return allData[dataKey][fieldName] || "";
@@ -37,6 +38,7 @@ const FormComponent = (props) => {
                                 onChange={changeHandler}
                                 value={inputState[field.name]}
                                 fontSize="xs"
+                                color="black"
                                 name={field.name}
                                 type={field.type || "text"}
                                 bg="white"
@@ -55,6 +57,20 @@ const FormComponent = (props) => {
                     >
                         {buttonText}
                     </Button>
+                    {extraButtons && extraButtons.map((button, index) => (
+                        <Button
+                            key={index}
+                            mt={4}
+                            borderRadius="50px"
+                            width="100%"
+                            onClick={button.onClick}
+                            bg="red"
+                            color="white"
+                            fontSize="xs"
+                        >
+                            {button.text}
+                        </Button>
+                    ))}
                     {isLoading && <LoadingSpinner text="Loading" />}
                 </form>
             </Stack>

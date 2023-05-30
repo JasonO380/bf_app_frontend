@@ -13,6 +13,7 @@ import {
 import { useMediaQuery } from "@chakra-ui/react";
 import { LoginRegisterContext } from "./login-register-context";
 import CoachLogin from "./coach-login";
+import FormComponent from "../shared/form-component";
 import LoadingSpinner from "../shared/loading-spinner";
 import { useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
@@ -46,7 +47,24 @@ const Login = (props) => {
 
     useEffect(() => {
         console.log("input state: ", inputState);
+        console.log('fields:', fields);
+        console.log(props);
     }, [inputState]);
+
+    const fields = [
+        {
+            name: "username",
+            label: "Username",
+            type: "text",
+            placeholder: "Enter username",
+        },
+        {
+            name: "password",
+            label: "Password",
+            type: "password",
+            placeholder: "Password",
+        },
+    ];
 
     const changeHandler = (event) => {
         const inputValue = event.target.value;
@@ -139,7 +157,7 @@ const Login = (props) => {
             </Flex>
             <Stack
                 margin="auto"
-                width={isTabletOrAbove ? "50%" : "80%"}
+                width={isTabletOrAbove ? "50%" : "100%"}
                 color="white"
                 borderRadius="12"
                 justifyContent="center"
@@ -151,7 +169,31 @@ const Login = (props) => {
                 <Heading fontSize="60px">
                     <FaUser />
                 </Heading>
-                {isLoading && <LoadingSpinner text="Logging in" />}
+                <FormComponent
+                    onSubmit={loginUser}
+                    inputState={inputState}
+                    changeHandler={changeHandler}
+                    buttonText="Login"
+                    isLoading={isLoading}
+                    fields={fields}
+                    extraButtons={[
+                        {
+                            text: "Switch to Coach login",
+                            onClick: coachLog,
+                        },
+                    ]}
+                />
+                {/* <Button
+                    mt={4}
+                    onClick={coachLog}
+                    width="100%"
+                    bg="red"
+                    color="white"
+                    fontSize="xs"
+                >
+                    Switch to Coach login
+                </Button> */}
+                {/* {isLoading && <LoadingSpinner text="Logging in" />}
                 <form onSubmit={loginUser}>
                     <FormControl>
                         <FormLabel fontSize="xs" htmlFor="username">Username</FormLabel>
@@ -199,7 +241,7 @@ const Login = (props) => {
                     >
                         Switch to Coach login
                     </Button>
-                </form>
+                </form> */}
                 {!login && errorMessage && (
                     <Text color="white">{errorMessage}</Text>
                 )}
