@@ -1,9 +1,7 @@
-import React from "react";
-import Intro from "../pages/homepage/intro";
+import React, { Suspense } from "react";
+import SplashPage from "../shared/Splash-page";
 import Login from "../authentication/login";
 import Register from "../authentication/register";
-import AddAthleteSession from "../athletes/add-athlete-session";
-import Dashboard from "../pages/dashboard/dashboard";
 import CoachDashboard from "../coaches/coach-dashboard";
 import CarbCycling from "../Blogs/CarbCycling";
 import Periodization from "../Blogs/Periodization";
@@ -13,6 +11,8 @@ import { Box } from "@chakra-ui/react";
 import WelcomeMessage from "../pages/mobile-homepage/components/welcome-message";
 
 const AnimatedRoutes = () => {
+    const Intro = React.lazy(() => import("../pages/homepage/intro"));
+    const Dashboard = React.lazy(() => import("../pages/dashboard/dashboard"));
     const location = useLocation();
     const MotionBox = motion(Box);
     const pageVariants = {
@@ -48,12 +48,16 @@ const AnimatedRoutes = () => {
                             variants={pageVariants}
                             transition={pageTransition}
                         >
-                            <Intro />
+                            <Suspense fallback={<SplashPage text="Loading home page" />}>
+                                <Intro />
+                            </Suspense>
                         </MotionBox>
                     }
                 />
-                <Route path="/login" element={
-                    <MotionBox
+                <Route
+                    path="/login"
+                    element={
+                        <MotionBox
                             initial="initial"
                             animate="in"
                             exit="out"
@@ -62,9 +66,12 @@ const AnimatedRoutes = () => {
                         >
                             <Login />
                         </MotionBox>
-                } />
-                <Route path="/register" element={
-                    <motion.div 
+                    }
+                />
+                <Route
+                    path="/register"
+                    element={
+                        <motion.div
                             initial="initial"
                             animate="in"
                             exit="out"
@@ -73,21 +80,24 @@ const AnimatedRoutes = () => {
                         >
                             <Register />
                         </motion.div>
-                } />
-                <Route path="/athlete" element={<Dashboard />} />
-                {/* <Route path="/athlete" element={
-                    <motion.div 
-                            initial="initial"
-                            animate="in"
-                            exit="out"
-                            variants={pageVariants}
-                            transition={pageTransition}
+                    }
+                />
+                <Route
+                    path="/athlete"
+                    element={
+                        <Suspense
+                            fallback={
+                                <SplashPage text="Gains on the way" />
+                            }
                         >
                             <Dashboard />
-                        </motion.div>
-                } /> */}
-                <Route path="/coach" element={
-                    <motion.div 
+                        </Suspense>
+                    }
+                />
+                <Route
+                    path="/coach"
+                    element={
+                        <motion.div
                             initial="initial"
                             animate="in"
                             exit="out"
@@ -96,9 +106,12 @@ const AnimatedRoutes = () => {
                         >
                             <CoachDashboard />
                         </motion.div>
-                } />
-                <Route path="/welcome" element={
-                    <motion.div 
+                    }
+                />
+                <Route
+                    path="/welcome"
+                    element={
+                        <motion.div
                             initial="initial"
                             animate="in"
                             exit="out"
@@ -107,9 +120,12 @@ const AnimatedRoutes = () => {
                         >
                             <WelcomeMessage />
                         </motion.div>
-                } />
-                <Route path="/carbcycling" element={
-                    <motion.div 
+                    }
+                />
+                <Route
+                    path="/carbcycling"
+                    element={
+                        <motion.div
                             initial="initial"
                             animate="in"
                             exit="out"
@@ -118,9 +134,12 @@ const AnimatedRoutes = () => {
                         >
                             <CarbCycling />
                         </motion.div>
-                } />
-                <Route path="/periodization" element={
-                    <motion.div 
+                    }
+                />
+                <Route
+                    path="/periodization"
+                    element={
+                        <motion.div
                             initial="initial"
                             animate="in"
                             exit="out"
@@ -129,7 +148,22 @@ const AnimatedRoutes = () => {
                         >
                             <Periodization />
                         </motion.div>
-                } />
+                    }
+                />
+                <Route
+                    path="/splashpage"
+                    element={
+                        <motion.div
+                            initial="initial"
+                            animate="in"
+                            exit="out"
+                            variants={pageVariants}
+                            transition={pageTransition}
+                        >
+                            <SplashPage text="Gains on the way" />
+                        </motion.div>
+                    }
+                />
             </Routes>
         </AnimatePresence>
     );

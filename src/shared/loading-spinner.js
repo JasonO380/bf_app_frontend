@@ -1,4 +1,4 @@
-import { Box, Text, MotionBox } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 
 const LoadingSpinner = (props) => {
@@ -11,8 +11,11 @@ const LoadingSpinner = (props) => {
                 transition: { type: "spring", bounce: 0.65, duration: 1.8 },
             }}
             exit={{ scale: 0 }}
-            width="160px"
-            height="55px"
+            width="fit-content"
+            height="65px"
+            padding="5px"
+            // width="160px"
+            // height="55px"
             bg="white"
             borderRadius="50px"
             display="flex"

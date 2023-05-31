@@ -1,8 +1,5 @@
 import React, { useState, useReducer, useContext, useEffect } from "react";
 import {
-    FormControl,
-    FormLabel,
-    Input,
     Flex,
     Text,
     Button,
@@ -14,7 +11,6 @@ import { useMediaQuery } from "@chakra-ui/react";
 import { LoginRegisterContext } from "./login-register-context";
 import CoachLogin from "./coach-login";
 import FormComponent from "../shared/form-component";
-import LoadingSpinner from "../shared/loading-spinner";
 import { useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 
@@ -176,6 +172,7 @@ const Login = (props) => {
                     buttonText="Login"
                     isLoading={isLoading}
                     fields={fields}
+                    message="Logging in"
                     extraButtons={[
                         {
                             text: "Switch to Coach login",
@@ -183,65 +180,6 @@ const Login = (props) => {
                         },
                     ]}
                 />
-                {/* <Button
-                    mt={4}
-                    onClick={coachLog}
-                    width="100%"
-                    bg="red"
-                    color="white"
-                    fontSize="xs"
-                >
-                    Switch to Coach login
-                </Button> */}
-                {/* {isLoading && <LoadingSpinner text="Logging in" />}
-                <form onSubmit={loginUser}>
-                    <FormControl>
-                        <FormLabel fontSize="xs" htmlFor="username">Username</FormLabel>
-                        <Input
-                            type="text"
-                            color="black"
-                            name="username"
-                            value={inputState.userName}
-                            fontSize="xs"
-                            placeholder="Enter username"
-                            bg="white"
-                            onChange={changeHandler}
-                        />
-                    </FormControl>
-                    <FormControl mt={4}>
-                        <FormLabel fontSize="xs" htmlFor="password">Password</FormLabel>
-                        <Input
-                            color="black"
-                            type="password"
-                            name="password"
-                            value={inputState.password}
-                            fontSize="xs"
-                            placeholder="Enter password"
-                            bg="white"
-                            onChange={changeHandler}
-                        />
-                    </FormControl>
-                    <Button
-                        mt={4}
-                        width="100%"
-                        type="submit"
-                        bg="red"
-                        color="white"
-                        fontSize="xs"
-                    >
-                        Login
-                    </Button>
-                    <Button
-                        mt={4}
-                        onClick={coachLog}
-                        width="100%"
-                        bg="red"
-                        color="white"
-                        fontSize="xs"
-                    >
-                        Switch to Coach login
-                    </Button>
-                </form> */}
                 {!login && errorMessage && (
                     <Text color="white">{errorMessage}</Text>
                 )}

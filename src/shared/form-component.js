@@ -14,10 +14,11 @@ const FormComponent = (props) => {
     const inputState = props.inputState;
     const changeHandler = props.changeHandler;
     const fields = props.fields;
-    const buttonText = props. buttonText;
-    const allData= props.allData;
+    const buttonText = props.buttonText;
+    const allData = props.allData;
     const isLoading = props.isLoading;
     const extraButtons = props.extraButtons;
+    const message = props.message;
     const renderPlaceholder = (fieldName, dataKey) => {
         if (allData && allData[dataKey]) {
             return allData[dataKey][fieldName] || "";
@@ -31,7 +32,11 @@ const FormComponent = (props) => {
                 <form onSubmit={onSubmit}>
                     {fields.map((field) => (
                         <FormControl fontSize="xs" key={field.name}>
-                            <FormLabel fontSize="xs" color="white" htmlFor={field.name}>
+                            <FormLabel
+                                fontSize="xs"
+                                color="white"
+                                htmlFor={field.name}
+                            >
                                 {field.label}
                             </FormLabel>
                             <Input
@@ -42,7 +47,14 @@ const FormComponent = (props) => {
                                 name={field.name}
                                 type={field.type || "text"}
                                 bg="white"
-                                placeholder={allData ? renderPlaceholder(field.name, field.dataKey) : field.placeholder}
+                                placeholder={
+                                    allData
+                                        ? renderPlaceholder(
+                                              field.name,
+                                              field.dataKey
+                                          )
+                                        : field.placeholder
+                                }
                             />
                         </FormControl>
                     ))}
@@ -57,22 +69,25 @@ const FormComponent = (props) => {
                     >
                         {buttonText}
                     </Button>
-                    {extraButtons && extraButtons.map((button, index) => (
-                        <Button
-                            key={index}
-                            mt={4}
-                            borderRadius="50px"
-                            width="100%"
-                            onClick={button.onClick}
-                            bg="red"
-                            color="white"
-                            fontSize="xs"
-                        >
-                            {button.text}
-                        </Button>
-                    ))}
-                    {isLoading && <LoadingSpinner text="Loading" />}
+                    {extraButtons &&
+                        extraButtons.map((button, index) => (
+                            <Button
+                                key={index}
+                                mt={4}
+                                borderRadius="50px"
+                                width="100%"
+                                onClick={button.onClick}
+                                bg="red"
+                                color="white"
+                                fontSize="xs"
+                            >
+                                {button.text}
+                            </Button>
+                        ))}
                 </form>
+                <Box margin="auto">
+                    {isLoading && <LoadingSpinner text={message} />}
+                </Box>
             </Stack>
         </Box>
     );
