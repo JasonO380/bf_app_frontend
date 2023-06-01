@@ -15,6 +15,7 @@ import { LoginRegisterContext } from "./login-register-context";
 import { FaClipboardList } from "react-icons/fa";
 import LoadingSpinner from "../shared/loading-spinner";
 import { useNavigate } from "react-router-dom";
+import FormComponent from "../shared/form-component";
 
 let accessGranted;
 const CoachLogin = (props) => {
@@ -52,6 +53,21 @@ const CoachLogin = (props) => {
             value: inputValue,
         });
     };
+
+    const fields = [
+        {
+            name: "coachname",
+            label: "Coach name",
+            type: "text",
+            placeholder: "Enter coach name",
+        },
+        {
+            name: "password",
+            label: "Password",
+            type: "password",
+            placeholder: "Password",
+        },
+    ];
 
     const loginCoach = async (event) => {
         setIsLoading(true);
@@ -118,13 +134,14 @@ const CoachLogin = (props) => {
                     bg="red"
                     color="white"
                     borderRadius="50px"
+                    fontSize="xs"
                 >
                     Home
                 </Button>
             </Flex>
             <Stack
                 margin="auto"
-                width={isTabletOrAbove ? "50%" : "80%"}
+                width={isTabletOrAbove ? "50%" : "100%"}
                 color="white"
                 borderRadius="12"
                 spacing={8}
@@ -135,61 +152,21 @@ const CoachLogin = (props) => {
                 <Heading fontSize="60px">
                     <FaClipboardList />
                 </Heading>
-                {isLoading && <LoadingSpinner />}
-                <form onSubmit={loginCoach}>
-                    <FormControl>
-                        <FormLabel htmlFor="username">Coach name</FormLabel>
-                        <Input
-                            type="text"
-                            color="black"
-                            name="coachname"
-                            value={inputState.coachname}
-                            placeholder="Enter coach name"
-                            bg="white"
-                            onChange={changeHandler}
-                        />
-                    </FormControl>
-                    <FormControl mt={4}>
-                        <FormLabel htmlFor="password">Password</FormLabel>
-                        <Input
-                            color="black"
-                            type="password"
-                            name="password"
-                            value={inputState.password}
-                            placeholder="Enter password"
-                            bg="white"
-                            onChange={changeHandler}
-                        />
-                    </FormControl>
-                    <Button
-                        mt={4}
-                        // bg="red"
-                        width="100%"
-                        type="submit"
-                        bg="red"
-                        color="white"
-                    >
-                        Login
-                    </Button>
-                </form>
-                <Button
-                    mt={4}
-                    onClick={props.onSwitch}
-                    width="100%"
-                    bg="red"
-                    color="white"
-                >
-                    Switch to user Login
-                </Button>
-                <Button
-                    mt={4}
-                    onClick={logout}
-                    width="100%"
-                    bg="red"
-                    color="white"
-                >
-                    Logout
-                </Button>
+                <FormComponent
+                    onSubmit={loginCoach}
+                    inputState={inputState}
+                    changeHandler={changeHandler}
+                    buttonText="Login"
+                    isLoading={isLoading}
+                    fields={fields}
+                    message="Logging in"
+                    extraButtons={[
+                        {
+                            text: "Switch to User login",
+                            onClick: props.onSwitch,
+                        },
+                    ]}
+                />
                 {isLoading && <LoadingSpinner text="Logging in" />}
                 {errorMessage && <Text>{errorMessage}</Text>}
             </Stack>

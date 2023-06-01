@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import SplashPage from "../shared/Splash-page";
 import Login from "../authentication/login";
 import Register from "../authentication/register";
@@ -13,6 +13,7 @@ import WelcomeMessage from "../pages/mobile-homepage/components/welcome-message"
 const AnimatedRoutes = () => {
     const Intro = React.lazy(() => import("../pages/homepage/intro"));
     const Dashboard = React.lazy(() => import("../pages/dashboard/dashboard"));
+    const [showSplash, setShowSplash] = useState(true);
     const location = useLocation();
     const MotionBox = motion(Box);
     const pageVariants = {
@@ -35,7 +36,21 @@ const AnimatedRoutes = () => {
         ease: "anticipate",
         duration: 0.4,
     };
+
+    useEffect(() => {
+        setShowSplash(true);
+        const timer = setTimeout(() => {
+            setShowSplash(false);
+        }, 1300); // Adjust the delay as needed (in milliseconds)
+
+        return () => {
+            clearTimeout(timer);
+        };
+    }, [location]);
+
     return (
+        <>
+        {showSplash && <SplashPage text="Gains on the way" />}
         <AnimatePresence mode="wait">
             <Routes location={location} key={location.pathname}>
                 <Route
@@ -48,7 +63,11 @@ const AnimatedRoutes = () => {
                             variants={pageVariants}
                             transition={pageTransition}
                         >
-                            <Suspense fallback={<SplashPage text="Loading home page" />}>
+                            <Suspense
+                                // fallback={
+                                //     <SplashPage text="Loading home page" />
+                                // }
+                            >
                                 <Intro />
                             </Suspense>
                         </MotionBox>
@@ -86,9 +105,7 @@ const AnimatedRoutes = () => {
                     path="/athlete"
                     element={
                         <Suspense
-                            fallback={
-                                <SplashPage text="Gains on the way" />
-                            }
+                            // fallback={<SplashPage text="Gains on the way" />}
                         >
                             <Dashboard />
                         </Suspense>
@@ -166,6 +183,7 @@ const AnimatedRoutes = () => {
                 />
             </Routes>
         </AnimatePresence>
+        </>
     );
 };
 
