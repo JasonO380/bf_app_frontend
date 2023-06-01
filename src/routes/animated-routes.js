@@ -37,6 +37,20 @@ const AnimatedRoutes = () => {
         duration: 0.4,
     };
 
+    const splashMessages = {
+        '/': 'Fit journey begins now',
+        '/athlete': 'Gains on the way',
+        '/register': 'Lean, Strong, Mobile',
+        '/login': 'Welcome back',
+        '/coach':'Lead by example',
+        '/welcome':'Thanks for visiting',
+        '/carbcycling':'Fuel for results',
+        '/periodization':'Train for the long game',
+        'Default message':'Loading'
+    };
+
+    const splashMessage = splashMessages[location.pathname] || 'Default message';
+
     useEffect(() => {
         setShowSplash(true);
         const timer = setTimeout(() => {
@@ -50,7 +64,7 @@ const AnimatedRoutes = () => {
 
     return (
         <>
-        {showSplash && <SplashPage text="Gains on the way" />}
+        {showSplash && <SplashPage text={splashMessage} />}
         <AnimatePresence mode="wait">
             <Routes location={location} key={location.pathname}>
                 <Route
@@ -63,11 +77,7 @@ const AnimatedRoutes = () => {
                             variants={pageVariants}
                             transition={pageTransition}
                         >
-                            <Suspense
-                                // fallback={
-                                //     <SplashPage text="Loading home page" />
-                                // }
-                            >
+                            <Suspense>
                                 <Intro />
                             </Suspense>
                         </MotionBox>
@@ -104,9 +114,7 @@ const AnimatedRoutes = () => {
                 <Route
                     path="/athlete"
                     element={
-                        <Suspense
-                            // fallback={<SplashPage text="Gains on the way" />}
-                        >
+                        <Suspense>
                             <Dashboard />
                         </Suspense>
                     }
