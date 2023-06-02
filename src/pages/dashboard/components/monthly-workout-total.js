@@ -1,14 +1,12 @@
-import React, { useState, useEffect, useContext} from "react";
-import { Bar } from "react-chartjs-2";
-import { Chart as ChartJS } from "chart.js/auto";
-import { Box, Text } from "@chakra-ui/react";
+import React, { useState, useEffect, useContext } from "react";
+import { Box } from "@chakra-ui/react";
 import { LoginRegisterContext } from "../../../authentication/login-register-context";
 import BarChart from "../../../shared/bar-chart";
 
-const WeeklyWorkoutTotal = () => {
+const MonthlyWorkoutTotal = () => {
     const auth = useContext(LoginRegisterContext);
     const [count, setCount] = useState([]);
-    const uniqueMonth = [];
+    let uniqueMonth = [];
 
     const getWorkoutData = async () => {
         const id = auth.userID;
@@ -32,12 +30,12 @@ const WeeklyWorkoutTotal = () => {
             const workoutData = responseData.sessions;
             prepChartData(workoutData);
         } catch (err) {
-            console.log(err)
+            console.log(err);
         }
     };
 
     const prepChartData = (workoutData) => {
-        let monthObj = [];
+        let monthObj = {};
         let doubles = [];
         const uniqueDays = [];
         workoutData.map((s)=> {
@@ -49,16 +47,19 @@ const WeeklyWorkoutTotal = () => {
                 if (!monthObj.daysLifted.includes(day)) {
                     monthObj.daysLifted.push(day);
                 }
-                uniqueMonth.push(monthObj);
+                if(month) { // check if month is not undefined before pushing
+                    uniqueMonth.push(monthObj);
+                }
             } else {
                 const index = uniqueMonth.findIndex((obj) => obj.month === month);
-                if (!uniqueMonth[index].daysLifted.includes(day)) {
+                if (index !== -1 && !uniqueMonth[index].daysLifted.includes(day)) {
                     uniqueMonth[index].daysLifted.push(day);
                 }
             }
         })
+        uniqueMonth = uniqueMonth.slice(-5);
         console.log(uniqueMonth);
-        //Set the count state variable to an array of objects containing month and count properties
+
         const liftedDaysCount = uniqueMonth.map((m) => ({
             month: m.month,
             count: m.daysLifted.length,
@@ -70,16 +71,16 @@ const WeeklyWorkoutTotal = () => {
         getWorkoutData();
     }, [auth.userID, auth.token]);
 
-    if(count){
+    if (count) {
         return (
             <Box color="white" paddingBottom="60px">
                 <BarChart
-                data={count}
-                options={{ maintainAspectRatio: false }}
-            />
+                    data={count}
+                    options={{ maintainAspectRatio: false }}
+                />
             </Box>
-        )
+        );
     }
-}
+};
 
-export default WeeklyWorkoutTotal;
+export default MonthlyWorkoutTotal;

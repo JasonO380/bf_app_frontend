@@ -44,7 +44,7 @@ const AnimatedRoutes = () => {
         '/login': 'Welcome back',
         '/coach':'Lead by example',
         '/welcome':'Thanks for visiting',
-        '/carbcycling':'Fuel for results',
+        '/carbcycling':'Eat for results',
         '/periodization':'Train for the long game',
         'Default message':'Loading'
     };

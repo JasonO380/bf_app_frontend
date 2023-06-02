@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import AddMovement from "../../athletes/add-movement";
 import AddAthleteSession from "../../athletes/add-athlete-session";
-import WeeklyWorkoutTotal from "./components/weekly-workout-total";
+import MonthlyWorkoutTotal from "./components/monthly-workout-total";
 import GetAndAddTodaysMacros from "../../macros/get-and-add-todays-macros";
 import ShowAthleteSessionsHistory from "../../athletes/show-athletes-history-sessions";
 import EditMacros from "../../macros/editMacros";
@@ -140,7 +140,7 @@ const Dashboard = () => {
                     </Heading>
                     <Text color="white">Welcome, {name}</Text>
                 </Box>
-                {isDefaultScreen && <WeeklyWorkoutTotal />}
+                {isDefaultScreen && <MonthlyWorkoutTotal />}
             </Box>
             <Box
                 position="fixed"

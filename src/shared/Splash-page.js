@@ -34,11 +34,13 @@ const SplashPage = (props) => {
                 bg="linear-gradient(to bottom, #3D0149, #00BCD4)"
                 height="100vh"
                 display="flex"
+                position="relative"
                 justifyContent="center"
                 alignItems="center"
                 initial="initial"
                 animate="in"
                 exit="out"
+                zIndex="7"
                 variants={pageVariants}
                 transition={pageTransition}
             >

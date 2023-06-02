@@ -5,7 +5,7 @@ import me2 from "../../../images/intro-me2.jpeg";
 const MobileServices = () => {
     return (
         <Box width="95%" margin="auto">
-            <Box paddingTop="225px">
+            <Box paddingTop="280px">
                 <Heading color="white">Services</Heading>
             </Box>
             <Flex paddingTop="25px" gap={5} width="95%" margin="auto">

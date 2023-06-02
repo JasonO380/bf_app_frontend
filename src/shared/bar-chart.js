@@ -39,6 +39,8 @@ const BarChart = (props) => {
         },
     };
     console.log(chartData);
+    // console.log("labels:", chartData.map((m) => m.month));
+    // console.log("data:", chartData.map((c) => c.count));
     const line = {
         labels: chartData.map((m) => m.month),
         datasets: [
