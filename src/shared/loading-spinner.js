@@ -44,22 +44,38 @@ const LoadingSpinner = (props) => {
                             repeatType: "reverse",
                         }}
                         animate={{
-                            y: [
-                                `${Math.sin((index / 10) * Math.PI) * 15}px`, // Going up
+                            height: [
+                                `${2 + Math.sin((index / 10) * Math.PI) * 7.5}px`, // Going up
                                 `${
+                                    12.0 +
                                     Math.sin(((index + 0.5) / 10) * Math.PI) *
-                                    -15
+                                        7.5
                                 }px`, // Going down
                                 `${
-                                    Math.sin(((index + 1) / 10) * Math.PI) * 15
+                                    2 + Math.sin(((index + 1) / 10) * Math.PI) * 7.5
                                 }px`, // Going up
                             ],
                         }}
+                        // animate={{
+                        //     y: [
+                        //         `${Math.sin((index / 10) * Math.PI) * 15}px`, // Going up
+                        //         `${
+                        //             Math.sin(((index + 0.5) / 10) * Math.PI) *
+                        //             -15
+                        //         }px`, // Going down
+                        //         `${
+                        //             Math.sin(((index + 1) / 10) * Math.PI) * 15
+                        //         }px`, // Going up
+                        //     ],
+                        // }}
                         w="5px"
-                        h="5px"
-                        borderRadius="100%"
+                        h="20px"
+                        // h="5px"
+                        // borderRadius="100%"
+                        borderRadius="1px"
                         bg={index % 2 === 0 ? "#ff1f06" : "#0000ffe0"}
-                        mx={1}
+                        mx={0.5}
+                        // mx={1}
                     />
                 ))}
             </Box>

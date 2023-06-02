@@ -2,6 +2,7 @@ import React, { useContext, useReducer, useState } from "react";
 import {
     Box,
     Text,
+    Heading,
     Flex,
     Button,
     Stack,
@@ -150,8 +151,8 @@ const AddRoundsToMovement = (props) => {
             {movement.map((m, index) => (
                 <React.Fragment key={index}>
                     <Box>
-                        <Text fontSize="xs" color="white">
-                            {m}
+                        <Text fontSize="x-large" color="white">
+                            <strong>{m}</strong>
                         </Text>
                     </Box>
                     <AddRoundsToMovementForm
