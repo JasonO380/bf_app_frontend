@@ -14,8 +14,6 @@ const LoadingSpinner = (props) => {
             width="fit-content"
             height="65px"
             padding="5px"
-            // width="160px"
-            // height="55px"
             bg="white"
             borderRadius="50px"
             display="flex"
@@ -56,26 +54,11 @@ const LoadingSpinner = (props) => {
                                 }px`, // Going up
                             ],
                         }}
-                        // animate={{
-                        //     y: [
-                        //         `${Math.sin((index / 10) * Math.PI) * 15}px`, // Going up
-                        //         `${
-                        //             Math.sin(((index + 0.5) / 10) * Math.PI) *
-                        //             -15
-                        //         }px`, // Going down
-                        //         `${
-                        //             Math.sin(((index + 1) / 10) * Math.PI) * 15
-                        //         }px`, // Going up
-                        //     ],
-                        // }}
                         w="5px"
                         h="20px"
-                        // h="5px"
-                        // borderRadius="100%"
-                        borderRadius="1px"
+                        borderRadius="50"
                         bg={index % 2 === 0 ? "#ff1f06" : "#0000ffe0"}
                         mx={0.5}
-                        // mx={1}
                     />
                 ))}
             </Box>
