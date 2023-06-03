@@ -121,7 +121,10 @@ const MainNav = () => {
                     >
                     <MotionBox>
                             <NavLink to="/welcome">Welcome</NavLink>
-                        </MotionBox>
+                    </MotionBox>
+                    <MotionBox>
+                            <NavLink to="/successmindset">Success Mindset</NavLink>
+                    </MotionBox>
                     <BlogOptions />
                     </MotionVStack>
                 </MotionBox>

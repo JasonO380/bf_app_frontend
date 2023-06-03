@@ -3,6 +3,7 @@ import SplashPage from "../shared/Splash-page";
 import Login from "../authentication/login";
 import Register from "../authentication/register";
 import CoachDashboard from "../coaches/coach-dashboard";
+import SuccessMindset from "../Blogs/SuccessMindset";
 import CarbCycling from "../Blogs/CarbCycling";
 import Periodization from "../Blogs/Periodization";
 import { Routes, Route, useLocation } from "react-router-dom";
@@ -172,6 +173,20 @@ const AnimatedRoutes = () => {
                             transition={pageTransition}
                         >
                             <Periodization />
+                        </motion.div>
+                    }
+                />
+                <Route
+                    path="/successmindset"
+                    element={
+                        <motion.div
+                            initial="initial"
+                            animate="in"
+                            exit="out"
+                            variants={pageVariants}
+                            transition={pageTransition}
+                        >
+                            <SuccessMindset />
                         </motion.div>
                     }
                 />
