@@ -39,18 +39,18 @@ const AnimatedRoutes = () => {
     };
 
     const splashMessages = {
-        '/': 'Fit journey begins now',
+        '/': 'Lean Strong Mobile',
         '/athlete': 'Gains on the way',
-        '/register': 'Lean, Strong, Mobile',
+        '/register': 'Accountability matters',
         '/login': 'Welcome back',
         '/coach':'Lead by example',
         '/welcome':'Thanks for visiting',
         '/carbcycling':'Eat for results',
         '/periodization':'Train for the long game',
-        'Default message':'Loading'
+        '/successmindset':'Embrace the process'
     };
 
-    const splashMessage = splashMessages[location.pathname] || 'Default message';
+    const splashMessage = splashMessages[location.pathname] || 'Loading...';
 
     useEffect(() => {
         setShowSplash(true);
