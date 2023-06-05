@@ -105,7 +105,7 @@ const SuccessMindset = () => {
                         track towards your fitness aspirations.
                     </ListItem>
                     <ListItem>
-                        <strong>Celebrate Every Victory</strong> Along the path
+                        <strong>4 Celebrate Every Victory:</strong> Along the path
                         to fitness success, it's crucial to acknowledge and
                         celebrate the small wins. Recognize and appreciate the
                         positive habits you build along the way, whether it's

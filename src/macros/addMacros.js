@@ -120,56 +120,6 @@ const AddMacros = () => {
             changeHandler={changeHandler}
             buttonText="Add macros"
         />
-        // <Box bg="offWhite" p={5} width="100%" margin="0 auto">
-        //     <Stack margin="auto" width="80%" paddingBottom="60px">
-        //         <form onSubmit={postMacros}>
-        //             <FormControl fontSize="xs">
-        //                 <FormLabel color="white" htmlFor="carbs">Carbs</FormLabel>
-        //                 <Input
-        //                     onChange={changeHandler}
-        //                     value={inputState.carbs}
-        //                     name="carbs"
-        //                     type="text"
-        //                     bg="white"
-        //                     placeholder="Carbs"
-        //                     fontSize="xs"
-        //                 />
-        //             </FormControl>
-        //             <FormControl>
-        //                 <FormLabel color="white" htmlFor="protein">Protein</FormLabel>
-        //                 <Input
-        //                     onChange={changeHandler}
-        //                     value={inputState.protein}
-        //                     name="protein"
-        //                     type="text"
-        //                     bg="white"
-        //                     placeholder="Protein"
-        //                 />
-        //             </FormControl>
-        //             <FormControl>
-        //                 <FormLabel color="white" htmlFor="fats">Fats</FormLabel>
-        //                 <Input
-        //                     onChange={changeHandler}
-        //                     value={inputState.fats}
-        //                     name="fats"
-        //                     type="text"
-        //                     bg="white"
-        //                     placeholder="Carbs"
-        //                 />
-        //             </FormControl>
-        //             <Button
-        //                 mt={4}
-        //                 width="100%"
-        //                 type="submit"
-        //                 bg="red"
-        //                 color="white"
-        //                 borderRadius="50px"
-        //             >
-        //                 Add macros
-        //             </Button>
-        //         </form>
-        //     </Stack>
-        // </Box>
     );
 };
 

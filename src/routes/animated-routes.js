@@ -3,11 +3,13 @@ import SplashPage from "../shared/Splash-page";
 import Login from "../authentication/login";
 import Register from "../authentication/register";
 import CoachDashboard from "../coaches/coach-dashboard";
+import MacroCalculator from "../macros/macro-calculator";
 import SuccessMindset from "../Blogs/SuccessMindset";
 import CarbCycling from "../Blogs/CarbCycling";
 import Periodization from "../Blogs/Periodization";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import DonutTest from "../macros/donut-test";
 import { Box } from "@chakra-ui/react";
 import WelcomeMessage from "../pages/mobile-homepage/components/welcome-message";
 
@@ -187,6 +189,20 @@ const AnimatedRoutes = () => {
                             transition={pageTransition}
                         >
                             <SuccessMindset />
+                        </motion.div>
+                    }
+                />
+                <Route
+                    path="/macrocalculator"
+                    element={
+                        <motion.div
+                            initial="initial"
+                            animate="in"
+                            exit="out"
+                            variants={pageVariants}
+                            transition={pageTransition}
+                        >
+                            <MacroCalculator />
                         </motion.div>
                     }
                 />

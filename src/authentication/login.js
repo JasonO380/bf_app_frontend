@@ -41,12 +41,6 @@ const Login = (props) => {
     });
     const loginRegister = useContext(LoginRegisterContext);
 
-    useEffect(() => {
-        console.log("input state: ", inputState);
-        console.log('fields:', fields);
-        console.log(props);
-    }, [inputState]);
-
     const fields = [
         {
             name: "username",
