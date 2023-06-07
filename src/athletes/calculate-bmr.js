@@ -9,7 +9,7 @@ const calculateBMR = (weight, height, age, gender) => {
         return "Can not perform calculation";
     }
 
-    return bmr;
+    return Math.round(bmr);
 };
 
 export default calculateBMR;

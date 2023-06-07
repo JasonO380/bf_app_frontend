@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import DonutChart from "../shared/donut-chart";
-import { Doughnut } from "react-chartjs-2";
+import MacroDonutChartLegend from "./macro-donut-chart-legend";
 import { ArcElement } from "chart.js";
 import { Chart as ChartJS } from "chart.js/auto";
 
@@ -10,16 +10,18 @@ ChartJS.register(ArcElement);
 const DonutTest = (macroDistribution) => {
     console.log(macroDistribution);
     const macros = macroDistribution.macroDistribution;
-    console.log(macros);
+    let text;
     const prepareChartData = (macros, label) => {
+        text = label;
         const { carbohydrates, protein, fats } = macros;
         console.log(macros);
         console.log(label);
+        console.log(text);
         const chartData = {
             labels: [
-                "Carbohydrates " + carbohydrates,
-                "Protein " + protein,
-                "Fats " + fats,
+                "Carbs",
+                "Pro",
+                "Fats",
             ],
             datasets: [
                 {
@@ -50,22 +52,6 @@ const DonutTest = (macroDistribution) => {
                 },
             },
         };
-        // const chartOptions = {
-        //     legend: {
-        //         position: "bottom",
-        //         labels: {
-        //             boxWidth: 15,
-        //         },
-        //     },
-        //     title: {
-        //         display: true,
-        //         text: label,
-        //         font: {
-        //             size: "16",
-        //             family: "Montserrat",
-        //         },
-        //     },
-        // };
 
         return { chartData, chartOptions };
     };
@@ -75,50 +61,94 @@ const DonutTest = (macroDistribution) => {
             {macros && (
                 <>
                     {macros.highCarb && (
-                        <Box color="white" height="12rem">
-                        <DonutChart
-                            data={
-                                prepareChartData(
-                                    macros.highCarb,
-                                    "High Carb Day"
-                                ).chartData
-                            }
-                            options={
-                                prepareChartData(
-                                    macros.highCarb,
-                                    "High Carb Day"
-                                ).chartOptions
-                            }
-                        />
-                        </Box>
+                        <>
+                            <Box>
+                                <Text
+                                    textAlign="center"
+                                    color="white"
+                                    fontSize="large"
+                                >
+                                    <strong>High Carb Day</strong>
+                                </Text>
+                            </Box>
+                            <Flex>
+                                <MacroDonutChartLegend
+                                    carbDayType={macros.highCarb}
+                                />
+                                <Box height="12rem">
+                                    <DonutChart
+                                        data={
+                                            prepareChartData(macros.highCarb)
+                                                .chartData
+                                        }
+                                        options={
+                                            prepareChartData(macros.highCarb)
+                                                .chartOptions
+                                        }
+                                    />
+                                </Box>
+                            </Flex>
+                        </>
                     )}
                     {macros.mediumCarb && (
-                        <DonutChart
-                            data={
-                                prepareChartData(
-                                    macros.mediumCarb,
-                                    "Medium Carb Day"
-                                ).chartData
-                            }
-                            options={
-                                prepareChartData(
-                                    macros.mediumCarb,
-                                    "Medium Carb Day"
-                                ).chartOptions
-                            }
-                        />
+                        <>
+                            <Box>
+                                <Text
+                                    textAlign="center"
+                                    color="white"
+                                    fontSize="large"
+                                >
+                                    <strong>Medium Carb Day</strong>
+                                </Text>
+                            </Box>
+                            <Flex>
+                                <MacroDonutChartLegend
+                                    carbDayType={macros.mediumCarb}
+                                />
+                                <Box height="12rem">
+                                    <DonutChart
+                                        data={
+                                            prepareChartData(macros.mediumCarb)
+                                                .chartData
+                                        }
+                                        options={
+                                            prepareChartData(macros.mediumCarb)
+                                                .chartOptions
+                                        }
+                                    />
+                                </Box>
+                            </Flex>
+                        </>
                     )}
                     {macros.lowCarb && (
-                        <DonutChart
-                            data={
-                                prepareChartData(macros.lowCarb, "Low Carb Day")
-                                    .chartData
-                            }
-                            options={
-                                prepareChartData(macros.lowCarb, "Low Carb Day")
-                                    .chartOptions
-                            }
-                        />
+                        <>
+                            <Box>
+                                <Text
+                                    textAlign="center"
+                                    color="white"
+                                    fontSize="large"
+                                >
+                                    <strong>Low Carb Day</strong>
+                                </Text>
+                            </Box>
+                            <Flex>
+                                <MacroDonutChartLegend
+                                    carbDayType={macros.lowCarb}
+                                />
+                                <Box height="12rem">
+                                    <DonutChart
+                                        data={
+                                            prepareChartData(macros.lowCarb)
+                                                .chartData
+                                        }
+                                        options={
+                                            prepareChartData(macros.lowCarb)
+                                                .chartOptions
+                                        }
+                                    />
+                                </Box>
+                            </Flex>
+                        </>
                     )}
                 </>
             )}

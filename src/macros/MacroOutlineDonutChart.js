@@ -1,64 +1,153 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import DonutChart from "../shared/donut-chart";
+import MacroDonutChartLegend from "./macro-donut-chart-legend";
+import { Box, Flex, Text } from "@chakra-ui/react";
 
 const MacroOutlineDonutChart = ({ macroDistribution }) => {
-    console.log(macroDistribution);
-    const [cData, setCData] = useState(null);
-    const [cOptions, setCOptions] = useState(null);
-
-    const prepareChartData = (macroDistribution) => {
-        const { highCarb, mediumCarb, lowCarb } = macroDistribution;
-        console.log(highCarb.carbohydrates, " high carbs");
-
+    console.log(macroDistribution)
+    const macros = macroDistribution;
+    console.log(macros);
+    const prepareChartData = (macros, label) => {
+        const { carbohydrates, protein, fats } = macros;
+        console.log(macros);
+        console.log(label);
         const chartData = {
-            labels: ["High Carb", "Medium Carb", "Low Carb"],
+            labels: [
+                "Carbs ",
+                "Pro ",
+                "Fats ",
+            ],
             datasets: [
                 {
-                    label: "Carbs",
-                    data: [
-                        highCarb.carbohydrates,
-                        mediumCarb.protein,
-                        lowCarb.fats,
-                    ],
-                    backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+                    data: [carbohydrates, protein, fats],
+                    backgroundColor: ["#257ff5", "#F06B2D", "#f8df00"],
                     hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-                },
-                {
-                    label: "Protein",
-                    data: [
-                        highCarb.protein,
-                        mediumCarb.protein,
-                        lowCarb.protein,
-                    ],
-                    backgroundColor: ["#FFB8D1", "#82CFFD", "#FFE88D"],
-                    hoverBackgroundColor: ["#FFB8D1", "#82CFFD", "#FFE88D"],
-                },
-                {
-                    label: "Fats",
-                    data: [highCarb.fats, mediumCarb.fats, lowCarb.fats],
-                    backgroundColor: ["#FFA7B2", "#7EC2F3", "#FFD460"],
-                    hoverBackgroundColor: ["#FFA7B2", "#7EC2F3", "#FFD460"],
                 },
             ],
         };
 
         const chartOptions = {
-            legend: {
-                position: "bottom",
-                labels: {
-                    boxWidth: 15,
+            plugins: {
+                legend: {
+                    position: "bottom",
+                    labels: {
+                        boxWidth: 15,
+                        color: "white",
+                    },
+                },
+                title: {
+                    display: true,
+                    text: label,
+                    font: {
+                        size: "16",
+                        family: "Montserrat",
+                        color: "white",
+                    },
                 },
             },
         };
-        setCData(chartData);
-        setCOptions(chartOptions);
+
+        return { chartData, chartOptions };
     };
 
-    useState(() => {
-        prepareChartData(macroDistribution);
-    }, [macroDistribution]);
-
-    return cData && <DonutChart data={cData} options={cOptions} />;
+    return (
+        <>
+            {macros && (
+                <>
+                    {macros.highCarb && (
+                        <>
+                            <Box>
+                                <Text
+                                    textAlign="center"
+                                    color="white"
+                                    fontSize="large"
+                                >
+                                    <strong>High Carb Day</strong>
+                                </Text>
+                            </Box>
+                            <Flex border="1px solid white" borderRadius="10px" padding="10px">
+                                <MacroDonutChartLegend
+                                    carbDayType={macros.highCarb}
+                                />
+                                <Box height="12rem">
+                                    <DonutChart
+                                        data={
+                                            prepareChartData(macros.highCarb)
+                                                .chartData
+                                        }
+                                        options={
+                                            prepareChartData(macros.highCarb)
+                                                .chartOptions
+                                        }
+                                    />
+                                </Box>
+                            </Flex>
+                        </>
+                    )}
+                    {macros.mediumCarb && (
+                        <>
+                            <Box>
+                                <Text
+                                    textAlign="center"
+                                    color="white"
+                                    fontSize="large"
+                                >
+                                    <strong>Medium Carb Day</strong>
+                                </Text>
+                            </Box>
+                            <Flex border="1px solid white" borderRadius="10px" padding="10px">
+                                <MacroDonutChartLegend
+                                    carbDayType={macros.mediumCarb}
+                                />
+                                <Box height="12rem">
+                                    <DonutChart
+                                        data={
+                                            prepareChartData(macros.mediumCarb)
+                                                .chartData
+                                        }
+                                        options={
+                                            prepareChartData(macros.mediumCarb)
+                                                .chartOptions
+                                        }
+                                    />
+                                </Box>
+                            </Flex>
+                        </>
+                    )}
+                    {macros.lowCarb && (
+                        <>
+                            <Box>
+                                <Text
+                                    textAlign="center"
+                                    color="white"
+                                    fontSize="large"
+                                >
+                                    <strong>Low Carb Day</strong>
+                                </Text>
+                            </Box>
+                            <Flex border="1px solid white" borderRadius="10px" padding="10px">
+                                <MacroDonutChartLegend
+                                    carbDayType={macros.lowCarb}
+                                />
+                                <Box height="12rem">
+                                    <DonutChart
+                                        data={
+                                            prepareChartData(macros.lowCarb)
+                                                .chartData
+                                        }
+                                        options={
+                                            prepareChartData(macros.lowCarb)
+                                                .chartOptions
+                                        }
+                                    />
+                                </Box>
+                            </Flex>
+                        </>
+                    )}
+                </>
+            )}
+        </>
+    );
 };
 
 export default MacroOutlineDonutChart;

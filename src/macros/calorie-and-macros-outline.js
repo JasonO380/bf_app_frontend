@@ -1,18 +1,7 @@
 import React from "react";
-import {
-    Box,
-    Text,
-    Image,
-    Flex,
-    Button,
-    Stack,
-    FormControl,
-    FormLabel,
-    Input,
-} from "@chakra-ui/react";
+import { Box, Text, } from "@chakra-ui/react";
 import MacroOutlineDonutChart from "./MacroOutlineDonutChart";
 import calculateMacroDistribution from "./calculate-macro-distribution";
-import DonutTest from "./donut-test";
 
 const CalorieAndMacrosOutline = ({ calorieTotal }) => {
     const sedentaryCarbs = calculateMacroDistribution(calorieTotal.sedentary);
@@ -20,44 +9,49 @@ const CalorieAndMacrosOutline = ({ calorieTotal }) => {
     const moderatelyActiveCarbs = calculateMacroDistribution(calorieTotal.moderatelyActive);
     const veryActiveCarbs = calculateMacroDistribution(calorieTotal.veryActive);
     const extraActiveCarbs = calculateMacroDistribution(calorieTotal.extraActive);
-    console.log(sedentaryCarbs);
-    console.log(veryActiveCarbs, " very active");
 
     return (
         <Box bg="offWhite" p={5} width="100%" margin="0 auto">
-            <Box>
-                <Text color="white">Sedentary: {calorieTotal.sedentary}</Text>
-                {lightlyActiveCarbs && <DonutTest macroDistribution={lightlyActiveCarbs} />}
-                <Text color="white">
-                    High carb day: CARBS:{" "}
-                    {sedentaryCarbs.highCarb.carbohydrates} PROTEIN:{" "}
-                    {sedentaryCarbs.highCarb.protein} FATS:{" "}
-                    {sedentaryCarbs.highCarb.fats}
-                </Text>
-                <Text color="white">
-                    Meduim carb day: CARBS:{" "}
-                    {sedentaryCarbs.mediumCarb.carbohydrates} PROTEIN:{" "}
-                    {sedentaryCarbs.mediumCarb.protein} FATS:{" "}
-                    {sedentaryCarbs.mediumCarb.fats}
-                </Text>
-                <Text color="white">
-                    Low carb day: CARBS: {sedentaryCarbs.lowCarb.carbohydrates}{" "}
-                    PROTEIN: {sedentaryCarbs.lowCarb.protein} FATS:{" "}
-                    {sedentaryCarbs.lowCarb.fats}
-                </Text>
-                <Text color="white">
-                    Lightly active: {calorieTotal.lightlyActive}
-                </Text>
-                <Text color="white">
-                    Moderately active: {calorieTotal.moderatelyActive}
-                </Text>
-                <Text color="white">
-                    Very active: {calorieTotal.veryActive}
-                </Text>
-                <Text color="white">
-                    Extra active: {calorieTotal.extraActive}
-                </Text>
+        {sedentaryCarbs && (
+            <>
+            <Box margin="auto">
+                <Text textAlign="center" color="white" fontSize="x-large"><strong>Sedentary cals: {calorieTotal.sedentary}</strong></Text>
             </Box>
+                <MacroOutlineDonutChart macroDistribution={sedentaryCarbs} />
+            </>
+        )}
+        {lightlyActiveCarbs && (
+            <>
+            <Box margin="auto">
+                <Text textAlign="center" color="white" fontSize="x-large"><strong>Light active cals: {calorieTotal.lightlyActive}</strong></Text>
+            </Box>
+                <MacroOutlineDonutChart macroDistribution={lightlyActiveCarbs} />
+            </>
+        )}
+        {moderatelyActiveCarbs && (
+            <>
+            <Box margin="auto">
+                <Text textAlign="center" color="white" fontSize="x-large"><strong>Moderately active cals: {calorieTotal.moderatelyActive}</strong></Text>
+            </Box>
+                <MacroOutlineDonutChart macroDistribution={moderatelyActiveCarbs} />
+            </>
+        )}
+        {veryActiveCarbs && (
+            <>
+            <Box margin="auto">
+                <Text textAlign="center" color="white" fontSize="x-large"><strong>Very active cals: {calorieTotal.veryActive}</strong></Text>
+            </Box>
+                <MacroOutlineDonutChart macroDistribution={veryActiveCarbs} />
+            </>
+        )}
+        {extraActiveCarbs && (
+            <>
+            <Box margin="auto">
+                <Text textAlign="center" color="white" fontSize="x-large"><strong>Intense active cals: {calorieTotal.extraActive}</strong></Text>
+            </Box>
+                <MacroOutlineDonutChart macroDistribution={extraActiveCarbs} />
+            </>
+        )}
         </Box>
     );
 };

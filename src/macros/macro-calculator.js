@@ -4,13 +4,12 @@ import CalorieAndMacrosOutline from "./calorie-and-macros-outline";
 import calculateActivityLevel from "../athletes/calculate-activity-level";
 import calculateBMR from "../athletes/calculate-bmr";
 import FormComponent from "../shared/form-component";
-import DonutTest from "./donut-test";
+import MacroCalculatorForm from "./macro-calculator-form";
 
 const MacroCalculator = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [calorieTotal, setCalorieTotal] = useState();
     const inputReducer = (state, action) => {
-        console.log("Action:", action);
         switch (action.type) {
             case "INPUT_CHANGE":
                 return {
@@ -35,7 +34,7 @@ const MacroCalculator = () => {
         height: "",
         weight: "",
         age: "",
-        gender: "",
+        gender: "male",
         activitylevel: "",
     });
 
@@ -54,14 +53,19 @@ const MacroCalculator = () => {
         event.preventDefault();
         const { weight, height, age, gender, activitylevel } = inputState;
         const bmr = calculateBMR(weight, height, age, gender, activitylevel);
-        console.log(bmr);
         const tdee = calculateActivityLevel(bmr, activitylevel);
-        console.log("tdee: ", tdee);
         setIsLoading(false);
-        setCalorieTotal(tdee)
-        console.log(calorieTotal, " total calories")
+        setCalorieTotal(tdee);
         dispatch({
             type: "CLEAR_FORM",
+        });
+    };
+
+    const toggleGender = () => {
+        dispatch({
+            type: "INPUT_CHANGE",
+            name: "gender",
+            value: inputState.gender === "male" ? "female" : "male",
         });
     };
 
@@ -75,57 +79,18 @@ const MacroCalculator = () => {
         });
     };
 
-    const fields = [
-        {
-            name: "height",
-            label: "Height",
-            type: "text",
-            placeholder: "Enter height in inches",
-        },
-        {
-            name: "weight",
-            label: "Weight",
-            type: "text",
-            placeholder: "Enter weight in KG",
-        },
-        {
-            name: "age",
-            label: "Age",
-            type: "text",
-            placeholder: "Enter age",
-        },
-        {
-            name: "gender",
-            label: "Gender",
-            type: "text",
-            placeholder: "enter gender",
-        },
-        {
-            name: "activitylevel",
-            label: "Activity level",
-            type: "text",
-            placeholder: "enter activity level",
-        },
-    ];
-
     return (
-        <Box bg="#151414" p={5} height="100%" width="100%" margin="0 auto">
-            <FormComponent
-                onSubmit={calculateMacros}
-                inputState={inputState}
+        <Box bg="#151414" p={5} minHeight="100vh" width="100%" margin="0 auto">
+            <MacroCalculatorForm
                 changeHandler={changeHandler}
-                buttonText="Find BMR"
-                isLoading={isLoading}
-                fields={fields}
-                message="Calculating"
-                extraButtons={[
-                    {
-                        text: "Convert weight to KG",
-                        onClick: convertKG,
-                    },
-                ]}
+                inputState={inputState}
+                calculateMacros={calculateMacros}
+                toggleGender={toggleGender}
+                convertToKG={convertKG}
             />
-            {calorieTotal && <CalorieAndMacrosOutline calorieTotal={calorieTotal} />}
+            {calorieTotal && (
+                <CalorieAndMacrosOutline calorieTotal={calorieTotal} />
+            )}
         </Box>
     );
 };
