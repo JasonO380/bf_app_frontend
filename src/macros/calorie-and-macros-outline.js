@@ -22,7 +22,7 @@ const CalorieAndMacrosOutline = ({ calorieTotal }) => {
         )}
         {lightlyActiveCarbs && (
             <>
-            <Box margin="auto">
+            <Box margin="auto" mt="15px">
                 <Text textAlign="center" color="white" fontSize="x-large"><strong>Light active cals: {calorieTotal.lightlyActive}</strong></Text>
             </Box>
                 <MacroOutlineDonutChart macroDistribution={lightlyActiveCarbs} />
@@ -30,7 +30,7 @@ const CalorieAndMacrosOutline = ({ calorieTotal }) => {
         )}
         {moderatelyActiveCarbs && (
             <>
-            <Box margin="auto">
+            <Box margin="auto" mt="15px">
                 <Text textAlign="center" color="white" fontSize="x-large"><strong>Moderately active cals: {calorieTotal.moderatelyActive}</strong></Text>
             </Box>
                 <MacroOutlineDonutChart macroDistribution={moderatelyActiveCarbs} />
@@ -38,7 +38,7 @@ const CalorieAndMacrosOutline = ({ calorieTotal }) => {
         )}
         {veryActiveCarbs && (
             <>
-            <Box margin="auto">
+            <Box margin="auto" mt="15px">
                 <Text textAlign="center" color="white" fontSize="x-large"><strong>Very active cals: {calorieTotal.veryActive}</strong></Text>
             </Box>
                 <MacroOutlineDonutChart macroDistribution={veryActiveCarbs} />
@@ -46,7 +46,7 @@ const CalorieAndMacrosOutline = ({ calorieTotal }) => {
         )}
         {extraActiveCarbs && (
             <>
-            <Box margin="auto">
+            <Box margin="auto" mt="15px">
                 <Text textAlign="center" color="white" fontSize="x-large"><strong>Intense active cals: {calorieTotal.extraActive}</strong></Text>
             </Box>
                 <MacroOutlineDonutChart macroDistribution={extraActiveCarbs} />

@@ -1,6 +1,7 @@
 import React from "react";
 import {
     Box,
+    Text,
     Switch,
     Flex,
     Button,
@@ -10,7 +11,7 @@ import {
     Input,
 } from "@chakra-ui/react";
 
-const MacroCalculatorForm = ({changeHandler, inputState, calculateMacros, toggleGender, convertToKG }) => {
+const MacroCalculatorForm = ({changeHandler, inputState, calculateMacros, toggleSex, convertToKG }) => {
     return (
         <form onSubmit={calculateMacros}>
             <Flex gap="10px" margin="auto" width="100%" paddingBottom="5px">
@@ -63,15 +64,19 @@ const MacroCalculatorForm = ({changeHandler, inputState, calculateMacros, toggle
                     </Stack>
                 </FormControl>
                 <FormControl>
-                    <FormLabel fontSize="xs" color="white" htmlFor="gender">
-                        Gender
+                    <FormLabel fontSize="xs" color="white" htmlFor="sex">
+                        Sex
                     </FormLabel>
+                    <Stack>
                     <Switch
-                        id="gender"
+                        id="sex"
+                        name="sex"
                         colorScheme="teal"
-                        isChecked={inputState.gender === "female"}
-                        onChange={toggleGender}
+                        isChecked={inputState.sex === "female"}
+                        onChange={toggleSex}
                     />
+                    <Text color="white" fontSize="xs">{inputState.sex}</Text>
+                    </Stack>
                 </FormControl>
             </Flex>
             <Flex gap="10px" margin="auto" width="100%" paddingBottom="5px">

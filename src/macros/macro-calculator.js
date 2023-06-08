@@ -22,8 +22,7 @@ const MacroCalculator = () => {
                     height: "",
                     weight: "",
                     age: "",
-                    gender: "",
-                    activitylevel: "",
+                    sex: "male"
                 };
             default:
                 return state;
@@ -34,8 +33,7 @@ const MacroCalculator = () => {
         height: "",
         weight: "",
         age: "",
-        gender: "male",
-        activitylevel: "",
+        sex: "male"
     });
 
     const changeHandler = (event) => {
@@ -51,8 +49,8 @@ const MacroCalculator = () => {
     const calculateMacros = (event) => {
         setIsLoading(true);
         event.preventDefault();
-        const { weight, height, age, gender, activitylevel } = inputState;
-        const bmr = calculateBMR(weight, height, age, gender, activitylevel);
+        const { weight, height, age, sex, activitylevel } = inputState;
+        const bmr = calculateBMR(weight, height, age, sex, activitylevel);
         const tdee = calculateActivityLevel(bmr, activitylevel);
         setIsLoading(false);
         setCalorieTotal(tdee);
@@ -61,11 +59,11 @@ const MacroCalculator = () => {
         });
     };
 
-    const toggleGender = () => {
+    const toggleSex = () => {
         dispatch({
             type: "INPUT_CHANGE",
-            name: "gender",
-            value: inputState.gender === "male" ? "female" : "male",
+            name: "sex",
+            value: inputState.sex === "male" ? "female" : "male",
         });
     };
 
@@ -85,7 +83,7 @@ const MacroCalculator = () => {
                 changeHandler={changeHandler}
                 inputState={inputState}
                 calculateMacros={calculateMacros}
-                toggleGender={toggleGender}
+                toggleSex={toggleSex}
                 convertToKG={convertKG}
             />
             {calorieTotal && (
