@@ -11,7 +11,7 @@ import {
     Input,
 } from "@chakra-ui/react";
 
-const MacroCalculatorForm = ({changeHandler, inputState, calculateMacros, toggleSex, convertToKG }) => {
+const MacroCalculatorForm = ({changeHandler, inputState, calculateMacros, toggleSex, convertToKG, calculateHeight }) => {
     return (
         <form onSubmit={calculateMacros}>
             <Flex gap="10px" margin="auto" width="100%" paddingBottom="5px">
@@ -36,7 +36,34 @@ const MacroCalculatorForm = ({changeHandler, inputState, calculateMacros, toggle
                         <FormLabel fontSize="xs" color="white" htmlFor="height">
                             Height
                         </FormLabel>
-                        <Input
+                        <Flex gap="10px">
+                        <Stack>
+                            <Input
+                                onChange={(e) => changeHandler(e)}
+                                value={inputState.heightFeet}
+                                name="heightFeet"
+                                type="text"
+                                bg="white"
+                                placeholder="Feet"
+                                fontSize="xs"
+                                marginRight="10px"
+                            />
+                            <Text color="white" fontSize="xs">Feet</Text>
+                            </Stack>
+                            <Stack>
+                            <Input
+                                onChange={(e) => changeHandler(e)}
+                                value={inputState.heightInches}
+                                name="heightInches"
+                                type="text"
+                                bg="white"
+                                placeholder="Inches"
+                                fontSize="xs"
+                            />
+                            <Text color="white" fontSize="xs">Inches</Text>
+                            </Stack>
+                        </Flex>
+                        {/* <Input
                             onChange={(e) => changeHandler(e)}
                             value={inputState.height}
                             name="height"
@@ -44,7 +71,7 @@ const MacroCalculatorForm = ({changeHandler, inputState, calculateMacros, toggle
                             bg="white"
                             placeholder="height"
                             fontSize="xs"
-                        />
+                        /> */}
                     </Stack>
                 </FormControl>
                 <FormControl>
