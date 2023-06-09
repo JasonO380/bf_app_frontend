@@ -44,7 +44,6 @@ const MacroCalculatorForm = ({changeHandler, inputState, calculateMacros, toggle
                                 name="heightFeet"
                                 type="text"
                                 bg="white"
-                                placeholder="Feet"
                                 fontSize="xs"
                                 marginRight="10px"
                             />
@@ -57,7 +56,6 @@ const MacroCalculatorForm = ({changeHandler, inputState, calculateMacros, toggle
                                 name="heightInches"
                                 type="text"
                                 bg="white"
-                                placeholder="Inches"
                                 fontSize="xs"
                             />
                             <Text color="white" fontSize="xs">Inches</Text>

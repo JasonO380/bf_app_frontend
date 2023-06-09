@@ -49,7 +49,8 @@ const AnimatedRoutes = () => {
         '/welcome':'Thanks for visiting',
         '/carbcycling':'Eat for results',
         '/periodization':'Train for the long game',
-        '/successmindset':'Embrace the process'
+        '/successmindset':'Embrace the process',
+        '/macrocalculator':'Organize your eating habits'
     };
 
     const splashMessage = splashMessages[location.pathname] || 'Loading...';
