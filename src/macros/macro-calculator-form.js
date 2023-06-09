@@ -57,6 +57,7 @@ const MacroCalculatorForm = ({changeHandler, inputState, calculateMacros, toggle
                                 type="text"
                                 bg="white"
                                 fontSize="xs"
+                                width="50px"
                             />
                             <Text color="white" fontSize="xs">Inches</Text>
                             </Stack>
