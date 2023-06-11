@@ -62,15 +62,6 @@ const MacroCalculatorForm = ({changeHandler, inputState, calculateMacros, toggle
                             <Text color="white" fontSize="xs">Inches</Text>
                             </Stack>
                         </Flex>
-                        {/* <Input
-                            onChange={(e) => changeHandler(e)}
-                            value={inputState.height}
-                            name="height"
-                            type="text"
-                            bg="white"
-                            placeholder="height"
-                            fontSize="xs"
-                        /> */}
                     </Stack>
                 </FormControl>
                 <FormControl>

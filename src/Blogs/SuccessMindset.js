@@ -56,9 +56,7 @@ const SuccessMindset = () => {
                 </Heading>
                 <Text color="white" fontSize="xs">
                     Much like you should never stop learning you should never
-                    stop being active and fit. Being active and fit is what will
-                    give you the freedom to move about and do your daily
-                    routines throughout your life span. Being active and fit is
+                    stop being active and fit. Being active and fit is
                     not just a short-term goal; it's a lifelong commitment that
                     grants you the freedom to move about and engage in your
                     daily routines throughout your entire life span.

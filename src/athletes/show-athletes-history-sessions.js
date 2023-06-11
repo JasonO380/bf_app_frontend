@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import SessionCard from "../shared/sessions-card";
 import AthletesTopSets from "./athletes-top-sets";
+import ShowWorkoutsByWeek from "./show-workouts-by-week";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
 const ShowAthleteSessionsHistory = (props) => {
@@ -66,7 +67,7 @@ const ShowAthleteSessionsHistory = (props) => {
     }, []);
 
 
-    return showEditWorkouts ? <SessionCard getUpdate={getSessions} workouts={allWorkouts} /> :  <AthletesTopSets session={allWorkouts} />;
+    return showEditWorkouts ? <SessionCard getUpdate={getSessions} workouts={allWorkouts} /> :  <ShowWorkoutsByWeek session={allWorkouts} />;
 };
 
 export default ShowAthleteSessionsHistory;
