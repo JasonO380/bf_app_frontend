@@ -1,4 +1,7 @@
 const CalculateTopSets = (sessions) => {
+    if (!sessions) {
+        return null; // Return null when sessions is falsy
+    }
     const sessionsByMovement = {};
 
     // Group the sessions by movement

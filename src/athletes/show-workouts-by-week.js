@@ -41,13 +41,12 @@ const ShowWorkoutsByWeek = (props) => {
                                                 gridTemplateColumns="repeat(7, 1fr)"
                                                 gap="1rem" 
                                                 overflowX="auto"
-                                                // whiteSpace="nowrap"
-                                                // width="max-content"
                                                 >
                                                     {" "}
                                                     {/* Flex container to display days in a row */}
-                                                    {week.map((dayObj) => {
-                                                        const day = dayObj.day;
+
+                                                    {week.filter(dayObj => dayObj !== null).map((dayObj) => {
+                                                        const day =  dayObj.day;
                                                         const dayOfWeek = dayObj.dayOfWeek;
                                                         const session =
                                                             dayObj.sessions;
