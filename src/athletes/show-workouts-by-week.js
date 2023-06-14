@@ -33,7 +33,6 @@ const ShowWorkoutsByWeek = (props) => {
                                             </Heading>
                                         </Flex>
                                         {weeks.map((week) => {
-                                            console.log(week)
                                             // Now we map over weeks
                                             return (
                                                 <Box
@@ -84,7 +83,7 @@ const ShowWorkoutsByWeek = (props) => {
                                                                         }
                                                                     </Text>
                                                                 </Stack>
-                                                                {topSets.map(
+                                                                {topSets && topSets.map(
                                                                     (s) => {
                                                                         return (
                                                                             <React.Fragment>

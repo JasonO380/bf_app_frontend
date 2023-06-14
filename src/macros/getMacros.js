@@ -96,11 +96,8 @@ const GetMacros = () => {
                 },
             },
         }));
-
-        console.log(allMacros);
         setCData(data);
         setCOptions(options);
-        console.log(cData);
     };
 
     const handleNextClick = () => {

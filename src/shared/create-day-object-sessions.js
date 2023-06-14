@@ -1,5 +1,4 @@
 const CreateDayObjectSession = (session) => {
-    console.log(session);
     const finalSession = [];
     //helper function to create MovementObjects
     const generateMovementObjects = (session) => ({

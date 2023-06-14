@@ -1,4 +1,7 @@
 const CalculateDailyVolume = (sessions) => {
+    if (!sessions) {
+        return null; // Return null when sessions is falsy
+    }
     let dailyTotal = 0;
     sessions.map((session) => {
         const reps = session.reps || 1;
