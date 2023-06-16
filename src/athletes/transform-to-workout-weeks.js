@@ -8,7 +8,7 @@ const transformToWorkoutWeeks = (data) => {
 
             // Define the acceptable range for each day of the week
             const dayRanges = {
-                Sunday: 6,
+                Sunday: 5,
                 Monday: 5,
                 Tuesday: 4,
                 Wednesday: 3,
@@ -28,13 +28,13 @@ const transformToWorkoutWeeks = (data) => {
             ];
 
             const dayOfWeekValue = {
-                Sunday:0,
-                Monday:1,
-                Tuesday:2,
+                Sunday:6,
+                Monday:5,
+                Tuesday:4,
                 Wednesday:3,
-                Thursday:4,
-                Friday:5,
-                Saturday:6
+                Thursday:2,
+                Friday:1,
+                Saturday:0
             }
 
             monthData.days.forEach((day, index) => {
@@ -73,15 +73,13 @@ const transformToWorkoutWeeks = (data) => {
                 }
 
                 previousDay = day; // Update the previous day's data
-                console.log(day)
-                console.log(previousDay)
             });
 
             // Push the remaining days of the last week
             if (currentWeek.length > 0) {
                 weeks.push(currentWeek);
             }
-
+            console.log(weeks)
             return {
                 ...monthData,
                 weeks: weeks,
