@@ -6,26 +6,12 @@ import SelectBox from "../shared/select-box";
 const GetGoogleSheets = () => {
     const auth = useContext(LoginRegisterContext);
     const [googleSheets, setGoogleSheets] = useState();
-    const [user, setUser] = useState([]);
     const [clientProgramming, setClientProgramming] = useState([]);
-    const [selectedClient, setSelectedClient] = useState();
-
-    const getAllUsers = async () => {
-        const response = await fetch(
-            "https://bf-backend.onrender.com/api/users/allusers"
-        );
-        const responseData = await response.json();
-        console.log(responseData.users);
-        const users = responseData.users;
-        console.log(users.map((user) => user.username));
-        setUser(users);
-    };
 
     const getGoogleSheets = async (API) => {
         try {
             const response = await fetch(
                 `${API}`
-                // `https://script.google.com/macros/s/AKfycbzfPg-qNeKGIFf05AokqKCqr2W1VzXDnAXYuJwO7L-GZad3WZXVOjZNmd8ppvTWqfA/exec`
             );
             const responseData = await response.json();
             const sheets = responseData.data;
@@ -38,33 +24,22 @@ const GetGoogleSheets = () => {
 
     const getUserProgramming = async () => {
         const userID = auth.userID;
-        console.log(userID);
         try {
             const response = await fetch(
-                `http://localhost:5000/api/programming/getuserprograms/${userID}`
+                `https://bf-backend.onrender.com/api/programming/getuserprograms/${userID}`
             );
             const responseData = await response.json();
-            console.log(responseData.programmingData);
             const program = responseData.programmingData;
             setClientProgramming(program);
-            const programName = program.cycleName;
-            console.log(program.map((cycle) => cycle.cycleName));
         } catch (err) {}
     }
 
     const handleSelect = (client) => {
-        console.log(client);
-        console.log(client.id);
-        setSelectedClient(client);
         getGoogleSheets(client.cycleAPI)
     };
 
     useEffect(() => {
         getUserProgramming()
-    }, []);
-
-    useEffect(() => {
-        getAllUsers();
     }, []);
 
     return (
@@ -126,7 +101,6 @@ const GetGoogleSheets = () => {
                                                             {data.join(" ")}
                                                         </Text>
                                                 )}
-                                                {/* <Text color="white">{data.join(' ')}</Text> */}
                                             </Box>
                                         );
                                     })}
