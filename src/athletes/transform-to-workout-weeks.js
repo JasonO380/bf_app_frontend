@@ -8,7 +8,7 @@ const transformToWorkoutWeeks = (data) => {
 
             // Define the acceptable range for each day of the week
             const dayRanges = {
-                Sunday: 5,
+                Sunday: 6,
                 Monday: 5,
                 Tuesday: 4,
                 Wednesday: 3,
@@ -46,7 +46,7 @@ const transformToWorkoutWeeks = (data) => {
                     for (let i = 0; i < missingDays; i++) {
                         currentWeek.push(null);
                     }
-                }
+                } 
 
                 if (currentWeek.length === 7) {
                     weeks.push(currentWeek);

@@ -11,6 +11,7 @@ import {
     Spacer,
 } from "@chakra-ui/react";
 import AddMovement from "../../athletes/add-movement";
+import GetGoogleSheets from "../../athletes/get-google-sheets";
 import AddAthleteSession from "../../athletes/add-athlete-session";
 import MonthlyWorkoutTotal from "./components/monthly-workout-total";
 import GetAndAddTodaysMacros from "../../macros/get-and-add-todays-macros";
@@ -140,7 +141,11 @@ const Dashboard = () => {
                     </Heading>
                     <Text color="white">Welcome, {name}</Text>
                 </Box>
-                {isDefaultScreen && <MonthlyWorkoutTotal />}
+                {isDefaultScreen && 
+                <>
+                <MonthlyWorkoutTotal />
+                <GetGoogleSheets />
+                </>}
             </Box>
             <Box
                 position="fixed"

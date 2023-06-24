@@ -21,7 +21,6 @@ const Login = (props) => {
     const [isTabletOrAbove] = useMediaQuery("(min-width: 600px)");
     let accessGranted;
     const inputReducer = (state, action) => {
-        console.log("Action:", action);
         switch (action.type) {
             case "INPUT_CHANGE":
                 return {

@@ -9,7 +9,8 @@ import CarbCycling from "../Blogs/CarbCycling";
 import Periodization from "../Blogs/Periodization";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import DonutTest from "../macros/donut-test";
+import GetGoogleSheets from "../athletes/get-google-sheets";
+import AddGoogleSheets from "../athletes/add-google-sheets";
 import { Box } from "@chakra-ui/react";
 import WelcomeMessage from "../pages/mobile-homepage/components/welcome-message";
 
@@ -218,6 +219,34 @@ const AnimatedRoutes = () => {
                             transition={pageTransition}
                         >
                             <SplashPage text="Gains on the way" />
+                        </motion.div>
+                    }
+                />
+                <Route
+                    path="/workouts"
+                    element={
+                        <motion.div
+                            initial="initial"
+                            animate="in"
+                            exit="out"
+                            variants={pageVariants}
+                            transition={pageTransition}
+                        >
+                            <GetGoogleSheets />
+                        </motion.div>
+                    }
+                />
+                <Route
+                    path="/addworkouts"
+                    element={
+                        <motion.div
+                            initial="initial"
+                            animate="in"
+                            exit="out"
+                            variants={pageVariants}
+                            transition={pageTransition}
+                        >
+                            <AddGoogleSheets />
                         </motion.div>
                     }
                 />

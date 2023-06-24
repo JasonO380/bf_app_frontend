@@ -36,7 +36,6 @@ const AddMovement = () => {
                     [action.name]: action.value,
                 };
             case "CLEAR_FORM":
-                console.log("form cleared");
                 return {
                     movement: "",
                 };
