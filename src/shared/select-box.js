@@ -3,9 +3,8 @@ import { Box, VStack } from "@chakra-ui/react";
 
 const SelectBox = ({ data, labelKey, selectedOption }) => {
     const [showMenu, setShowMenu] = useState(false);
-    // const [selectedOption, setSelectedOption] = useState();
     const handleMenuClick = () => {
-        setShowMenu(true);
+        setShowMenu((prevShowMenu) => !prevShowMenu);
     };
 
     const handleSelect = (option) => {
