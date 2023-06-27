@@ -1,6 +1,6 @@
 import React, { useState, useReducer, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Flex, Button } from "@chakra-ui/react";
+import { Box, Flex, Text, Button } from "@chakra-ui/react";
 import CalorieAndMacrosOutline from "./calorie-and-macros-outline";
 import calculateActivityLevel from "../athletes/calculate-activity-level";
 import calculateBMR from "../athletes/calculate-bmr";
@@ -24,11 +24,11 @@ const MacroCalculator = () => {
                 console.log("form cleared");
                 return {
                     height: "",
-                    heightFeet:"",
-                    heightInches:"",
+                    heightFeet: "",
+                    heightInches: "",
                     weight: "",
                     age: "",
-                    sex: "male"
+                    sex: "male",
                 };
             default:
                 return state;
@@ -37,24 +37,24 @@ const MacroCalculator = () => {
 
     const [inputState, dispatch] = useReducer(inputReducer, {
         height: "",
-        heightInches:"",
-        heightFeet:"",
+        heightInches: "",
+        heightFeet: "",
         weight: "",
         age: "",
-        sex: "male"
+        sex: "male",
     });
 
     const calculateHeight = (height, inches) => {
-        if(height === ""){
+        if (height === "") {
             height = 0;
         }
-        const heightInInches = ((parseInt(height) * 12) + parseInt(inches))
+        const heightInInches = parseInt(height) * 12 + parseInt(inches);
         dispatch({
             type: "INPUT_CHANGE",
             name: "height",
             value: heightInInches,
         });
-    }
+    };
 
     const changeHandler = (event) => {
         const inputValue = event.target.value;
@@ -65,11 +65,17 @@ const MacroCalculator = () => {
             value: inputValue,
         });
 
-        if (inputName === 'heightFeet' || inputName === 'heightInches') {
+        if (inputName === "heightFeet" || inputName === "heightInches") {
             // Ensure we're always passing numbers to calculateHeight
-            const feet = inputName === 'heightFeet' ? (inputValue || 0) : (inputState.heightFeet || 0);
-            const inches = inputName === 'heightInches' ? (inputValue || 0) : (inputState.heightInches || 0);
-    
+            const feet =
+                inputName === "heightFeet"
+                    ? inputValue || 0
+                    : inputState.heightFeet || 0;
+            const inches =
+                inputName === "heightInches"
+                    ? inputValue || 0
+                    : inputState.heightInches || 0;
+
             calculateHeight(feet, inches);
         }
     };
@@ -133,6 +139,23 @@ const MacroCalculator = () => {
                     Home
                 </Button>
             </Flex>
+            <Box>
+                <Text fontSize="xs" color="white" mb="30px">
+                    The Macro Calculator is a tool designed to calculate your
+                    Basal Metabolic Rate BMR using the
+                    Mifflin-St Jeor equation. To use the calculator, simply
+                    enter your height in feet and inches, your weight in
+                    kilograms, if you have it in pounds you can convert it
+                    using the provided button, and select your sex. In addition
+                    to providing your BMR, the calculator also offers BMR totals
+                    for different activity levels. Furthermore, based on your
+                    activity level, it suggests the optimal macronutrient
+                    distribution for high, medium, and low carb days. These
+                    suggested macros, along with the accompanying blog on carb
+                    cycling, can serve as a starting point to help you plan your
+                    weekly eating habits effectively.
+                </Text>
+            </Box>
             <MacroCalculatorForm
                 changeHandler={changeHandler}
                 inputState={inputState}

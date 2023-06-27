@@ -53,7 +53,7 @@ const GetGoogleSheets = () => {
         >
             <>
                 <Box marginTop="15px" width="90%" margin="auto">
-                    {clientProgramming && (
+                    {clientProgramming.length > 0 && (
                         <Box>
                             <Text color="white">Select program to view</Text>
                             <SelectBox
