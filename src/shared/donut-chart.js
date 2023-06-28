@@ -18,7 +18,7 @@ const DonutChart = (props) => {
                 {
                     beforeInit: function (chart) {
                         chart.legend.afterFit = function () {
-                            this.height = this.height + 20;
+                            this.width = this.width += 20;
                         };
                     },
                 },

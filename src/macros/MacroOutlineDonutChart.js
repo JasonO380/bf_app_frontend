@@ -1,6 +1,5 @@
 import React from "react";
 import DonutChart from "../shared/donut-chart";
-import MacroDonutChartLegend from "./macro-donut-chart-legend";
 import { Box, Flex, Text } from "@chakra-ui/react";
 
 const MacroOutlineDonutChart = ({ macroDistribution, label }) => {
@@ -13,7 +12,7 @@ const MacroOutlineDonutChart = ({ macroDistribution, label }) => {
         console.log(label);
         const chartData = {
             labels: [
-                "Carbs " + carbohydrates,
+                "Carb " + carbohydrates,
                 "Pro " + protein,
                 "Fats " + fats,
             ],
@@ -31,9 +30,9 @@ const MacroOutlineDonutChart = ({ macroDistribution, label }) => {
                 legend: {
                     position: "left",
                     labels: {
-                        boxWidth: 15,
+                        boxWidth: 10,
                         color: "white",
-                    },
+                    }
                 },
                 title: {
                     display: true,
@@ -56,7 +55,6 @@ const MacroOutlineDonutChart = ({ macroDistribution, label }) => {
                 overflowX="auto"
                 whiteSpace="nowrap"
                 direction="row"
-                // alignItems="center"
             >
                 {macros && (
                     <>
@@ -65,7 +63,8 @@ const MacroOutlineDonutChart = ({ macroDistribution, label }) => {
                                 border="1px solid white"
                                 borderRadius="10px"
                                 padding="15px"
-                                height="12rem"
+                                height="14rem"
+                                minWidth="225px"
                                 marginRight="2rem"
                             >
                                 <DonutChart
@@ -87,7 +86,8 @@ const MacroOutlineDonutChart = ({ macroDistribution, label }) => {
                                 border="1px solid white"
                                 borderRadius="10px"
                                 padding="10px"
-                                height="12rem"
+                                height="14rem"
+                                minWidth="225px"
                                 marginRight="2rem"
                             >
                                 <DonutChart
@@ -109,7 +109,8 @@ const MacroOutlineDonutChart = ({ macroDistribution, label }) => {
                                 border="1px solid white"
                                 borderRadius="10px"
                                 padding="10px"
-                                height="12rem"
+                                height="14rem"
+                                minWidth="225px"
                                 marginRight="2rem"
                             >
                                 <DonutChart
