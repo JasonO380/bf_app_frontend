@@ -5,6 +5,7 @@ import {
     Flex,
     Text,
     Button,
+    TableContainer,
     Table,
     Thead,
     Tbody,
@@ -169,8 +170,8 @@ const MacroCalculator = () => {
                     distribution
                 </Text>
             </Box>
-            <Box mt="30px">
-                <Table variant="unstyled" color="white" fontSize="xs">
+            <Box mt="30px" mb="30px">
+                <Table variant="unstyled" color="white" fontSize="xs" size="xs">
                     <Thead>
                         <Tr>
                             <Th>Description</Th>
