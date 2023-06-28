@@ -1,6 +1,17 @@
 import React, { useState, useReducer, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Flex, Text, Button } from "@chakra-ui/react";
+import {
+    Box,
+    Flex,
+    Text,
+    Button,
+    Table,
+    Thead,
+    Tbody,
+    Tr,
+    Th,
+    Td,
+} from "@chakra-ui/react";
 import CalorieAndMacrosOutline from "./calorie-and-macros-outline";
 import calculateActivityLevel from "../athletes/calculate-activity-level";
 import calculateBMR from "../athletes/calculate-bmr";
@@ -142,19 +153,53 @@ const MacroCalculator = () => {
             <Box>
                 <Text fontSize="xs" color="white" mb="30px">
                     The Macro Calculator is a tool designed to calculate your
-                    Basal Metabolic Rate BMR using the
-                    Mifflin-St Jeor equation. To use the calculator, simply
-                    enter your height in feet and inches, your weight in
-                    kilograms, if you have it in pounds you can convert it
-                    using the provided button, and select your sex. In addition
-                    to providing your BMR, the calculator also offers BMR totals
-                    for different activity levels. Furthermore, based on your
-                    activity level, it suggests the optimal macronutrient
-                    distribution for high, medium, and low carb days. These
-                    suggested macros, along with the accompanying blog on carb
-                    cycling, can serve as a starting point to help you plan your
-                    weekly eating habits effectively.
+                    Basal Metabolic Rate BMR using the Mifflin-St Jeor equation.
+                    To use the calculator, simply enter your height in feet and
+                    inches, your weight in kilograms, if you have it in pounds
+                    you can convert it using the provided button, and select
+                    your sex. In addition to providing your BMR, the calculator
+                    also offers BMR totals for different activity levels.
+                    Furthermore, based on your activity level, it suggests the
+                    optimal macronutrient distribution in grams for high,
+                    medium, and low carb days. These suggested macros, along
+                    with the accompanying blog on carb cycling, can serve as a
+                    starting point to help you plan your weekly eating habits
+                    effectively. The table below shows the percent used from
+                    total calories of each macro used to calculate macro
+                    distribution
                 </Text>
+            </Box>
+            <Box mt="30px">
+                <Table variant="unstyled" color="white" fontSize="xs">
+                    <Thead>
+                        <Tr>
+                            <Th>Description</Th>
+                            <Th>Protein</Th>
+                            <Th>Carbs</Th>
+                            <Th>Fat</Th>
+                        </Tr>
+                    </Thead>
+                    <Tbody>
+                        <Tr>
+                            <Td>High Carb Day</Td>
+                            <Td>35%</Td>
+                            <Td>45%</Td>
+                            <Td>20%</Td>
+                        </Tr>
+                        <Tr>
+                            <Td>Medium Carb Day</Td>
+                            <Td>35%</Td>
+                            <Td>30%</Td>
+                            <Td>35%</Td>
+                        </Tr>
+                        <Tr>
+                            <Td>Low Carb Day</Td>
+                            <Td>35%</Td>
+                            <Td>15%</Td>
+                            <Td>50%</Td>
+                        </Tr>
+                    </Tbody>
+                </Table>
             </Box>
             <MacroCalculatorForm
                 changeHandler={changeHandler}
