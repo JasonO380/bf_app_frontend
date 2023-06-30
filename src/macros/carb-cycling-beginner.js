@@ -19,14 +19,14 @@ const CarbCyclingBeginner = ({ macroDistribution }) => {
                     <Text color="white" fontWeight="bold">
                         Day {index + 1}
                     </Text>
-                    <Text color="white">
+                    <Text fontSize="xs" color="white">
                         Carbs: {macroDistribution[day].carbohydrates}{" "}
                         grams
                     </Text>
-                    <Text color="white">
+                    <Text fontSize="xs" color="white">
                         Protein: {macroDistribution[day].protein} grams
                     </Text>
-                    <Text color="white">
+                    <Text fontSize="xs" color="white">
                         Fats: {macroDistribution[day].fats} grams
                     </Text>
                 </Stack>

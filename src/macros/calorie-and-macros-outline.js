@@ -5,7 +5,6 @@ import CarbCyclingBeginner from "./carb-cycling-beginner";
 import calculateMacroDistribution from "./calculate-macro-distribution";
 
 const CalorieAndMacrosOutline = ({ calorieTotal }) => {
-    console.log(calorieTotal)
     const sedentaryCarbs = calculateMacroDistribution(calorieTotal.sedentary);
     const lightlyActiveCarbs = calculateMacroDistribution(calorieTotal.lightlyActive);
     const moderatelyActiveCarbs = calculateMacroDistribution(calorieTotal.moderatelyActive);

@@ -1,5 +1,4 @@
 const calculateMacroDistribution = (calorieTotal) => {
-    console.log(calorieTotal);
     let highCarb = {};
     let mediumCarb = {};
     let lowCarb = {};
