@@ -1,9 +1,11 @@
 import React from "react";
 import { Box, Text, } from "@chakra-ui/react";
 import MacroOutlineDonutChart from "./MacroOutlineDonutChart";
+import CarbCyclingBeginner from "./carb-cycling-beginner";
 import calculateMacroDistribution from "./calculate-macro-distribution";
 
 const CalorieAndMacrosOutline = ({ calorieTotal }) => {
+    console.log(calorieTotal)
     const sedentaryCarbs = calculateMacroDistribution(calorieTotal.sedentary);
     const lightlyActiveCarbs = calculateMacroDistribution(calorieTotal.lightlyActive);
     const moderatelyActiveCarbs = calculateMacroDistribution(calorieTotal.moderatelyActive);
@@ -17,7 +19,7 @@ const CalorieAndMacrosOutline = ({ calorieTotal }) => {
             <Box margin="auto">
                 <Text textAlign="center" color="white" fontSize="x-large"><strong>Sedentary cals: {calorieTotal.sedentary}</strong></Text>
             </Box>
-                <MacroOutlineDonutChart macroDistribution={sedentaryCarbs} />
+                <CarbCyclingBeginner macroDistribution={sedentaryCarbs} />
             </>
         )}
         {lightlyActiveCarbs && (
@@ -25,7 +27,7 @@ const CalorieAndMacrosOutline = ({ calorieTotal }) => {
             <Box margin="auto" mt="15px">
                 <Text textAlign="center" color="white" fontSize="x-large"><strong>Light active cals: {calorieTotal.lightlyActive}</strong></Text>
             </Box>
-                <MacroOutlineDonutChart macroDistribution={lightlyActiveCarbs} />
+                <CarbCyclingBeginner macroDistribution={lightlyActiveCarbs} />
             </>
         )}
         {moderatelyActiveCarbs && (
@@ -33,7 +35,7 @@ const CalorieAndMacrosOutline = ({ calorieTotal }) => {
             <Box margin="auto" mt="15px">
                 <Text textAlign="center" color="white" fontSize="x-large"><strong>Moderately active cals: {calorieTotal.moderatelyActive}</strong></Text>
             </Box>
-                <MacroOutlineDonutChart macroDistribution={moderatelyActiveCarbs} />
+                <CarbCyclingBeginner macroDistribution={moderatelyActiveCarbs} />
             </>
         )}
         {veryActiveCarbs && (
@@ -41,7 +43,7 @@ const CalorieAndMacrosOutline = ({ calorieTotal }) => {
             <Box margin="auto" mt="15px">
                 <Text textAlign="center" color="white" fontSize="x-large"><strong>Very active cals: {calorieTotal.veryActive}</strong></Text>
             </Box>
-                <MacroOutlineDonutChart macroDistribution={veryActiveCarbs} />
+                <CarbCyclingBeginner macroDistribution={veryActiveCarbs} />
             </>
         )}
         {extraActiveCarbs && (
@@ -49,7 +51,7 @@ const CalorieAndMacrosOutline = ({ calorieTotal }) => {
             <Box margin="auto" mt="15px">
                 <Text textAlign="center" color="white" fontSize="x-large"><strong>Intense active cals: {calorieTotal.extraActive}</strong></Text>
             </Box>
-                <MacroOutlineDonutChart macroDistribution={extraActiveCarbs} />
+                <CarbCyclingBeginner macroDistribution={extraActiveCarbs} />
             </>
         )}
         </Box>

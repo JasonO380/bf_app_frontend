@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import CalorieAndMacrosOutline from "./calorie-and-macros-outline";
 import calculateActivityLevel from "../athletes/calculate-activity-level";
+import CarbCyclingBeginner from "./carb-cycling-beginner";
 import calculateBMR from "../athletes/calculate-bmr";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 import MacroCalculatorForm from "./macro-calculator-form";
@@ -33,7 +34,6 @@ const MacroCalculator = () => {
                     [action.name]: action.value,
                 };
             case "CLEAR_FORM":
-                console.log("form cleared");
                 return {
                     height: "",
                     heightFeet: "",
@@ -183,21 +183,21 @@ const MacroCalculator = () => {
                     <Tbody>
                         <Tr>
                             <Td>High Carb Day</Td>
-                            <Td>35%</Td>
+                            <Td>30%</Td>
                             <Td>45%</Td>
-                            <Td>20%</Td>
+                            <Td>25%</Td>
                         </Tr>
                         <Tr>
                             <Td>Medium Carb Day</Td>
-                            <Td>35%</Td>
                             <Td>30%</Td>
-                            <Td>35%</Td>
+                            <Td>30%</Td>
+                            <Td>40%</Td>
                         </Tr>
                         <Tr>
                             <Td>Low Carb Day</Td>
-                            <Td>35%</Td>
+                            <Td>30%</Td>
                             <Td>15%</Td>
-                            <Td>50%</Td>
+                            <Td>55%</Td>
                         </Tr>
                     </Tbody>
                 </Table>

@@ -1,4 +1,5 @@
 const calculateActivityLevel = (bmr) => {
+    console.log(bmr)
     const activityLevels = {
         sedentary: Math.round(bmr * 1.2),
         lightlyActive: Math.round(bmr * 1.375),
