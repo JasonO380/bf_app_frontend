@@ -1,11 +1,22 @@
 import React from "react";
 import DonutChart from "../shared/donut-chart";
+import { motion } from "framer-motion";
 import { Box, Flex, Text } from "@chakra-ui/react";
 
 const MacroOutlineDonutChart = ({ macroDistribution, label }) => {
     console.log(macroDistribution);
     const macros = macroDistribution;
     console.log(macros);
+    const MotionBox = motion(Box);
+    const boxVariants = {
+        hidden: { scaleY: 0 },
+        show: {
+            scaleY: 1,
+            transition: {
+                duration: 0.5
+            }
+        }
+    };
     const prepareChartData = (macros, label) => {
         const { carbohydrates, protein, fats } = macros;
         console.log(macros);

@@ -10,10 +10,14 @@ import {
     FormLabel,
     Input,
 } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 
-const MacroCalculatorForm = ({changeHandler, inputState, calculateMacros, toggleSex, convertToKG, calculateHeight }) => {
+const MacroCalculatorForm = ({changeHandler, inputState, calculateMacros, toggleSex, convertToKG, carbCycleType }) => {
     return (
-        <form onSubmit={calculateMacros}>
+        <motion.form
+        initial={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -50 }} 
+        onSubmit={calculateMacros}>
             <Flex gap="10px" margin="auto" width="100%" paddingBottom="5px">
                 <FormControl>
                     <Stack>
@@ -97,7 +101,7 @@ const MacroCalculatorForm = ({changeHandler, inputState, calculateMacros, toggle
                 </FormControl>
             </Flex>
             <Flex gap="10px" margin="auto" width="100%" paddingBottom="5px">
-                <Button
+                {/* <Button
                     mt={4}
                     name={inputState.weight}
                     border="1px solid white"
@@ -110,12 +114,42 @@ const MacroCalculatorForm = ({changeHandler, inputState, calculateMacros, toggle
                     fontSize="xs"
                 >
                     Convert weight KG
+                </Button> */}
+                {/* <Button
+                    mt={4}
+                    name="beginner"
+                    border="1px solid white"
+                    borderRadius="50px"
+                    width="fit-content"
+                    onClick={carbCycleType}
+                    type="button"
+                    bg="transparent"
+                    color="white"
+                    fontSize="xs"
+                >
+                    Beginner cycle
                 </Button>
                 <Button
                     mt={4}
+                    name="advanced"
+                    border="1px solid white"
                     borderRadius="50px"
                     width="fit-content"
-                    type="submit"
+                    onClick={carbCycleType}
+                    type="button"
+                    bg="transparent"
+                    color="white"
+                    fontSize="xs"
+                >
+                    Advanced cycle
+                </Button> */}
+                <Button
+                    mt={4}
+                    name="bmr"
+                    borderRadius="50px"
+                    width="fit-content"
+                    onClick={calculateMacros}
+                    // type="submit"
                     bg="red"
                     color="white"
                     fontSize="xs"
@@ -123,7 +157,7 @@ const MacroCalculatorForm = ({changeHandler, inputState, calculateMacros, toggle
                     Calculate BMR
                 </Button>
             </Flex>
-        </form>
+        </motion.form>
     );
 };
 

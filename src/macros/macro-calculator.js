@@ -13,6 +13,7 @@ import {
     Th,
     Td,
 } from "@chakra-ui/react";
+import { AnimatePresence } from "framer-motion";
 import CalorieAndMacrosOutline from "./calorie-and-macros-outline";
 import calculateActivityLevel from "../athletes/calculate-activity-level";
 import CarbCyclingBeginner from "./carb-cycling-beginner";
@@ -26,6 +27,7 @@ const MacroCalculator = () => {
     const isLoggedIn = auth.isLoggedIn;
     const [isLoading, setIsLoading] = useState(false);
     const [calorieTotal, setCalorieTotal] = useState();
+    const [cycleType, setCycleType] = useState();
     const inputReducer = (state, action) => {
         switch (action.type) {
             case "INPUT_CHANGE":
@@ -95,14 +97,22 @@ const MacroCalculator = () => {
     const calculateMacros = (event) => {
         setIsLoading(true);
         event.preventDefault();
+        console.log(event.target.name);
         const { weight, height, age, sex, activitylevel } = inputState;
         const bmr = calculateBMR(weight, height, age, sex, activitylevel);
         const tdee = calculateActivityLevel(bmr, activitylevel);
         setIsLoading(false);
         setCalorieTotal(tdee);
+        setCycleType(event.target.name);
         dispatch({
             type: "CLEAR_FORM",
         });
+    };
+
+    const carbCycleType = (event) => {
+        event.preventDefault();
+        console.log(event.target.name);
+        setCycleType(event.target.name);
     };
 
     const toggleSex = () => {
@@ -174,7 +184,7 @@ const MacroCalculator = () => {
                 <Table variant="unstyled" color="white" fontSize="xs" size="xs">
                     <Thead>
                         <Tr>
-                            <Th>Description</Th>
+                            <Th>Day Type</Th>
                             <Th>Protein</Th>
                             <Th>Carbs</Th>
                             <Th>Fat</Th>
@@ -202,15 +212,55 @@ const MacroCalculator = () => {
                     </Tbody>
                 </Table>
             </Box>
-            <MacroCalculatorForm
-                changeHandler={changeHandler}
-                inputState={inputState}
-                calculateMacros={calculateMacros}
-                toggleSex={toggleSex}
-                convertToKG={convertKG}
-            />
+            <AnimatePresence>
+                {!calorieTotal && (
+                    <MacroCalculatorForm
+                        changeHandler={changeHandler}
+                        inputState={inputState}
+                        calculateMacros={calculateMacros}
+                        toggleSex={toggleSex}
+                        convertToKG={convertKG}
+                        // carbCycleType={carbCycleType}
+                    />
+                )}
+            </AnimatePresence>
             {calorieTotal && (
-                <CalorieAndMacrosOutline calorieTotal={calorieTotal} />
+                <>
+                    <Flex marginBottom="20px">
+                        <Button
+                            mt={4}
+                            name="beginner"
+                            border="1px solid white"
+                            borderRadius="50px"
+                            width="fit-content"
+                            onClick={carbCycleType}
+                            type="button"
+                            bg="transparent"
+                            color="white"
+                            fontSize="xs"
+                        >
+                            Beginner cycle
+                        </Button>
+                        <Button
+                            mt={4}
+                            name="advanced"
+                            border="1px solid white"
+                            borderRadius="50px"
+                            width="fit-content"
+                            onClick={carbCycleType}
+                            type="button"
+                            bg="transparent"
+                            color="white"
+                            fontSize="xs"
+                        >
+                            Advanced cycle
+                        </Button>
+                    </Flex>
+                    <CalorieAndMacrosOutline
+                        calorieTotal={calorieTotal}
+                        type={cycleType}
+                    />
+                </>
             )}
         </Box>
     );
