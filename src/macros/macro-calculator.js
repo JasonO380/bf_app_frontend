@@ -25,7 +25,6 @@ const MacroCalculator = () => {
     const navigate = useNavigate();
     const auth = useContext(LoginRegisterContext);
     const isLoggedIn = auth.isLoggedIn;
-    const [isLoading, setIsLoading] = useState(false);
     const [calorieTotal, setCalorieTotal] = useState();
     const [cycleType, setCycleType] = useState();
     const inputReducer = (state, action) => {
@@ -95,13 +94,11 @@ const MacroCalculator = () => {
     };
 
     const calculateMacros = (event) => {
-        setIsLoading(true);
         event.preventDefault();
         console.log(event.target.name);
         const { weight, height, age, sex, activitylevel } = inputState;
         const bmr = calculateBMR(weight, height, age, sex, activitylevel);
         const tdee = calculateActivityLevel(bmr, activitylevel);
-        setIsLoading(false);
         setCalorieTotal(tdee);
         setCycleType(event.target.name);
         dispatch({
@@ -220,7 +217,6 @@ const MacroCalculator = () => {
                         calculateMacros={calculateMacros}
                         toggleSex={toggleSex}
                         convertToKG={convertKG}
-                        // carbCycleType={carbCycleType}
                     />
                 )}
             </AnimatePresence>
@@ -257,9 +253,9 @@ const MacroCalculator = () => {
                         </Button>
                     </Flex>
                     <CalorieAndMacrosOutline
-                        calorieTotal={calorieTotal}
-                        type={cycleType}
-                    />
+                            calorieTotal={calorieTotal}
+                            type={cycleType}
+                        />
                 </>
             )}
         </Box>

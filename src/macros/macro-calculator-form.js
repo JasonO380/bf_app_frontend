@@ -103,20 +103,6 @@ const MacroCalculatorForm = ({changeHandler, inputState, calculateMacros, toggle
             <Flex gap="10px" margin="auto" width="100%" paddingBottom="5px">
                 {/* <Button
                     mt={4}
-                    name={inputState.weight}
-                    border="1px solid white"
-                    borderRadius="50px"
-                    width="fit-content"
-                    onClick={() => convertToKG(inputState.weight)}
-                    type="button"
-                    bg="transparent"
-                    color="white"
-                    fontSize="xs"
-                >
-                    Convert weight KG
-                </Button> */}
-                {/* <Button
-                    mt={4}
                     name="beginner"
                     border="1px solid white"
                     borderRadius="50px"
@@ -149,7 +135,6 @@ const MacroCalculatorForm = ({changeHandler, inputState, calculateMacros, toggle
                     borderRadius="50px"
                     width="fit-content"
                     onClick={calculateMacros}
-                    // type="submit"
                     bg="red"
                     color="white"
                     fontSize="xs"
