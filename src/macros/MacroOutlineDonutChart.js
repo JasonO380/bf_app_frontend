@@ -63,13 +63,15 @@ const MacroOutlineDonutChart = ({ macroDistribution, label, day, cycleType }) =>
             <MotionBox
                 border="1px solid white"
                 borderRadius="10px"
-                padding="15px"
+                boxShadow="10px 10px 5px black"
+                padding="5px"
                 height="14rem"
                 minWidth="225px"
                 marginRight="2rem"
                 variants={boxVariants}
                 initial="hidden"
                 animate="show"
+                // overflow="hidden"
             >
                 <DonutChart
                     data={prepareChartData(macros, label).chartData}
@@ -87,7 +89,8 @@ const MacroOutlineDonutChart = ({ macroDistribution, label, day, cycleType }) =>
                                 <Box
                                     border="1px solid white"
                                     borderRadius="10px"
-                                    padding="15px"
+                                    boxShadow="10px 10px 5px black"
+                                    padding="5px"
                                     height="14rem"
                                     minWidth="225px"
                                     marginRight="2rem"
@@ -110,7 +113,7 @@ const MacroOutlineDonutChart = ({ macroDistribution, label, day, cycleType }) =>
                                 <Box
                                     border="1px solid white"
                                     borderRadius="10px"
-                                    padding="10px"
+                                    padding="5px"
                                     height="14rem"
                                     minWidth="225px"
                                     marginRight="2rem"
@@ -133,7 +136,7 @@ const MacroOutlineDonutChart = ({ macroDistribution, label, day, cycleType }) =>
                                 <Box
                                     border="1px solid white"
                                     borderRadius="10px"
-                                    padding="10px"
+                                    padding="5px"
                                     height="14rem"
                                     minWidth="225px"
                                     marginRight="2rem"

@@ -9,122 +9,85 @@ const CarbCyclingBeginner = ({
 }) => {
     console.log(calorieTotal);
     const type = cycleType;
-    const sedentaryCarbs = calculateMacroDistribution(calorieTotal.sedentary);
-    const lightlyActiveCarbs = calculateMacroDistribution(
-        calorieTotal.lightlyActive
-    );
-    const moderatelyActiveCarbs = calculateMacroDistribution(
-        calorieTotal.moderatelyActive
-    );
-    const veryActiveCarbs = calculateMacroDistribution(calorieTotal.veryActive);
-    const extraActiveCarbs = calculateMacroDistribution(
-        calorieTotal.extraActive
-    );
-    const macroDistributions = {
-        sedentary: sedentaryCarbs,
-        lightlyActive: lightlyActiveCarbs,
-        moderatelyActive: moderatelyActiveCarbs,
-        veryActive: veryActiveCarbs,
-        extraActive: extraActiveCarbs,
-    };
+    const activities = ["sedentary", "lightlyActive", "moderatelyActive", "veryActive", "extraActive"];
+    const macroDistributions = activities.reduce((acc, activity) => {
+        acc[activity] = calculateMacroDistribution(calorieTotal[activity]);
+        return acc;
+    }, {});
     console.log(macroDistributions);
 
     const beginner = [
-        { type: "mediumCarb", activity: "sedentary", label: "Medium carb" },
-        { type: "mediumCarb", activity: "sedentary", label: "Medium carb" },
-        { type: "lowCarb", activity: "sedentary", label: "Low carb" },
-        { type: "lowCarb", activity: "sedentary", label: "Low carb" },
-        { type: "highCarb", activity: "sedentary", label: "High carb" },
-        { type: "lowCarb", activity: "sedentary", label: "Low carb" },
-        { type: "mediumCarb", activity: "sedentary", label: "Medium carb" },
+        { type: "mediumCarb", activity: ["sedentary", "lightlyActive", "moderatelyActive", "veryActive", "extraActive"], label: "Medium carb" },
+        { type: "mediumCarb", activity: ["sedentary", "lightlyActive", "moderatelyActive", "veryActive", "extraActive"], label: "Medium carb" },
+        { type: "lowCarb", activity: ["sedentary", "lightlyActive", "moderatelyActive", "veryActive", "extraActive"], label: "Low carb" },
+        { type: "lowCarb", activity: ["sedentary", "lightlyActive", "moderatelyActive", "veryActive", "extraActive"], label: "Low carb" },
+        { type: "highCarb", activity: ["sedentary", "lightlyActive", "moderatelyActive", "veryActive", "extraActive"], label: "High carb" },
+        { type: "lowCarb", activity: ["sedentary", "lightlyActive", "moderatelyActive", "veryActive", "extraActive"], label: "Low carb" },
+        { type: "mediumCarb", activity: ["sedentary", "lightlyActive", "moderatelyActive", "veryActive", "extraActive"], label: "Medium carb" },
     ];
 
     const advanced = [
-        "lowCarb",
-        "lowCarb",
-        "lowCarb",
-        "lowCarb",
-        "lowCarb",
-        "highCarb",
-        "mediumCarb",
+        {type:"lowCarb", activity: ["sedentary", "lightlyActive", "moderatelyActive", "veryActive", "extraActive"], label: "Low carb"},
+        {type:"lowCarb", activity: ["sedentary", "lightlyActive", "moderatelyActive", "veryActive", "extraActive"], label: "Low carb"},
+        {type:"lowCarb", activity: ["sedentary", "lightlyActive", "moderatelyActive", "veryActive", "extraActive"], label: "Low carb"},
+        {type:"lowCarb", activity: ["sedentary", "lightlyActive", "moderatelyActive", "veryActive", "extraActive"], label: "Low carb"},
+        {type:"lowCarb", activity: ["sedentary", "lightlyActive", "moderatelyActive", "veryActive", "extraActive"], label: "Low carb"},
+        {type:"highCarb", activity: ["sedentary", "lightlyActive", "moderatelyActive", "veryActive", "extraActive"], label: "High carb"},
+        {type:"mediumCarb", activity: ["sedentary", "lightlyActive", "moderatelyActive", "veryActive", "extraActive"], label: "Medium carb"},
     ];
     let days = cycleType === "beginner" ? beginner : advanced;
-    console.log(days);
-    console.log(macroDistributions);
-    console.log('Rendering CarbCyclingBeginner component');
 
     return (
-        <Flex
-            overflowX="auto"
-            whiteSpace="nowrap"
-            direction="row"
-            mt={3}
-            rounded="md"
-            bg="gray.800"
-            borderRadius="20px"
-        >
-            {days.map((day, index) => {
-                console.log(macroDistributions[day.activity][day.type])
-                return (
-                    macroDistributions[day.activity] ? (
-                        <React.Fragment key={index}>
-                            <Stack>
-                                <Box margin="auto">
-                                    <Text
-                                        textAlign="center"
-                                        color="white"
-                                        fontSize="x-large"
-                                    >
-                                        <strong>Day {index + 1}</strong>
-                                    </Text>
-                                </Box>
-                                <MacroOutlineDonutChart
-                                    macroDistribution={
-                                        macroDistributions[day.activity][day.type]
-                                    }
-                                    label={day.label}
-                                    day={index + 1}
-                                    cycleType={type}
-                                />
-                            </Stack>
-                        </React.Fragment>
-                    ) : null
-                );
-            })}
-        </Flex>
+        <Box
+        bg="gray.800"
+        borderRadius="20px">
+        {activities.map((activity, activityIndex) => (
+            <Box key={activityIndex} mb={4}>
+            <Box margin="auto">
+                <Text color="white" fontSize="x-large" textAlign="center" mb={2}>
+                    <strong>{activity} cals: {calorieTotal[activity]}</strong> 
+                </Text>
+                </Box>
+                <Flex
+                    overflowX="auto"
+                    whiteSpace="nowrap"
+                    direction="row"
+                    rounded="md"
+                >
+                    {days.map((day, dayIndex) => {
+                        console.log(macroDistributions[activity][day.type]);
+                        return (
+                            macroDistributions[activity] && macroDistributions[activity][day.type] ? (
+                                <React.Fragment key={dayIndex}>
+                                    <Stack marginRight="2rem" >
+                                        <Box margin="auto">
+                                            <Text
+                                                textAlign="center"
+                                                color="white"
+                                                fontSize="x-large"
+                                            >
+                                                <strong>Day {dayIndex + 1}</strong>
+                                            </Text>
+                                        </Box>
+                                        <MacroOutlineDonutChart
+                                            macroDistribution={macroDistributions[activity][day.type]}
+                                            label={day.label}
+                                            day={dayIndex + 1}
+                                            cycleType={type}
+                                        />
+                                    </Stack>
+                                </React.Fragment>
+                            ) : null
+                        );
+                    })}
+                </Flex>
+            </Box>
+        ))}
+    </Box>
     );
 };
 
 export default CarbCyclingBeginner;
 
-{
-    /* <Stack 
-                key={index} 
-                p={6} mb={1} 
-                mr={3} 
-                >
-                    <Text color="white" fontWeight="bold">
-                        Day {index + 1}
-                    </Text>
-                    <Text fontSize="xs" color="white">
-                        Carbs: {macroDistribution[day].carbohydrates}{" "}
-                        grams
-                    </Text>
-                    <Text fontSize="xs" color="white">
-                        Protein: {macroDistribution[day].protein} grams
-                    </Text>
-                    <Text fontSize="xs" color="white">
-                        Fats: {macroDistribution[day].fats} grams
-                    </Text>
-                </Stack> */
-}
 
-// const beginner = [
-//     "mediumCarb",
-//     "mediumCarb",
-//     "lowCarb",
-//     "lowCarb",
-//     "highCarb",
-//     "lowCarb",
-//     "mediumCarb",
-// ];
+
