@@ -3,9 +3,9 @@ import DonutChart from "../shared/donut-chart";
 import { motion } from "framer-motion";
 import { Box, Flex, Text } from "@chakra-ui/react";
 
-const MacroOutlineDonutChart = ({ macroDistribution, label, day, cycleType }) => {
+const MacroOutlineDonutChart = ({ macroDistribution, label, day, cycleType, borderColor }) => {
     const carbCycle = cycleType;
-    const dayNumber = day;
+    const color = borderColor;
     const macros = macroDistribution;
     console.log(macros)
     console.log(cycleType);
@@ -20,8 +20,17 @@ const MacroOutlineDonutChart = ({ macroDistribution, label, day, cycleType }) =>
             },
         },
     };
+    const selectBorderColor = (color) => {
+        console.log(color)
+        if (color === "High carb") {
+            return "#FF0040"; // Red for highCarb
+        } else if (color === "Medium carb") {
+            return "#CA4DF7"; // Purple for mediumCarb
+        } else if (color === "Low carb") {
+            return "#00FF00"; // Green for lowCarb
+        }
+    };
     const prepareChartData = (macros,label) => {
-        // cycleType === "bmr" ? macros : macros[carbCycle];
         const { carbohydrates, protein, fats } = macros;
         const chartData = {
             labels: ["Carb " + carbohydrates, "Pro " + protein, "Fats " + fats],
@@ -61,9 +70,8 @@ const MacroOutlineDonutChart = ({ macroDistribution, label, day, cycleType }) =>
     if (cycleType === "beginner" || cycleType === "advanced") {
         return (
             <MotionBox
-                border="1px solid white"
+                border={`10px solid ${selectBorderColor(color)}`}
                 borderRadius="10px"
-                boxShadow="10px 10px 5px black"
                 padding="5px"
                 height="14rem"
                 minWidth="225px"
@@ -71,7 +79,6 @@ const MacroOutlineDonutChart = ({ macroDistribution, label, day, cycleType }) =>
                 variants={boxVariants}
                 initial="hidden"
                 animate="show"
-                // overflow="hidden"
             >
                 <DonutChart
                     data={prepareChartData(macros, label).chartData}
@@ -87,9 +94,8 @@ const MacroOutlineDonutChart = ({ macroDistribution, label, day, cycleType }) =>
                         <>
                             {macros.highCarb && (
                                 <Box
-                                    border="1px solid white"
-                                    borderRadius="10px"
-                                    boxShadow="10px 10px 5px black"
+                                    border="10px solid #FF0040"
+                                    borderRadius="40px"
                                     padding="5px"
                                     height="14rem"
                                     minWidth="225px"
@@ -111,8 +117,8 @@ const MacroOutlineDonutChart = ({ macroDistribution, label, day, cycleType }) =>
                             )}
                             {macros.mediumCarb && (
                                 <Box
-                                    border="1px solid white"
-                                    borderRadius="10px"
+                                    border="10px solid #CA4DF7"
+                                    borderRadius="40px"
                                     padding="5px"
                                     height="14rem"
                                     minWidth="225px"
@@ -134,8 +140,8 @@ const MacroOutlineDonutChart = ({ macroDistribution, label, day, cycleType }) =>
                             )}
                             {macros.lowCarb && (
                                 <Box
-                                    border="1px solid white"
-                                    borderRadius="10px"
+                                    border="10px solid #00FF00"
+                                    borderRadius="40px"
                                     padding="5px"
                                     height="14rem"
                                     minWidth="225px"

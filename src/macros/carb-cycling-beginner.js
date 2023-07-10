@@ -71,6 +71,7 @@ const CarbCyclingBeginner = ({
                                         </Box>
                                         <MacroOutlineDonutChart
                                             macroDistribution={macroDistributions[activity][day.type]}
+                                            borderColor={day.label}
                                             label={day.label}
                                             day={dayIndex + 1}
                                             cycleType={type}

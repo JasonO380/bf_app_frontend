@@ -58,7 +58,7 @@ const CalorieAndMacrosOutline = ({ calorieTotal, type }) => {
                     <Box margin="auto">
                         <Text textAlign="center" color="white" fontSize="x-large"><strong>{name} cals: {cals}</strong></Text>
                     </Box>
-                    <MacroOutlineDonutChart macroDistribution={macroDistribution} isCarbCycle={false} cycleType={type} />
+                    <MacroOutlineDonutChart macroDistribution={macroDistribution} cycleType={type} />
                 </React.Fragment>
             ))}
         </MotionBox>
