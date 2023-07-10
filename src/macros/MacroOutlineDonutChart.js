@@ -71,7 +71,7 @@ const MacroOutlineDonutChart = ({ macroDistribution, label, day, cycleType, bord
         return (
             <MotionBox
                 border={`10px solid ${selectBorderColor(color)}`}
-                borderRadius="10px"
+                borderRadius="40px"
                 padding="5px"
                 height="14rem"
                 minWidth="225px"
