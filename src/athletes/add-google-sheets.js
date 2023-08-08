@@ -97,7 +97,6 @@ const AddGoogleSheets = () => {
             width="100%"
             bottom="0"
             position="relative"
-            minHeight="100vh"
             bg="#151414"
             overflowY="auto"
         >
@@ -116,7 +115,6 @@ const AddGoogleSheets = () => {
                     inputState={inputState}
                     changeHandler={changeHandler}
                     buttonText="Add program"
-                    // isLoading={isLoading}
                 />
             </Box>
         </Box>
