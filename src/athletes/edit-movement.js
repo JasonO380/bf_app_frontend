@@ -1,6 +1,5 @@
 import React, {
     useContext,
-    useReducer,
     useState,
     useEffect,
     useRef,
@@ -12,17 +11,14 @@ import {
     Flex,
     Button,
     Text,
-    Stack,
-    FormControl,
-    FormLabel,
-    Input,
-    background,
+    Input
 } from "@chakra-ui/react";
 
 const EditMovement = () => {
     const auth = useContext(LoginRegisterContext);
     const [allMovements, setAllMovements] = useState([]);
     const [editMovementID, setEditMovementID] = useState(null);
+    const [editedMovementName, setEditedMovementName] = useState("");
     const inputRef = useRef(null);
     const getMovements = async () => {
         const response = await fetch("http://localhost:5000/api/movement", {
@@ -36,28 +32,72 @@ const EditMovement = () => {
         setAllMovements(responseData.movements);
     };
 
-    const editMovement = (id) => {
-        console.log(id);
-    };
+    const editMovement = async (event) => {
+        event.preventDefault();
+        console.log(editedMovementName);
+        try {
+            const response = await fetch(
+                `http://localhost:5000/api/movement/${editMovementID}`,
+                {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Issuer " + auth.token,
+                    },
+                    body: JSON.stringify({
+                        movement: editedMovementName,
+                    }),
+                }
+            );
+            const responseData = await response.json();
 
-    const deleteMovement = (id) => {
-        console.log(id);
-    };
-
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (inputRef.current && !inputRef.current.contains(event.target)) {
-                setEditMovementID(null);
+            if (!response.ok) {
+                throw new Error(responseData.message);
             }
-        };
-    
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            // Cleanup when component unmounts or when editingId changes
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [editMovementID]);
-    
+            setEditedMovementName("");
+            getMovements();
+        } catch (err) {
+            console.error(err.message || "Failed to edit the movement");
+        } finally {
+            setEditMovementID(null);
+        }
+    };
+
+    const deleteMovement = async (id) => {
+        console.log(id);
+        try {
+            const response = await fetch(
+                `http://localhost:5000/api/movement/${id}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.log(errorData.message);
+                throw new Error(errorData.message);
+            }
+            const responseData = await response.json();
+            console.log(responseData.message);
+        } catch (err) {
+            console.log(err);
+        }
+        getMovements();
+    };
+
+    // useEffect(() => {
+    //     console.log('editMovementID ', editMovementID);
+    //     if (editMovementID) {
+    //         console.log("Edit mode");
+    //     }
+    // }, [editMovementID]);
+
+    const handleEditClick = (event) => {
+        editMovement(event);
+    };
 
     useEffect(() => {
         getMovements();
@@ -77,27 +117,50 @@ const EditMovement = () => {
                         justifyContent="space-between"
                         marginBottom="6px"
                     >
-                        <Box>
+                        <Box marginRight="8px">
                             {editMovementID === m._id ? (
                                 <Input
-                                    defaultValue={m.movement}
-                                    ref={inputRef}
-                                    onBlur={() => {
-                                        // Handle saving the edited name here
-                                        setEditMovementID(null); // This will revert back to the Text view after saving
-                                    }}
+                                    placeholder={m.movement}
+                                    value={editedMovementName}
+                                    onChange={(e) =>
+                                        setEditedMovementName(e.target.value)
+                                    }
+                                    color="white"
                                 />
                             ) : (
                                 <Text color="white">{m.movement}</Text>
                             )}
                         </Box>
                         <Flex>
-                            <Button onClick={() => setEditMovementID(m._id)}>
-                                Edit
-                            </Button>
-                            <Button onClick={() => deleteMovement(m._id)}>
-                                Delete
-                            </Button>
+                            {editMovementID === m._id ? (
+                                <>
+                                    <Button
+                                    onClick={(event) => handleEditClick(event)}
+                                    >
+                                        Update
+                                    </Button>
+                                    <Button
+                                        onClick={() => setEditMovementID(null)}
+                                    >
+                                        Cancel
+                                    </Button>
+                                </>
+                            ) : (
+                                <>
+                                    <Button
+                                        onClick={() => {
+                                            setEditMovementID(prevId => m._id)
+                                        }}
+                                    >
+                                        Edit
+                                    </Button>
+                                    <Button
+                                        onClick={() => deleteMovement(m._id)}
+                                    >
+                                        Delete
+                                    </Button>
+                                </>
+                            )}
                         </Flex>
                     </Flex>
                 ))}
