@@ -29,20 +29,39 @@ const ShowTodaysSession = (props) => {
                 throw new Error(errorData.message);
             }
             const responseData = await response.json();
-            allSessions = responseData.sessions.reverse();
-            console.log(allSessions);
-            const sessionsForToday = allSessions.filter((s) => {
-                const date = new Date();
-                const year = date.getFullYear();
-                const month = date.toLocaleString("en-US", { month: "long" });
-                const dayOfMonth = date.getDate();
-                return (
-                    s.year === year &&
-                    s.month === month &&
-                    s.dayOfMonth === dayOfMonth
-                );
+            allSessions = responseData.sessions;
+            let todaysSessions = [];
+            const date = new Date();
+            const month = date.toLocaleString("en-US", { month: "long" });
+            const dayOfMonth = date.getDate();
+            allSessions.forEach((data) => {
+                data.months.forEach((monthObj) => {
+                    if (monthObj.month === month) {
+                        monthObj.days.forEach((dayObj) => {
+                            if (dayObj.day === dayOfMonth) {
+                                todaysSessions.push(...dayObj.sessions);
+                            }
+                        });
+                    }
+                });
             });
-            setWorkouts(sessionsForToday);
+            console.log(todaysSessions)
+            // Filter out any month objects where the month is undefined
+            // const validSessions = allSessions.filter(monthObj => monthObj.month !== undefined);
+            // console.log(allSessions);
+            // console.log("Valid sessions are: ", validSessions)
+            // const sessionsForToday = allSessions.filter((s) => {
+            //     const date = new Date();
+            //     const year = date.getFullYear();
+            //     const month = date.toLocaleString("en-US", { month: "long" });
+            //     const dayOfMonth = date.getDate();
+            //     return (
+            //         s.year === year &&
+            //         s.month === month &&
+            //         s.dayOfMonth === dayOfMonth
+            //     );
+            // });
+            setWorkouts(todaysSessions);
         } catch (err) {}
     };
 

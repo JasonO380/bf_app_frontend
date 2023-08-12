@@ -1,30 +1,19 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import SessionCard from "../shared/sessions-card";
-import AthletesTopSets from "./athletes-top-sets";
 import ShowWorkoutsByWeek from "./show-workouts-by-week";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
 const ShowAthleteSessionsHistory = (props) => {
     const user = props.user;
     const showEditWorkouts = props.edit;
-    const [id, setID] = useState();
-    const history = props.history;
-    let sessionToDelete;
-    let updateID;
-    let ses = [];
     let allSessions;
-    console.log(user);
-    const [editWorkouts, setEditWorkouts] = useState(false);
-    const newSession = props.newSession;
     const auth = useContext(LoginRegisterContext);
-    const [update, setUpdate] = useState();
-    const [workouts, setWorkouts] = useState([]);
     const [allWorkouts, setAllWorkouts] = useState([]);
     const getSessions = async () => {
-        console.log(user);
         try {
             const response = await fetch(
-                `https://bf-backend.onrender.com/api/users/${user}`,
+                `https://bf-backend.onrender.com/api/users/usersworkoutsweekly/${user}`,
+                // `http://localhost:5000/api/users/${user}`, keep this here for testing purposes for now
                 {
                     method: "GET",
                     headers: {
@@ -39,33 +28,16 @@ const ShowAthleteSessionsHistory = (props) => {
                 throw new Error(errorData.message);
             }
             const responseData = await response.json();
-            allSessions = responseData.sessions.reverse();
-            allSessions.map((s) => {
-                const date = new Date();
-                const year = date.getFullYear();
-                const month = date.toLocaleString("en-US", { month: "long" });
-                const dayOfWeek = date.toLocaleString("default", {
-                    weekday: "long",
-                });
-                if (
-                    s.year === year &&
-                    s.month === month &&
-                    s.dayOfWeek === dayOfWeek
-                ) {
-                    ses.push(s);
-                }
-            });
-            setWorkouts(ses);
+            allSessions = responseData.sessions
             setAllWorkouts(allSessions);
         } catch (err) {}
     };
 
     useEffect(() => {
-        setID(user);
+        // setID(user);
         getSessions();
         console.log(auth.userID);
     }, []);
-
 
     return showEditWorkouts ? <SessionCard getUpdate={getSessions} workouts={allWorkouts} /> :  <ShowWorkoutsByWeek session={allWorkouts} />;
 };

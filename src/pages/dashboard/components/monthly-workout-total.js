@@ -6,12 +6,13 @@ import BarChart from "../../../shared/bar-chart";
 const MonthlyWorkoutTotal = () => {
     const auth = useContext(LoginRegisterContext);
     const [count, setCount] = useState([]);
-    let uniqueMonth = [];
+    let lastFiveMonths = [];
 
     const getWorkoutData = async () => {
         const id = auth.userID;
         try {
             const response = await fetch(
+                // `http://localhost:5000/api/users/${id}`, keep here for testing purposes
                 `https://bf-backend.onrender.com/api/users/${id}`,
                 {
                     method: "GET",
@@ -28,44 +29,28 @@ const MonthlyWorkoutTotal = () => {
             }
             const responseData = await response.json();
             const workoutData = responseData.sessions;
-            prepChartData(workoutData);
+            console.log(workoutData);
+            prepareChartData(workoutData);
         } catch (err) {
             console.log(err);
         }
     };
 
-    const prepChartData = (workoutData) => {
-        let monthObj = {};
-        let doubles = [];
-        const uniqueDays = [];
-        workoutData.map((s)=> {
-            const month = s.month;
-            const day = s.dayOfMonth;
-            if(!doubles.includes(month)){
-                doubles.push(month);
-                monthObj = { month, daysLifted: [] };
-                if (!monthObj.daysLifted.includes(day)) {
-                    monthObj.daysLifted.push(day);
-                }
-                if(month) { // check if month is not undefined before pushing
-                    uniqueMonth.push(monthObj);
-                }
-            } else {
-                const index = uniqueMonth.findIndex((obj) => obj.month === month);
-                if (index !== -1 && !uniqueMonth[index].daysLifted.includes(day)) {
-                    uniqueMonth[index].daysLifted.push(day);
-                }
-            }
-        })
-        uniqueMonth = uniqueMonth.slice(-5);
-        console.log(uniqueMonth);
+    const prepareChartData = (workoutData) => {
+        // Flatten the data structure to get an array of month objects
+        const allMonths = workoutData.flatMap((item) => item.months);
+        // Filter out any month objects where the month is undefined
+        const validMonths = allMonths.filter(monthObj => monthObj.month !== undefined);
+        lastFiveMonths = validMonths.splice(-5)
+        // Map over all month objects to get the count of days lifted for each month
+        const daysLiftedCounts = lastFiveMonths.map((monthObj) => ({
+            month: monthObj.month,
+            count: monthObj.days.length,
+        }));
 
-        const liftedDaysCount = uniqueMonth.map((m) => ({
-            month: m.month,
-            count: m.daysLifted.length,
-            }));
-            setCount(liftedDaysCount);
-    }
+        console.log(daysLiftedCounts)
+        setCount(daysLiftedCounts)
+    };
 
     useEffect(() => {
         getWorkoutData();

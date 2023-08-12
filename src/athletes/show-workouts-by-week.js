@@ -1,25 +1,20 @@
 import React from "react";
 import { Box, Stack, Flex, Text, Heading } from "@chakra-ui/react";
-import transformToWorkoutWeeks from "./transform-to-workout-weeks";
-import CreateDayObjectSession from "../shared/create-day-object-sessions";
 import CalculateTopSets from "./calculate-athletes-top-sets";
 import CalculateDailyVolume from "./calculate-daily-volume";
 
 const ShowWorkoutsByWeek = (props) => {
     const session = props.session;
-    const sessionData = CreateDayObjectSession(session);
-    const sessionDataWithWeeks = transformToWorkoutWeeks(sessionData);
-    console.log(sessionDataWithWeeks)
 
     return (
         <Box paddingBottom="70px">
             <Box width="90%">
-                {sessionDataWithWeeks.length > 0 && sessionDataWithWeeks.map((s) => {
+                {session.length > 0 && session.map((s) => {
                     const months = s.months;
                     return (
                         <React.Fragment>
                             {months.map((monthObj) => {
-                                const weeks = monthObj.weeks; // Now we have weeks instead of days
+                                const weeks = monthObj.weeks; 
                                 const month = monthObj.month;
                                 return (
                                     <React.Fragment>

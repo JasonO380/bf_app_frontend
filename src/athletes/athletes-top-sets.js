@@ -1,26 +1,22 @@
-import React, { useState, useContext, useEffect } from "react";
+import React from "react";
 import {
     Box,
     Heading,
     Flex,
     Text,
-    Button,
     Stack
 } from "@chakra-ui/react";
-import CreateDayObjectSession from "../shared/create-day-object-sessions";
 import CalculateTopSets from "./calculate-athletes-top-sets";
 import CalculateDailyVolume from "./calculate-daily-volume";
 
 
 const AthletesTopSets = (props) => {
     const session = props.session;
-    console.log(session);
-    const sessionData = CreateDayObjectSession(session)
-    console.log(sessionData);
+
     return (
         <Box paddingBottom="70px">
             <Box>
-                {sessionData.map((s)=> {
+                {session.map((s)=> {
                     const months = s.months;
                     return(
                         <React.Fragment>
