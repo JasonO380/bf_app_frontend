@@ -34,7 +34,6 @@ const ShowAthleteSessionsHistory = (props) => {
     };
 
     useEffect(() => {
-        // setID(user);
         getSessions();
         console.log(auth.userID);
     }, []);

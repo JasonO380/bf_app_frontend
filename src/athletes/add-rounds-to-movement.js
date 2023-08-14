@@ -10,7 +10,7 @@ import {
     FormLabel,
     Input,
 } from "@chakra-ui/react";
-import ShowTodaysSession from "./show-todays-session";
+import ShowTodaysSession from "./do-not-need-show-todays-session";
 // import useGetTodaysSessions from "../http-requests/getTodaysSessions";
 // import useGetSessions from "../http-requests/getSessions";
 import AddRoundsToMovementForm from "./add-rounds-to-movement-form";

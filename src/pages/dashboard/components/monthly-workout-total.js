@@ -1,15 +1,18 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Box } from "@chakra-ui/react";
 import { LoginRegisterContext } from "../../../authentication/login-register-context";
+import LoadingSpinner from "../../../shared/loading-spinner";
 import BarChart from "../../../shared/bar-chart";
 
 const MonthlyWorkoutTotal = () => {
     const auth = useContext(LoginRegisterContext);
     const [count, setCount] = useState([]);
+    const [isLoading, setIsLoading] = useState(false)
     let lastFiveMonths = [];
 
     const getWorkoutData = async () => {
         const id = auth.userID;
+        setIsLoading(true)
         try {
             const response = await fetch(
                 // `http://localhost:5000/api/users/${id}`, keep here for testing purposes
@@ -34,6 +37,7 @@ const MonthlyWorkoutTotal = () => {
         } catch (err) {
             console.log(err);
         }
+        setIsLoading(false)
     };
 
     const prepareChartData = (workoutData) => {
@@ -55,6 +59,10 @@ const MonthlyWorkoutTotal = () => {
     useEffect(() => {
         getWorkoutData();
     }, [auth.userID, auth.token]);
+
+    if(isLoading){
+        return <LoadingSpinner text={"Processing your workout totals"} />
+    }
 
     if (count) {
         return (

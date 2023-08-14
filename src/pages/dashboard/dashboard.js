@@ -11,15 +11,15 @@ import {
     Spacer,
 } from "@chakra-ui/react";
 import AddMovement from "../../athletes/add-movement";
-import ShowTodaysSession from "../../athletes/show-todays-session";
 import useGetSessions from "../../http-requests/getSessions";
 import GetGoogleSheets from "../../athletes/get-google-sheets";
 import MonthlyWorkoutTotal from "./components/monthly-workout-total";
+import LoadingSpinner from "../../shared/loading-spinner";
 import GetAndAddTodaysMacros from "../../macros/get-and-add-todays-macros";
+import ShowWorkoutsByWeek from "../../athletes/show-workouts-by-week";
 import SessionCard from "../../shared/sessions-card";
 import ShowAthleteSessionsHistory from "../../athletes/show-athletes-history-sessions";
 import EditMacros from "../../macros/editMacros";
-import AddMacros from "../../macros/addMacros";
 import GetMacros from "../../macros/getMacros";
 import { AnimatePresence, motion } from "framer-motion";
 import { LoginRegisterContext } from "../../authentication/login-register-context";
@@ -32,80 +32,32 @@ const Dashboard = () => {
     const navigate = useNavigate();
     console.log(user);
     const [view, setView] = useState("default");
-    const { workouts, sessionsLoading } = useGetSessions(user, 'today', refreshSessions);
-    console.log(workouts);
-    const [showMacros, setShowMacros] = useState(false);
-    const [showWorkoutEdit, setShowWorkoutEdit] = useState(false);
-    const [showMacrosEdit, setShowMacrosEdit] = useState(false);
-    const [isDefaultScreen, setIsDefaultScreen] = useState(true);
-    const [currentDaysWorkouts, setCurrentDaysWorkouts] = useState([]);
-    const [showWorkoutHistory, setShowWorkoutHistory] = useState(false);
-    const [todaysSession, setTodaysSession] = useState([]);
-    const MotionBox = motion(Box);
-    const pageVariants = {
-        initial: {
-            opacity: 0,
-            x: "-100%",
-        },
-        in: {
-            opacity: 1,
-            x: 0,
-        },
-        out: {
-            opacity: 0,
-            y: "-100%",
-        },
-    };
-
-    const pageTransition = {
-        type: "tween",
-        ease: "anticipate",
-        duration: 0.4,
-    };
+    const { allSessions, todaysSessions, sessionsLoading } = useGetSessions(user, refreshSessions);
+    console.log(todaysSessions);
+    console.log(allSessions);
 
     const handleCloseClick = () => {
         setView("default");
-        // setShowAddAthleteSession(false);
-        // setShowWorkoutHistory(false);
-        // setShowMacros(false);
-        // setShowWorkoutEdit(false);
-        // setShowMacrosEdit(false);
-        // setIsDefaultScreen(true);
     };
 
     const handleStartWorkoutClick = () => {
         setView("showAddAthleteSession");
-        // handleCloseClick();
-        // setShowAddAthleteSession(true);
-        // setIsDefaultScreen(false);
     };
 
     const handleViewWorkoutHistoryClick = () => {
         setView("showWorkoutHistory");
-        // handleCloseClick();
-        // setShowWorkoutHistory(true);
-        // setIsDefaultScreen(false);
     };
 
     const handleMacrosClick = () => {
         setView("showMacros");
-        // handleCloseClick();
-        // setShowMacros(true);
-        // setIsDefaultScreen(false);
     };
 
     const handleEditWorkoutsClick = () => {
         setView("showWorkoutEdit");
-        // handleCloseClick();
-        // setShowWorkoutEdit(true);
-        // setIsDefaultScreen(false);
     };
 
     const handleEditMacrosClick = () => {
         setView("showMacrosEdit");
-        // handleCloseClick();
-        // setShowMacrosEdit(true);
-        // setIsDefaultScreen(false);
     };
 
     const handleRefreshSessions = () => {
@@ -170,6 +122,7 @@ const Dashboard = () => {
                     </>
                 )}
             </Box>
+            {sessionsLoading && <LoadingSpinner text={"Fetching data"} />}
             <Box
                 position="fixed"
                 bottom="0"
@@ -245,7 +198,7 @@ const Dashboard = () => {
                         >
                             Close
                         </Button>
-                        <AddMovement refreshSessions={handleRefreshSessions} workouts={workouts} />
+                        <AddMovement refreshSessions={handleRefreshSessions} workouts={todaysSessions} />
                         
                     </Box>
                 </motion.div>
@@ -292,7 +245,7 @@ const Dashboard = () => {
                             </Button>
                         </Flex>
                         <GetMacros />
-                        <ShowAthleteSessionsHistory user={user} />
+                        <ShowWorkoutsByWeek user={user} />
                     </Box>
                 </motion.div>
             )}
@@ -324,10 +277,11 @@ const Dashboard = () => {
                                 </Stack>
                             </Button>
                         </Flex>
-                        <ShowAthleteSessionsHistory
-                            edit={showWorkoutEdit}
+                        <SessionCard workouts={allSessions.reverse()} />
+                        {/* <ShowAthleteSessionsHistory
+                            edit={view === "showWorkoutEdit"}
                             user={user}
-                        />
+                        /> */}
                     </Box>
                 </motion.div>
             )}

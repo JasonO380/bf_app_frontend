@@ -10,7 +10,7 @@ import {
     Input,
 } from "@chakra-ui/react";
 import GetAthletesSessions from "./get-athletes-sessions";
-import ShowTodaysSession from "./show-todays-session";
+import ShowTodaysSession from "./do-not-need-show-todays-session";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
 let user;

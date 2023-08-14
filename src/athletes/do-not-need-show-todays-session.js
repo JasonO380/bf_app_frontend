@@ -4,21 +4,12 @@ import SessionCard from "../shared/sessions-card";
 
 const ShowTodaysSession = ({user, workouts}) => {
     console.log("ShowTodaysSession rendered", workouts);
-    // const newSession = props.newSession;
-    // const session = props.session;
-    // console.log(session)
-    // const newMovement = props.newMovement;
-    // console.log("New movement triggered: ", newMovement)
-    // const update = props.onUpdate;
-    // const user = props.user;
     console.log("Show todays session: ", user)
-    // let ses = [];
     let allSessions;
     let todaysSessions = [];
     const auth = useContext(LoginRegisterContext);
     const [newWorkouts, setNewWorkouts] = useState([]);
     const [sessionsLoaded, setSessionsLoaded] = useState(false)
-    // setNewWorkouts(workouts);
     const getSessions = async () => {
         // console.log(user);
         try {
@@ -66,12 +57,6 @@ const ShowTodaysSession = ({user, workouts}) => {
             // newSession(false);
         } catch (err) {}
     };
-
-    // useEffect(() => {
-    //     setSessionsLoaded(false);
-    //     console.log("useEffect triggered in show todays session");
-    //     getSessions()
-    // }, [user]);
 
     return (
         (

@@ -1,15 +1,54 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Box, Stack, Flex, Text, Heading } from "@chakra-ui/react";
+import { LoginRegisterContext } from "../authentication/login-register-context";
+import LoadingSpinner from "../shared/loading-spinner";
 import CalculateTopSets from "./calculate-athletes-top-sets";
 import CalculateDailyVolume from "./calculate-daily-volume";
 
-const ShowWorkoutsByWeek = (props) => {
-    const session = props.session;
+const ShowWorkoutsByWeek = ({user}) => {
+    let allSessions;
+    const auth = useContext(LoginRegisterContext);
+    const [allWorkouts, setAllWorkouts] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const getSessions = async () => {
+        setIsLoading(true)
+        try {
+            const response = await fetch(
+                `https://bf-backend.onrender.com/api/users/usersworkoutsweekly/${user}`,
+                // `http://localhost:5000/api/users/${user}`, keep this here for testing purposes for now
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Issuer " + auth.token,
+                    },
+                }
+            );
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.log(errorData.message);
+                throw new Error(errorData.message);
+            }
+            const responseData = await response.json();
+            allSessions = responseData.sessions
+            setAllWorkouts(allSessions);
+        } catch (err) {}
+        setIsLoading(false)
+    };
+
+    useEffect(() => {
+        getSessions();
+        console.log(auth.userID);
+    }, []);
+
+    if(isLoading){
+        return <LoadingSpinner text={"Fetching your requested data"} />
+    }
 
     return (
         <Box paddingBottom="70px">
             <Box width="90%">
-                {session.length > 0 && session.map((s) => {
+                {allWorkouts.length > 0 && allWorkouts.map((s) => {
                     const months = s.months;
                     return (
                         <React.Fragment>
