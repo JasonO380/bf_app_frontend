@@ -9,12 +9,16 @@ import {
     FormLabel,
     Input,
 } from "@chakra-ui/react";
+// import useGetSessions from "../http-requests/getSessions";
 import GetAthletesSessions from "./get-athletes-sessions";
 import AddRoundsToMovement from "./add-rounds-to-movement";
-import ShowTodaysSession from "./show-todays-session";
+// import ShowTodaysSession from "./show-todays-session";
+import SessionCard from "../shared/sessions-card";
+import TestSessionCard from "./test-session-card";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
-const AddMovement = () => {
+const AddMovement = ({ workouts, refreshSessions }) => {
+    console.log("AddMovement mounted: ", workouts)
     const auth = useContext(LoginRegisterContext);
     const user = auth.userID;
     let movementID;
@@ -27,6 +31,7 @@ const AddMovement = () => {
     const [selectedMovement, setSelectedMovement] = useState([]);
     const [showAddRounds, setShowAddRounds] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    // const { workouts } = useGetSessions(user);
     const inputReducer = (state, action) => {
         const dateEntry = new Date();
         switch (action.type) {
@@ -52,6 +57,22 @@ const AddMovement = () => {
         movement: "",
         athlete: "",
     });
+
+    // let todaysSessions = [];
+    //         const date = new Date();
+    //         const month = date.toLocaleString("en-US", { month: "long" });
+    //         const dayOfMonth = date.getDate();
+    //         workouts.forEach((data) => {
+    //             data.months.forEach((monthObj) => {
+    //                 if (monthObj.month === month) {
+    //                     monthObj.days.forEach((dayObj) => {
+    //                         if (dayObj.day === dayOfMonth) {
+    //                             todaysSessions.push(...dayObj.sessions);
+    //                         }
+    //                     });
+    //                 }
+    //             });
+    //         });
 
     const searchForMovement = async (query) => {
         if (query.length < 1) {
@@ -291,8 +312,11 @@ const AddMovement = () => {
                         <AddRoundsToMovement
                             movement={[...newMovement, ...selectedMovement]}
                             removeMovement={removeMovementHandler}
+                            refreshSessions={refreshSessions}
+                            user={user}
                         />
                     )}
+                    {workouts && <TestSessionCard refreshSessions={refreshSessions} workouts={workouts} /> }
                 </Stack>
             </Box>
         </React.Fragment>

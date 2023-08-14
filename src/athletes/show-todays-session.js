@@ -2,16 +2,25 @@ import React, { useState, useContext, useEffect } from "react";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 import SessionCard from "../shared/sessions-card";
 
-const ShowTodaysSession = (props) => {
-    const newSession = props.newSession;
-    const update = props.onUpdate;
-    const user = props.user;
-    let ses = [];
+const ShowTodaysSession = ({user, workouts}) => {
+    console.log("ShowTodaysSession rendered", workouts);
+    // const newSession = props.newSession;
+    // const session = props.session;
+    // console.log(session)
+    // const newMovement = props.newMovement;
+    // console.log("New movement triggered: ", newMovement)
+    // const update = props.onUpdate;
+    // const user = props.user;
+    console.log("Show todays session: ", user)
+    // let ses = [];
     let allSessions;
+    let todaysSessions = [];
     const auth = useContext(LoginRegisterContext);
-    const [workouts, setWorkouts] = useState([]);
+    const [newWorkouts, setNewWorkouts] = useState([]);
+    const [sessionsLoaded, setSessionsLoaded] = useState(false)
+    // setNewWorkouts(workouts);
     const getSessions = async () => {
-        console.log(user);
+        // console.log(user);
         try {
             const response = await fetch(
                 `https://bf-backend.onrender.com/api/users/${user}`,
@@ -30,11 +39,17 @@ const ShowTodaysSession = (props) => {
             }
             const responseData = await response.json();
             allSessions = responseData.sessions;
-            let todaysSessions = [];
+            // Filter sessions
+            const validSessions = allSessions.filter((session) => {
+                return session.months.every((month) => {
+                    return month.month; // month name exists
+                });
+            });
+            todaysSessions = [];
             const date = new Date();
             const month = date.toLocaleString("en-US", { month: "long" });
             const dayOfMonth = date.getDate();
-            allSessions.forEach((data) => {
+            validSessions.forEach((data) => {
                 data.months.forEach((monthObj) => {
                     if (monthObj.month === month) {
                         monthObj.days.forEach((dayObj) => {
@@ -45,46 +60,30 @@ const ShowTodaysSession = (props) => {
                     }
                 });
             });
-            console.log(todaysSessions)
-            // Filter out any month objects where the month is undefined
-            // const validSessions = allSessions.filter(monthObj => monthObj.month !== undefined);
-            // console.log(allSessions);
-            // console.log("Valid sessions are: ", validSessions)
-            // const sessionsForToday = allSessions.filter((s) => {
-            //     const date = new Date();
-            //     const year = date.getFullYear();
-            //     const month = date.toLocaleString("en-US", { month: "long" });
-            //     const dayOfMonth = date.getDate();
-            //     return (
-            //         s.year === year &&
-            //         s.month === month &&
-            //         s.dayOfMonth === dayOfMonth
-            //     );
-            // });
-            setWorkouts(todaysSessions);
+            console.log(todaysSessions);
+            setNewWorkouts(prevWorkouts => todaysSessions);
+            setSessionsLoaded(true)
+            // newSession(false);
         } catch (err) {}
     };
 
-    const handleUpdate = () => {
-        getSessions();
-    };
-
-    useEffect(() => {
-        getSessions();
-        console.log(auth.userID);
-    }, [user, newSession]);
+    // useEffect(() => {
+    //     setSessionsLoaded(false);
+    //     console.log("useEffect triggered in show todays session");
+    //     getSessions()
+    // }, [user]);
 
     return (
-        workouts.length > 0 && (
+        (
             <SessionCard
-                setUpdate={props.setUpdate}
+                // setUpdate={props.setUpdate}
                 workouts={workouts}
                 getUpdate={getSessions}
                 onDelete={getSessions}
-                update={props.update}
+                // update={props.update}
             />
         )
     );
 };
 
-export default ShowTodaysSession;
+export default React.memo(ShowTodaysSession);

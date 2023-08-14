@@ -11,10 +11,12 @@ import {
     Spacer,
 } from "@chakra-ui/react";
 import AddMovement from "../../athletes/add-movement";
+import ShowTodaysSession from "../../athletes/show-todays-session";
+import useGetSessions from "../../http-requests/getSessions";
 import GetGoogleSheets from "../../athletes/get-google-sheets";
-import AddAthleteSession from "../../athletes/add-athlete-session";
 import MonthlyWorkoutTotal from "./components/monthly-workout-total";
 import GetAndAddTodaysMacros from "../../macros/get-and-add-todays-macros";
+import SessionCard from "../../shared/sessions-card";
 import ShowAthleteSessionsHistory from "../../athletes/show-athletes-history-sessions";
 import EditMacros from "../../macros/editMacros";
 import AddMacros from "../../macros/addMacros";
@@ -24,19 +26,21 @@ import { LoginRegisterContext } from "../../authentication/login-register-contex
 
 const Dashboard = () => {
     const auth = useContext(LoginRegisterContext);
-    console.log(auth);
+    const [refreshSessions, setRefreshSessions] = useState(false);
     const user = auth.userID;
     const name = auth.userName;
     const navigate = useNavigate();
     console.log(user);
-    const [showAddAthleteSession, setShowAddAthleteSession] = useState(false);
+    const [view, setView] = useState("default");
+    const { workouts, sessionsLoading } = useGetSessions(user, 'today', refreshSessions);
+    console.log(workouts);
     const [showMacros, setShowMacros] = useState(false);
     const [showWorkoutEdit, setShowWorkoutEdit] = useState(false);
     const [showMacrosEdit, setShowMacrosEdit] = useState(false);
     const [isDefaultScreen, setIsDefaultScreen] = useState(true);
     const [currentDaysWorkouts, setCurrentDaysWorkouts] = useState([]);
     const [showWorkoutHistory, setShowWorkoutHistory] = useState(false);
-    const [allWorkouts, setAllWorkouts] = useState([]);
+    const [todaysSession, setTodaysSession] = useState([]);
     const MotionBox = motion(Box);
     const pageVariants = {
         initial: {
@@ -60,43 +64,54 @@ const Dashboard = () => {
     };
 
     const handleCloseClick = () => {
-        setShowAddAthleteSession(false);
-        setShowWorkoutHistory(false);
-        setShowMacros(false);
-        setShowWorkoutEdit(false);
-        setShowMacrosEdit(false);
-        setIsDefaultScreen(true);
+        setView("default");
+        // setShowAddAthleteSession(false);
+        // setShowWorkoutHistory(false);
+        // setShowMacros(false);
+        // setShowWorkoutEdit(false);
+        // setShowMacrosEdit(false);
+        // setIsDefaultScreen(true);
     };
 
     const handleStartWorkoutClick = () => {
-        handleCloseClick();
-        setShowAddAthleteSession(true);
-        setIsDefaultScreen(false);
+        setView("showAddAthleteSession");
+        // handleCloseClick();
+        // setShowAddAthleteSession(true);
+        // setIsDefaultScreen(false);
     };
 
     const handleViewWorkoutHistoryClick = () => {
-        handleCloseClick();
-        setShowWorkoutHistory(true);
-        setIsDefaultScreen(false);
+        setView("showWorkoutHistory");
+        // handleCloseClick();
+        // setShowWorkoutHistory(true);
+        // setIsDefaultScreen(false);
     };
 
     const handleMacrosClick = () => {
-        handleCloseClick();
-        setShowMacros(true);
-        setIsDefaultScreen(false);
+        setView("showMacros");
+        // handleCloseClick();
+        // setShowMacros(true);
+        // setIsDefaultScreen(false);
     };
 
     const handleEditWorkoutsClick = () => {
-        handleCloseClick();
-        setShowWorkoutEdit(true);
-        setIsDefaultScreen(false);
+        setView("showWorkoutEdit");
+        // handleCloseClick();
+        // setShowWorkoutEdit(true);
+        // setIsDefaultScreen(false);
     };
 
     const handleEditMacrosClick = () => {
-        handleCloseClick();
-        setShowMacrosEdit(true);
-        setIsDefaultScreen(false);
+        setView("showMacrosEdit");
+        // handleCloseClick();
+        // setShowMacrosEdit(true);
+        // setIsDefaultScreen(false);
     };
+
+    const handleRefreshSessions = () => {
+        console.log("handleRefreshSessions called");
+        setRefreshSessions(prev => !prev);
+    }
 
     const variants = {
         hidden: {
@@ -111,6 +126,13 @@ const Dashboard = () => {
             },
         },
     };
+
+    useEffect(() => {
+        console.log("Dashboard mounted");
+        return () => {
+            console.log("Dashboard will unmount");
+        };
+    }, []);
 
     return (
         <Box
@@ -141,11 +163,12 @@ const Dashboard = () => {
                     </Heading>
                     <Text color="white">Welcome, {name}</Text>
                 </Box>
-                {isDefaultScreen && 
-                <>
-                <MonthlyWorkoutTotal />
-                <GetGoogleSheets />
-                </>}
+                {view === "default" && (
+                    <>
+                        <MonthlyWorkoutTotal />
+                        <GetGoogleSheets />
+                    </>
+                )}
             </Box>
             <Box
                 position="fixed"
@@ -187,11 +210,11 @@ const Dashboard = () => {
                     <Spacer />
                 </Flex>
             </Box>
-            {showMacros && (
+            {view === "showMacros" && (
                 <motion.div
                     variants={variants}
                     initial="hidden"
-                    animate={showMacros ? "visible" : "hidden"}
+                    animate={view === "showMacros" ? "visible" : "hidden"}
                 >
                     <Box p="10px">
                         <Button
@@ -205,11 +228,13 @@ const Dashboard = () => {
                     </Box>
                 </motion.div>
             )}
-            {showAddAthleteSession && (
+            {view === "showAddAthleteSession" && (
                 <motion.div
                     variants={variants}
                     initial="hidden"
-                    animate={showAddAthleteSession ? "visible" : "hidden"}
+                    animate={
+                        view === "showAddAthleteSession" ? "visible" : "hidden"
+                    }
                 >
                     <Box p="10px">
                         <Button
@@ -220,15 +245,18 @@ const Dashboard = () => {
                         >
                             Close
                         </Button>
-                        <AddMovement />
+                        <AddMovement refreshSessions={handleRefreshSessions} workouts={workouts} />
+                        
                     </Box>
                 </motion.div>
             )}
-            {showWorkoutHistory && (
+            {view === "showWorkoutHistory" && (
                 <motion.div
                     variants={variants}
                     initial="hidden"
-                    animate={showWorkoutHistory ? "visible" : "hidden"}
+                    animate={
+                        view === "showWorkoutHistory" ? "visible" : "hidden"
+                    }
                 >
                     <Box p="10px">
                         <Flex justifyContent="center" gap="10px">
@@ -268,11 +296,11 @@ const Dashboard = () => {
                     </Box>
                 </motion.div>
             )}
-            {showWorkoutEdit && (
+            {view === "showWorkoutEdit" && (
                 <motion.div
                     variants={variants}
                     initial="hidden"
-                    animate={showWorkoutEdit ? "visible" : "hidden"}
+                    animate={view === "showWorkoutEdit" ? "visible" : "hidden"}
                 >
                     <Box p="10px">
                         <Flex justifyContent="center" gap="10px">
@@ -303,11 +331,11 @@ const Dashboard = () => {
                     </Box>
                 </motion.div>
             )}
-            {showMacrosEdit && (
+            {view === "showMacrosEdit" && (
                 <motion.div
                     variants={variants}
                     initial="hidden"
-                    animate={showMacrosEdit ? "visible" : "hidden"}
+                    animate={view === "showMacrosEdit" ? "visible" : "hidden"}
                 >
                     <Box p="10px">
                         <Flex justifyContent="center" gap="10px">

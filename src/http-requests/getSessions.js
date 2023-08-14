@@ -1,50 +1,100 @@
-import { useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
-const GetSessions = async (type) => {
+export default function useGetSessions(user, fetchType = 'all', refreshSessions) {
+    console.log(user);
+    console.log(fetchType);
     const [workouts, setWorkouts] = useState();
-    const [allWorkouts, setAllWorkouts] = useState();
-    let allSessions;
+    const [sessionsLoading, setSessionsLoading] = useState(false);
     const auth = useContext(LoginRegisterContext);
-    const user = auth.userID;
-    try {
-        const response = await fetch(
-            `http://localhost:5000/api/users/${user}`,
-            {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: "Issuer " + auth.token,
-                },
+    let allSessions;
+
+    useEffect(() => {
+        getSessions(user);
+    }, [user, refreshSessions]);
+
+    const getSessions = async (user) => {
+        console.log("get sessions hook is being called");
+        setSessionsLoading(true);
+        if (fetchType === "all") {
+            try {
+                const response = await fetch(
+                    `https://bf-backend.onrender.com/api/users/${user}`,
+                    {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: "Issuer " + auth.token,
+                        },
+                    }
+                );
+                if (!response.ok) {
+                    throw new Error("Failed to fetch sessions.");
+                }
+                const responseData = await response.json();
+                allSessions = responseData.sessions;
+                console.log(allSessions);
+                // Filter sessions
+                const validSessions = allSessions.filter((session) => {
+                    return session.months.every((month) => {
+                        return month.month; // month name exists
+                    });
+                });
+                console.log(validSessions);
+                setWorkouts(validSessions);
+            } catch (err) {
+                console.error("Error fetching sessions:", err);
+            } finally {
+                setSessionsLoading(false);
             }
-        );
-        const responseData = await response.json();
-        allSessions = responseData.sessions;
-        console.log(allSessions);
-        const sessions = responseData.sessions.filter((session) => {
-            const date = new Date();
-            const year = date.getFullYear();
-            const month = date.toLocaleString("en-US", { month: "long" });
-            const dayOfWeek = date.toLocaleString("default", {
-                weekday: "long",
-            });
-            const dayOfMonth = date.getDate();
-            return (
-                session.year === year &&
-                session.month === month &&
-                session.dayOfMonth === dayOfMonth &&
-                session.dayOfWeek === dayOfWeek
-            );
-        });
-        setWorkouts(sessions);
-        setAllWorkouts(allSessions);
-    } catch (err) {}
+        } else if (fetchType === "today") {
+            try {
+                const response = await fetch(
+                    `https://bf-backend.onrender.com/api/users/${user}`,
+                    {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: "Issuer " + auth.token,
+                        },
+                    }
+                );
+                if (!response.ok) {
+                    throw new Error("Failed to fetch sessions.");
+                }
+                const responseData = await response.json();
+                allSessions = responseData.sessions;
+                console.log(allSessions);
+                // Filter sessions
+                const validSessions = allSessions.filter((session) => {
+                    return session.months.every((month) => {
+                        return month.month; // month name exists
+                    });
+                });
+                console.log(validSessions);
+                const date = new Date();
+                const month = date.toLocaleString("default", { month: "long" });
+                const dayOfMonth = date.getDate();
+                let todaysSessions = [];
+                validSessions.forEach((data) => {
+                    data.months.forEach((monthObj) => {
+                        if (monthObj.month === month) {
+                            monthObj.days.forEach((dayObj) => {
+                                if (dayObj.day === dayOfMonth) {
+                                    todaysSessions.push(...dayObj.sessions);
+                                }
+                            });
+                        }
+                    });
+                });
+                setWorkouts(todaysSessions);
+            } catch (err) {
+                console.error("Error fetching sessions:", err);
+            } finally {
+                setSessionsLoading(false);
+            }
+        }
+    };
 
-    return(
-        type === "today" ? workouts : allWorkouts
-    )
-
-
-};
-
-export default GetSessions;
+    return { workouts, sessionsLoading };
+}
