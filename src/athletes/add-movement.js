@@ -1,4 +1,10 @@
-import React, { useContext, useReducer, useState } from "react";
+import React, {
+    useContext,
+    useReducer,
+    useState,
+    useRef,
+    useEffect,
+} from "react";
 import {
     Box,
     Text,
@@ -18,8 +24,9 @@ import TestSessionCard from "./test-session-card";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
 const AddMovement = ({ workouts, refreshSessions }) => {
-    console.log("AddMovement mounted: ", workouts)
+    console.log("AddMovement mounted: ", workouts);
     const auth = useContext(LoginRegisterContext);
+    const refPoint = useRef(null);
     const user = auth.userID;
     let movementID;
     const [newMovement, setNewMovement] = useState([]);
@@ -57,22 +64,6 @@ const AddMovement = ({ workouts, refreshSessions }) => {
         movement: "",
         athlete: "",
     });
-
-    // let todaysSessions = [];
-    //         const date = new Date();
-    //         const month = date.toLocaleString("en-US", { month: "long" });
-    //         const dayOfMonth = date.getDate();
-    //         workouts.forEach((data) => {
-    //             data.months.forEach((monthObj) => {
-    //                 if (monthObj.month === month) {
-    //                     monthObj.days.forEach((dayObj) => {
-    //                         if (dayObj.day === dayOfMonth) {
-    //                             todaysSessions.push(...dayObj.sessions);
-    //                         }
-    //                     });
-    //                 }
-    //             });
-    //         });
 
     const searchForMovement = async (query) => {
         if (query.length < 1) {
@@ -164,6 +155,20 @@ const AddMovement = ({ workouts, refreshSessions }) => {
         setShowMenu(false);
     };
 
+    useEffect(() => {
+        const handleClickOutsideDiv = (event) => {
+            if (refPoint.current && !refPoint.current.contains(event.target)) {
+                setIsCreateMovement(false);
+            }
+        };
+        // Attach the click event listener
+        document.addEventListener("mousedown", handleClickOutsideDiv);
+        // Clean up the listener on component unmount
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutsideDiv);
+        };
+    }, []);
+
     const addMovement = (event) => {
         event.preventDefault();
         console.log(inputState.movement);
@@ -203,8 +208,8 @@ const AddMovement = ({ workouts, refreshSessions }) => {
     return (
         <React.Fragment>
             <Box bg="offWhite" p={5} width="100%" margin="0 auto">
-                <Stack margin="auto" width="100%" paddingBottom="60px">
-                    {!isCreateMovement ? (
+                <Stack margin="auto" width="100%" paddingBottom="60px" ref={refPoint}>
+                    {!isCreateMovement && !selectedMovement.length && !newMovement.length ? (
                         <Button
                             mt={4}
                             width="100%"
@@ -316,7 +321,12 @@ const AddMovement = ({ workouts, refreshSessions }) => {
                             user={user}
                         />
                     )}
-                    {workouts && <TestSessionCard refreshSessions={refreshSessions} workouts={workouts} /> }
+                    {workouts && (
+                        <TestSessionCard
+                            refreshSessions={refreshSessions}
+                            workouts={workouts}
+                        />
+                    )}
                 </Stack>
             </Box>
         </React.Fragment>

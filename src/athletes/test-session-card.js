@@ -134,7 +134,7 @@ const TestSessionCard = ({ workouts, refreshSessions }) => {
                                         {" " + s.rounds}
                                     </Text>
                                 </Stack>
-                                <Flex gap="7px">
+                                <Flex gap="7px" marginTop="5px">
                                     <Button
                                         color="white"
                                         borderRadius="50"
@@ -157,7 +157,7 @@ const TestSessionCard = ({ workouts, refreshSessions }) => {
                                         onClick={() =>
                                             handleAddRound(s.id, s.movement)
                                         }
-                                        bg="blue"
+                                        bg="blue.500"
                                         color="white"
                                         borderRadius="50"
                                         fontSize="xs"
