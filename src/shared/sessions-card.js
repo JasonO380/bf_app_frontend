@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Flex, Text, Heading, Button, Stack } from "@chakra-ui/react";
 import UpdateSession from "./update-session";
+import LoadingSpinner from "./loading-spinner";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
 let updateID;
@@ -9,6 +10,9 @@ const SessionCard = (props) => {
     const session = props.workouts;
     console.log(session)
     const [update, setUpdate] = useState();
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [deleteID, setDeleteID] = useState(null);
+    const [error, setError] = useState(null);
     const [editSession, setEditSession] = useState(false);
     let sessionToDelete;
     const updateChange = props.onUpdate;
@@ -26,63 +30,10 @@ const SessionCard = (props) => {
         updateID = updateChange;
     }, [updateChange]);
 
-    //helper function to create MovementObjects
-
-    // const generateMovementObjects = (session) => ({
-    //     id: session._id,
-    //     movement: session.exercise,
-    //     rounds: session.rounds,
-    //     reps: session.reps,
-    //     weight: session.weight,
-    //     distance: session.distance,
-    //     time: session.time,
-    // });
-
-    // Helper function to find or create a year object
-
-    // const findOrCreateYear = (year) => {
-    //     let yearObj = finalSession.find((fSession) => fSession.year === year);
-    //     if (!yearObj) {
-    //         yearObj = { year, months: [] };
-    //         finalSession.push(yearObj);
-    //     }
-    //     return yearObj;
-    // };
-
-    // Helper function to find or create a month object
-
-    // const findOrCreateMonth = (yearObj, month) => {
-    //     let monthObj = yearObj.months.find(
-    //         (monthObj) => monthObj.month === month
-    //     );
-    //     if (!monthObj) {
-    //         monthObj = { month, days: [] };
-    //         yearObj.months.push(monthObj);
-    //     }
-    //     return monthObj;
-    // };
-
-    // Helper function to find or create a day object
-
-    // const findOrCreateDay = (monthObj, day) => {
-    //     let dayObj = monthObj.days.find((dayObj) => dayObj.day === day);
-    //     if (!dayObj) {
-    //         dayObj = { day, sessions: [] };
-    //         monthObj.days.push(dayObj);
-    //     }
-    //     return dayObj;
-    // };
-
-    // session.forEach((sess) => {
-    //     const yearObj = findOrCreateYear(sess.year);
-    //     const monthObj = findOrCreateMonth(yearObj, sess.month);
-    //     const dayObj = findOrCreateDay(monthObj, sess.dayOfMonth);
-    //     dayObj.sessions.push(generateMovementObjects(sess));
-    // });
-
-    const deleteSession = async (event) => {
-        console.log(event.target.name);
-        sessionToDelete = event.target.name;
+    const deleteSession = async (id) => {
+        // console.log(event.target.name);
+        // sessionToDelete = event.target.name;
+        setIsDeleting(true)
         const userID = auth.userID;
         try {
             const response = await fetch(
@@ -94,14 +45,32 @@ const SessionCard = (props) => {
                         Authorization: "Issuer " + auth.token,
                     },
                     body: JSON.stringify({
-                        session: sessionToDelete,
+                        session: id,
                     }),
                 }
             );
             const responseData = await response.json();
             console.log(responseData.message);
-        } catch (err) {}
+        } catch (err) {
+            setError(err.message);
+        }
+        setIsDeleting(false)
         props.getUpdate();
+    };
+
+    const handleDelete = async (sessionId) => {
+        setDeleteID(sessionId)
+        if (window.confirm("Are you sure you want to delete this session?")) {
+            const success = await deleteSession(sessionId);
+            if (success) {
+                // Handle successful deletion, e.g., remove the session from the UI.
+            } else {
+                // Handle errors, e.g., display an error message to the user.
+                console.error("Error while deleting:", error);
+            }
+        }
+        // props.getUpdate();
+        // refreshSessions();
     };
 
     const updateDOM = () => {
@@ -227,6 +196,7 @@ const SessionCard = (props) => {
                                                                             </Text>
                                                                         </Stack>
                                                                     )}
+                                                                    {isDeleting && deleteID === s.id && <LoadingSpinner text={"Deleting requested session"} /> }
                                                                     <Flex
                                                                         ml={8}
                                                                         mt={2}
@@ -256,7 +226,7 @@ const SessionCard = (props) => {
                                                                                 s.id
                                                                             }
                                                                             onClick={
-                                                                                deleteSession
+                                                                                () => handleDelete(s.id)
                                                                             }
                                                                             bg="red"
                                                                         >

@@ -6,6 +6,7 @@ import BarChart from "../../../shared/bar-chart";
 
 const MonthlyWorkoutTotal = () => {
     const auth = useContext(LoginRegisterContext);
+    const name = auth.userName;
     const [count, setCount] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
     let lastFiveMonths = [];

@@ -15,7 +15,7 @@ import ShowTodaysSession from "./do-not-need-show-todays-session";
 // import useGetSessions from "../http-requests/getSessions";
 import AddRoundsToMovementForm from "./add-rounds-to-movement-form";
 import { LoginRegisterContext } from "../authentication/login-register-context";
-import SessionCard from "../shared/sessions-card";
+import LoadingSpinner from "../shared/loading-spinner";
 
 const AddRoundsToMovement = ({movement, removeMovement, refreshSessions, user}) => {
     // const user = props.user;
@@ -23,7 +23,7 @@ const AddRoundsToMovement = ({movement, removeMovement, refreshSessions, user}) 
     // const movementToRemove = props.removeMovement;
     const [todaysLoadedSessions, setTodaysLoadedSessions] = useState([]);
     const [sessionID, setSessionID] = useState([]);
-    const [isTodaysSession, setIsTodaysSession] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [isNewSession, setIsNewSession] = useState(false);
     const [currentMovement, setCurrentMovement] = useState("");
     const auth = useContext(LoginRegisterContext);
@@ -164,6 +164,7 @@ const AddRoundsToMovement = ({movement, removeMovement, refreshSessions, user}) 
     };
 
     const addSession = async (event) => {
+        setIsLoading(true)
         const userID = auth.userID;
         event.preventDefault();
         try {
@@ -199,11 +200,11 @@ const AddRoundsToMovement = ({movement, removeMovement, refreshSessions, user}) 
             // console.log(responseData.sessionID);
             // setSessionID(responseData.sessionID);
             setIsNewSession(true);
-            setIsTodaysSession(true);
             if(refreshSessions){
                 refreshSessions()
             }
         } catch (err) {}
+        setIsLoading(false)
     };
 
     return (
@@ -215,6 +216,7 @@ const AddRoundsToMovement = ({movement, removeMovement, refreshSessions, user}) 
                             <strong>{m}</strong>
                         </Text>
                     </Box>
+                    {isLoading && <LoadingSpinner text={"Sending your session data"} />}
                     <AddRoundsToMovementForm
                         movement={m}
                         movementHandler={movementHandler}

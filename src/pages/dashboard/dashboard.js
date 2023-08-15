@@ -14,7 +14,6 @@ import AddMovement from "../../athletes/add-movement";
 import useGetSessions from "../../http-requests/getSessions";
 import GetGoogleSheets from "../../athletes/get-google-sheets";
 import MonthlyWorkoutTotal from "./components/monthly-workout-total";
-import LoadingSpinner from "../../shared/loading-spinner";
 import GetAndAddTodaysMacros from "../../macros/get-and-add-todays-macros";
 import ShowWorkoutsByWeek from "../../athletes/show-workouts-by-week";
 import SessionCard from "../../shared/sessions-card";
@@ -122,7 +121,6 @@ const Dashboard = () => {
                     </>
                 )}
             </Box>
-            {sessionsLoading && <LoadingSpinner text={"Fetching data"} />}
             <Box
                 position="fixed"
                 bottom="0"
@@ -198,7 +196,7 @@ const Dashboard = () => {
                         >
                             Close
                         </Button>
-                        <AddMovement refreshSessions={handleRefreshSessions} workouts={todaysSessions} />
+                        <AddMovement refreshSessions={handleRefreshSessions} allWorkouts={allSessions} workouts={todaysSessions} />
                         
                     </Box>
                 </motion.div>
@@ -277,7 +275,7 @@ const Dashboard = () => {
                                 </Stack>
                             </Button>
                         </Flex>
-                        <SessionCard workouts={allSessions.reverse()} />
+                        <SessionCard workouts={allSessions} />
                         {/* <ShowAthleteSessionsHistory
                             edit={view === "showWorkoutEdit"}
                             user={user}

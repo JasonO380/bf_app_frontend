@@ -33,6 +33,7 @@ export default function useDeleteSelectedSession() {
             setIsDeleting(false);
             setError(err.message);
         }
+        setIsDeleting(false);
     };
     return { deleteSession, isDeleting, error  }
 

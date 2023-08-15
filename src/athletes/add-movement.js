@@ -15,16 +15,12 @@ import {
     FormLabel,
     Input,
 } from "@chakra-ui/react";
-// import useGetSessions from "../http-requests/getSessions";
-import GetAthletesSessions from "./get-athletes-sessions";
 import AddRoundsToMovement from "./add-rounds-to-movement";
-// import ShowTodaysSession from "./show-todays-session";
-import SessionCard from "../shared/sessions-card";
 import TestSessionCard from "./test-session-card";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
-const AddMovement = ({ workouts, refreshSessions }) => {
-    console.log("AddMovement mounted: ", workouts);
+const AddMovement = ({ workouts, allWorkouts, refreshSessions }) => {
+    console.log("AddMovement mounted:", allWorkouts);
     const auth = useContext(LoginRegisterContext);
     const refPoint = useRef(null);
     const user = auth.userID;
@@ -38,7 +34,6 @@ const AddMovement = ({ workouts, refreshSessions }) => {
     const [selectedMovement, setSelectedMovement] = useState([]);
     const [showAddRounds, setShowAddRounds] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    // const { workouts } = useGetSessions(user);
     const inputReducer = (state, action) => {
         const dateEntry = new Date();
         switch (action.type) {
@@ -65,35 +60,48 @@ const AddMovement = ({ workouts, refreshSessions }) => {
         athlete: "",
     });
 
-    const searchForMovement = async (query) => {
+    const searchForMovement = (query) => {
         if (query.length < 1) {
             setMovements([]);
             return;
         }
-        try {
-            const response = await fetch(
-                `https://bf-backend.onrender.com/api/movement/search/${query}`,
-                {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Issuer " + auth.token,
-                    },
-                }
-            );
-            const responseData = await response.json();
-            if (responseData.movements && responseData.movements.length === 0) {
-                console.log("no movements found");
-            }
-            setMovements(responseData.movements);
-            setShowMenu(
-                responseData.movements && responseData.movements.length > 0
-            );
-            console.log(responseData.movements);
-        } catch (err) {
-            console.log(err);
-        }
+        console.log("search for movement: ", query);
+        // Filter through the allWorkouts array structure to find matching movements
+        const matchingMovements = [];
+        allWorkouts.forEach((workout) => {
+            workout.months.forEach((month) => {
+                month.days.forEach((day) => {
+                    day.sessions.forEach((session) => {
+                        if (
+                            session.movement
+                                .toLowerCase()
+                                .includes(query.toLowerCase())
+                        ) {
+                            console.log("Inside allWorkouts search" ,session.movement)
+                            matchingMovements.push(session.movement);
+                        }
+                    });
+                });
+            });
+        });
+
+        // To get unique movements only
+        const uniqueMatchingMovements = [...new Set(matchingMovements)];
+
+        setMovements(uniqueMatchingMovements);
+        setShowMenu(uniqueMatchingMovements.length > 0);
     };
+
+    const debounce = (func, wait) => {
+        let timeout;
+        return (...args) => {
+            const context = this;
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(context, args), wait);
+        };
+    };
+
+    const debouncedSearch = debounce(searchForMovement, 300);
 
     const validateMovement = (value) => {
         if (value.length < 1) {
@@ -117,7 +125,7 @@ const AddMovement = ({ workouts, refreshSessions }) => {
         const formattedValue =
             inputValue.charAt(0).toUpperCase() +
             inputValue.slice(1).toLowerCase();
-        searchForMovement(formattedValue);
+        debouncedSearch(formattedValue);
         if (formattedValue.length < 3) {
             setIsValid(false);
         }
@@ -208,8 +216,15 @@ const AddMovement = ({ workouts, refreshSessions }) => {
     return (
         <React.Fragment>
             <Box bg="offWhite" p={5} width="100%" margin="0 auto">
-                <Stack margin="auto" width="100%" paddingBottom="60px" ref={refPoint}>
-                    {!isCreateMovement && !selectedMovement.length && !newMovement.length ? (
+                <Stack
+                    margin="auto"
+                    width="100%"
+                    paddingBottom="60px"
+                    ref={refPoint}
+                >
+                    {!isCreateMovement &&
+                    !selectedMovement.length &&
+                    !newMovement.length ? (
                         <Button
                             mt={4}
                             width="100%"
@@ -285,10 +300,10 @@ const AddMovement = ({ workouts, refreshSessions }) => {
                                 >
                                     --Select one--
                                 </Box>
-                                {movements.map((movement) => (
+                                {movements.map((movement, index) => (
                                     <Box
-                                        key={movement._id}
-                                        value={movement._id}
+                                        key={index}
+                                        value={index}
                                         p={2}
                                         borderBottomWidth={
                                             movements.indexOf(movement) ===
@@ -297,12 +312,12 @@ const AddMovement = ({ workouts, refreshSessions }) => {
                                                 : "1px"
                                         }
                                         onClick={() =>
-                                            handleSelectMovement(movement)
+                                            handleSelectMovement({movement: movement})
                                         }
                                         _hover={{ bg: "gray.100" }}
                                         cursor="pointer"
                                     >
-                                        {movement.movement}
+                                        {movement}
                                     </Box>
                                 ))}
                             </VStack>

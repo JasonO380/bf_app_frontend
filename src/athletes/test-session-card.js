@@ -3,17 +3,20 @@ import { Flex, Text, Box, Heading, Button, Stack } from "@chakra-ui/react";
 import useDeleteSelectedSession from "../http-requests/deleteSelectedSession";
 import UpdateSession from "../shared/update-session";
 import { LoginRegisterContext } from "../authentication/login-register-context";
-import useGetSessions from "../http-requests/getSessions";
+import LoadingSpinner from "../shared/loading-spinner";
 
 const TestSessionCard = ({ workouts, refreshSessions }) => {
     console.log(workouts);
     const auth = useContext(LoginRegisterContext);
     const [update, setUpdate] = useState();
     const [addRoundID, setAddRoundID] = useState();
+    const [deleteRoundID, setDeleteroundID] = useState();
+    const [isLoading, setIsLoading] = useState(false)
     const [movement, setMovement] = useState([]);
     const { deleteSession, isDeleting, error } = useDeleteSelectedSession();
 
     const addRoundToMovement = async (id, movement) => {
+        setIsLoading(true);
         const workoutToUpdate = workouts.find((w) => w.id === id);
         if (!workoutToUpdate) return; // Exit if no matching workout is found
 
@@ -43,6 +46,7 @@ const TestSessionCard = ({ workouts, refreshSessions }) => {
             const responseData = await response.json();
             console.log(responseData);
         } catch (err) {}
+        setIsLoading(false)
         refreshSessions();
     };
     const handleDelete = async (sessionId) => {
@@ -106,6 +110,8 @@ const TestSessionCard = ({ workouts, refreshSessions }) => {
                                     <Text color="white">
                                         Movement:
                                         {" " + s.movement}
+                                        {isLoading && addRoundID === s.id  && <LoadingSpinner text={"Adding round to movement"} />}
+                                        {isDeleting && <LoadingSpinner text={"Deleting round"} />}
                                         {s.weight !== null &&
                                             s.weight !== undefined && (
                                                 <Text color="white">
