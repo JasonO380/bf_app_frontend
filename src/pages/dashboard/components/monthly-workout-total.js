@@ -46,7 +46,7 @@ const MonthlyWorkoutTotal = () => {
         const allMonths = workoutData.flatMap((item) => item.months);
         // Filter out any month objects where the month is undefined
         const validMonths = allMonths.filter(monthObj => monthObj.month !== undefined);
-        lastFiveMonths = validMonths.splice(-5)
+        lastFiveMonths = validMonths.splice(0,5)
         // Map over all month objects to get the count of days lifted for each month
         const daysLiftedCounts = lastFiveMonths.map((monthObj) => ({
             month: monthObj.month,
