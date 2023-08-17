@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import {
     Box,
-    Image,
     Flex,
     Button,
     Heading,
@@ -17,7 +16,6 @@ import MonthlyWorkoutTotal from "./components/monthly-workout-total";
 import GetAndAddTodaysMacros from "../../macros/get-and-add-todays-macros";
 import ShowWorkoutsByWeek from "../../athletes/show-workouts-by-week";
 import SessionCard from "../../shared/sessions-card";
-import ShowAthleteSessionsHistory from "../../athletes/show-athletes-history-sessions";
 import EditMacros from "../../macros/editMacros";
 import GetMacros from "../../macros/getMacros";
 import { AnimatePresence, motion } from "framer-motion";
@@ -276,10 +274,6 @@ const Dashboard = () => {
                             </Button>
                         </Flex>
                         <SessionCard workouts={allSessions} />
-                        {/* <ShowAthleteSessionsHistory
-                            edit={view === "showWorkoutEdit"}
-                            user={user}
-                        /> */}
                     </Box>
                 </motion.div>
             )}

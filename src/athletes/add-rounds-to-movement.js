@@ -1,34 +1,16 @@
-import React, { useContext, useReducer, useState, useEffect } from "react";
+import React, { useContext, useReducer, useState } from "react";
 import {
     Box,
     Text,
-    Heading,
-    Flex,
-    Button,
-    Stack,
-    FormControl,
-    FormLabel,
-    Input,
 } from "@chakra-ui/react";
-import ShowTodaysSession from "./do-not-need-show-todays-session";
-// import useGetTodaysSessions from "../http-requests/getTodaysSessions";
-// import useGetSessions from "../http-requests/getSessions";
 import AddRoundsToMovementForm from "./add-rounds-to-movement-form";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 import LoadingSpinner from "../shared/loading-spinner";
 
 const AddRoundsToMovement = ({movement, removeMovement, refreshSessions, user}) => {
-    // const user = props.user;
-    // const movement = props.movement;
-    // const movementToRemove = props.removeMovement;
-    const [todaysLoadedSessions, setTodaysLoadedSessions] = useState([]);
-    const [sessionID, setSessionID] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [isNewSession, setIsNewSession] = useState(false);
     const [currentMovement, setCurrentMovement] = useState("");
     const auth = useContext(LoginRegisterContext);
-    // const { workouts } = useGetSessions(auth.userID);
-    // console.log("Add rounds to movement getSessions ", workouts);
     const inputReducer = (state, action) => {
         const dateEntry = new Date();
         switch (action.type) {
@@ -78,52 +60,6 @@ const AddRoundsToMovement = ({movement, removeMovement, refreshSessions, user}) 
         }
     };
     const [inputState, dispatch] = useReducer(inputReducer, {});
-    // const date = new Date();
-    // const month = date.toLocaleString("default", { month: "long" });
-    // const dayOfMonth = date.getDate();
-    // let todaysSessions = [];
-    // workouts.forEach((data) => {
-    //     data.months.forEach((monthObj) => {
-    //         if (monthObj.month === month) {
-    //             monthObj.days.forEach((dayObj) => {
-    //                 if (dayObj.day === dayOfMonth) {
-    //                     todaysSessions.push(...dayObj.sessions);
-    //                 }
-    //             });
-    //         }
-    //     });
-    // });
-    // console.log(todaysSessions);
-    // setTodaysLoadedSessions((prevWorkouts) => todaysSessions);
-    // console.log(todaysLoadedSessions);
-
-    // useEffect(() => {
-    //     const todaysSessions = workouts.filter((session) => {
-    //         const date = new Date();
-    //         const month = date.toLocaleString("default", { month: "long" });
-    //         const day = date.getDate();
-    //         let matches = false;
-    //         session.months.forEach((monthObj) => {
-    //             if (monthObj.month === month) {
-    //                 monthObj.days.forEach((dayObj) => {
-    //                     if (dayObj.day === day) {
-    //                         matches = true;
-    //                     }
-    //                 });
-    //             }
-    //         });
-
-    //         return matches;
-    //     });
-    //     console.log(todaysSessions);
-    //     setTodaysLoadedSessions((prevWorkouts) => todaysSessions);
-    //     console.log(todaysLoadedSessions);
-    // }, [workouts]);
-
-    // useEffect(()=> {
-    //     setTodaysLoadedSessions(prevSession => workouts)
-    //     console.log(todaysLoadedSessions)
-    // },[workouts])
 
     const changeHandler = (event, movement) => {
         const inputValue = event.target.value;
@@ -146,7 +82,6 @@ const AddRoundsToMovement = ({movement, removeMovement, refreshSessions, user}) 
 
     const removeMovementHandler = (movementToRemove) => {
         removeMovement(movementToRemove);
-        // props.removeMovement(movementToRemove);
     };
 
     const convertToKG = (movement) => {
@@ -197,9 +132,6 @@ const AddRoundsToMovement = ({movement, removeMovement, refreshSessions, user}) 
                 type: "CLEAR_FORM",
                 movement: currentMovement,
             });
-            // console.log(responseData.sessionID);
-            // setSessionID(responseData.sessionID);
-            setIsNewSession(true);
             if(refreshSessions){
                 refreshSessions()
             }

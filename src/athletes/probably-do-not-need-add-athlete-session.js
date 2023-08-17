@@ -9,8 +9,8 @@ import {
     FormLabel,
     Input,
 } from "@chakra-ui/react";
-import GetAthletesSessions from "./get-athletes-sessions";
-import ShowTodaysSession from "./do-not-need-show-todays-session";
+import GetAthletesSessions from "./probably-dont-need-get-athletes-sessions";
+import ShowTodaysSession from "./probably-do-not-need-show-todays-session";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
 let user;

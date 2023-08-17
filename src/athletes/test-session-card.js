@@ -50,6 +50,7 @@ const TestSessionCard = ({ workouts, refreshSessions }) => {
         refreshSessions();
     };
     const handleDelete = async (sessionId) => {
+        setDeleteroundID(sessionId)
         if (window.confirm("Are you sure you want to delete this session?")) {
             const success = await deleteSession(sessionId);
             if (success) {
@@ -111,7 +112,7 @@ const TestSessionCard = ({ workouts, refreshSessions }) => {
                                         Movement:
                                         {" " + s.movement}
                                         {isLoading && addRoundID === s.id  && <LoadingSpinner text={"Adding round to movement"} />}
-                                        {isDeleting && <LoadingSpinner text={"Deleting round"} />}
+                                        {isDeleting && deleteRoundID === s.id && <LoadingSpinner text={"Deleting round"} />}
                                         {s.weight !== null &&
                                             s.weight !== undefined && (
                                                 <Text color="white">

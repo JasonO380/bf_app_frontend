@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from "@chakra-ui/react";
 import AddGoogleSheets from "../../athletes/add-google-sheets";
-import EditMovement from "../../athletes/edit-movement";
+import EditMovement from "./components/edit-movement";
 
 const Admin = () => {
     return (

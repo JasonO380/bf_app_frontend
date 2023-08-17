@@ -4,7 +4,7 @@ import React, {
     useEffect,
     useRef,
 } from "react";
-import { LoginRegisterContext } from "../authentication/login-register-context";
+import { LoginRegisterContext } from "../../../authentication/login-register-context";
 import {
     Box,
     Heading,
@@ -18,6 +18,7 @@ const EditMovement = () => {
     const auth = useContext(LoginRegisterContext);
     const [allMovements, setAllMovements] = useState([]);
     const [editMovementID, setEditMovementID] = useState(null);
+    const [error, setError] = useState(null);
     const [editedMovementName, setEditedMovementName] = useState("");
     const inputRef = useRef(null);
     const getMovements = async () => {
@@ -35,6 +36,7 @@ const EditMovement = () => {
     const editMovement = async (event) => {
         event.preventDefault();
         console.log(editedMovementName);
+        console.log("edit movement ID: ", editMovementID)
         try {
             const response = await fetch(
                 `http://localhost:5000/api/movement/${editMovementID}`,
@@ -54,12 +56,24 @@ const EditMovement = () => {
             if (!response.ok) {
                 throw new Error(responseData.message);
             }
-            setEditedMovementName("");
             getMovements();
         } catch (err) {
             console.error(err.message || "Failed to edit the movement");
         } finally {
             setEditMovementID(null);
+            setEditedMovementName("");
+        }
+    };
+
+    const handleDelete = async (sessionId) => {
+        if (window.confirm("Are you sure you want to delete this session?")) {
+            const success = await deleteMovement(sessionId);
+            if (success) {
+                // Handle successful deletion, e.g., remove the session from the UI.
+            } else {
+                // Handle errors, e.g., display an error message to the user.
+                console.error("Error while deleting:", error);
+            }
         }
     };
 
@@ -83,17 +97,11 @@ const EditMovement = () => {
             const responseData = await response.json();
             console.log(responseData.message);
         } catch (err) {
+            setError(err.message);
             console.log(err);
         }
         getMovements();
     };
-
-    // useEffect(() => {
-    //     console.log('editMovementID ', editMovementID);
-    //     if (editMovementID) {
-    //         console.log("Edit mode");
-    //     }
-    // }, [editMovementID]);
 
     const handleEditClick = (event) => {
         editMovement(event);
@@ -155,7 +163,7 @@ const EditMovement = () => {
                                         Edit
                                     </Button>
                                     <Button
-                                        onClick={() => deleteMovement(m._id)}
+                                        onClick={() => handleDelete(m._id)}
                                     >
                                         Delete
                                     </Button>

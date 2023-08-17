@@ -69,8 +69,6 @@ const SessionCard = (props) => {
                 console.error("Error while deleting:", error);
             }
         }
-        // props.getUpdate();
-        // refreshSessions();
     };
 
     const updateDOM = () => {

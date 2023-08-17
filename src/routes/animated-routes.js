@@ -11,7 +11,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import GetGoogleSheets from "../athletes/get-google-sheets";
 import AddGoogleSheets from "../athletes/add-google-sheets";
-import EditMovement from "../athletes/edit-movement";
+import EditMovement from "../pages/admin/components/edit-movement";
 import Admin from "../pages/admin/admin";
 import { Box } from "@chakra-ui/react";
 import WelcomeMessage from "../pages/mobile-homepage/components/welcome-message";

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { LoginRegisterContext } from "../../../authentication/login-register-context";
 import LoadingSpinner from "../../../shared/loading-spinner";
 import BarChart from "../../../shared/bar-chart";
@@ -62,7 +62,11 @@ const MonthlyWorkoutTotal = () => {
     }, [auth.userID, auth.token]);
 
     if(isLoading){
-        return <LoadingSpinner text={"Processing your workout totals"} />
+        return (
+            <Flex marginTop="100px" alignItems="center" justifyContent="center">
+                <LoadingSpinner text={"Processing your workout totals"} />
+            </Flex>
+        )
     }
 
     if (count) {
