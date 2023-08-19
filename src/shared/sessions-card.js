@@ -8,7 +8,6 @@ let updateID;
 const SessionCard = (props) => {
     const auth = useContext(LoginRegisterContext);
     const session = props.workouts;
-    console.log(session)
     const [update, setUpdate] = useState();
     const [isDeleting, setIsDeleting] = useState(false);
     const [deleteID, setDeleteID] = useState(null);
@@ -31,8 +30,6 @@ const SessionCard = (props) => {
     }, [updateChange]);
 
     const deleteSession = async (id) => {
-        // console.log(event.target.name);
-        // sessionToDelete = event.target.name;
         setIsDeleting(true)
         const userID = auth.userID;
         try {
@@ -55,7 +52,7 @@ const SessionCard = (props) => {
             setError(err.message);
         }
         setIsDeleting(false)
-        props.getUpdate();
+        props.refreshSessions();
     };
 
     const handleDelete = async (sessionId) => {
@@ -72,24 +69,19 @@ const SessionCard = (props) => {
     };
 
     const updateDOM = () => {
-        props.getUpdate();
+        props.refreshSessions();
     };
 
     const updateHandler = (event) => {
         updateID = event.target.name;
-        setUpdate((prevUpdate) => updateID);
-        props.getUpdate();
-        console.log(update);
+        setUpdate(updateID);
     };
 
     const updateChangeHandler = (data) => {
         updateID = data;
-        setUpdate(updateID);
+        setUpdate(null);
+        props.refreshSessions();
     };
-
-    useEffect(() => {
-        console.log(update);
-    }, [update]);
 
     if (session) {
         return (
@@ -132,6 +124,7 @@ const SessionCard = (props) => {
                                                                     {update ===
                                                                     s.id ? (
                                                                         <UpdateSession
+                                                                            sessionType="all"
                                                                             updateChangeHandler={
                                                                                 updateChangeHandler
                                                                             }
@@ -209,6 +202,7 @@ const SessionCard = (props) => {
                                                                             onClick={
                                                                                 updateHandler
                                                                             }
+                                                                            updateMode={()=> setUpdate(null)}
                                                                             bg="teal"
                                                                             mr={
                                                                                 2

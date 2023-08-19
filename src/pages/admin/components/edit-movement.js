@@ -18,7 +18,7 @@ const EditMovement = () => {
     const auth = useContext(LoginRegisterContext);
     const [allMovements, setAllMovements] = useState([]);
     const [editMovementID, setEditMovementID] = useState(null);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState("");
     const [editedMovementName, setEditedMovementName] = useState("");
     const inputRef = useRef(null);
     const getMovements = async () => {
@@ -33,13 +33,12 @@ const EditMovement = () => {
         setAllMovements(responseData.movements);
     };
 
-    const editMovement = async (event) => {
-        event.preventDefault();
+    const editMovement = async (movementID) => {
         console.log(editedMovementName);
-        console.log("edit movement ID: ", editMovementID)
+        console.log("edit movement ID: ", movementID)
         try {
             const response = await fetch(
-                `http://localhost:5000/api/movement/${editMovementID}`,
+                `http://localhost:5000/api/movement/${movementID}`,
                 {
                     method: "PATCH",
                     headers: {
@@ -103,8 +102,8 @@ const EditMovement = () => {
         getMovements();
     };
 
-    const handleEditClick = (event) => {
-        editMovement(event);
+    const handleEditClick = (movementID) => {
+        editMovement(movementID);
     };
 
     useEffect(() => {
@@ -143,7 +142,7 @@ const EditMovement = () => {
                             {editMovementID === m._id ? (
                                 <>
                                     <Button
-                                    onClick={(event) => handleEditClick(event)}
+                                    onClick={(event) => handleEditClick(m.id)}
                                     >
                                         Update
                                     </Button>

@@ -20,7 +20,6 @@ import TestSessionCard from "./test-session-card";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
 const AddMovement = ({ workouts, allWorkouts, refreshSessions }) => {
-    console.log("AddMovement mounted:", allWorkouts);
     const auth = useContext(LoginRegisterContext);
     const refPoint = useRef(null);
     const user = auth.userID;
@@ -65,7 +64,6 @@ const AddMovement = ({ workouts, allWorkouts, refreshSessions }) => {
             setMovements([]);
             return;
         }
-        console.log("search for movement: ", query);
         // Filter through the allWorkouts array structure to find matching movements
         const matchingMovements = [];
         allWorkouts.forEach((workout) => {
@@ -77,7 +75,6 @@ const AddMovement = ({ workouts, allWorkouts, refreshSessions }) => {
                                 .toLowerCase()
                                 .includes(query.toLowerCase())
                         ) {
-                            console.log("Inside allWorkouts search" ,session.movement)
                             matchingMovements.push(session.movement);
                         }
                     });
@@ -111,9 +108,7 @@ const AddMovement = ({ workouts, allWorkouts, refreshSessions }) => {
             setErrorMessage("Movement must be at least 3 characters long");
             setTouched(true);
             setIsValid(false);
-            console.log("movement too short");
         } else {
-            console.log("movement valid");
             setIsValid(true);
             setErrorMessage("");
         }
@@ -179,7 +174,6 @@ const AddMovement = ({ workouts, allWorkouts, refreshSessions }) => {
 
     const addMovement = (event) => {
         event.preventDefault();
-        console.log(inputState.movement);
         setShowMenu(false);
         validateMovement(inputState.movement);
         if (inputState.movement.trim() === "") {

@@ -23,7 +23,7 @@ import { LoginRegisterContext } from "../../authentication/login-register-contex
 
 const Dashboard = () => {
     const auth = useContext(LoginRegisterContext);
-    const [refreshSessions, setRefreshSessions] = useState(false);
+    const [refreshSessions, setRefreshSessions] = useState(0);
     const user = auth.userID;
     const name = auth.userName;
     const navigate = useNavigate();
@@ -59,7 +59,7 @@ const Dashboard = () => {
 
     const handleRefreshSessions = () => {
         console.log("handleRefreshSessions called");
-        setRefreshSessions(prev => !prev);
+        setRefreshSessions(prev => prev + 1);
     }
 
     const variants = {
@@ -273,7 +273,7 @@ const Dashboard = () => {
                                 </Stack>
                             </Button>
                         </Flex>
-                        <SessionCard workouts={allSessions} />
+                        <SessionCard refreshSessions={handleRefreshSessions} workouts={allSessions} />
                     </Box>
                 </motion.div>
             )}

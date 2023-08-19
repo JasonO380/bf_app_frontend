@@ -7,8 +7,6 @@ import React, {
 } from "react";
 import {
     Box,
-    Text,
-    Flex,
     Button,
     Stack,
     FormControl,
@@ -65,7 +63,6 @@ const UpdateSession = (props) => {
         const isInputOrButton =
             event.target.tagName === "INPUT" ||
             event.target.tagName === "BUTTON";
-        console.log(updateDiv);
         if (updateDiv && !updateDiv.contains(event.target)) {
             console.log("clicked outside");
             props.updateChangeHandler(null);
@@ -87,19 +84,18 @@ const UpdateSession = (props) => {
     };
 
     const updateWorkout = async (event) => {
-        console.log(updateSession);
         event.preventDefault();
         try {
             console.log(inputState);
             let requestBody = {
-                exercise: workoutToUpdate.movement,
+                exercise: workoutToUpdate.exercise,
                 rounds: workoutToUpdate.rounds,
                 reps: workoutToUpdate.reps,
                 weight: workoutToUpdate.weight,
                 distance: workoutToUpdate.distance,
                 time: workoutToUpdate.time,
             };
-            requestBody.exercise = workoutToUpdate.exercise;
+            if (inputState.exercise) requestBody.exercise = inputState.exercise;
             if (inputState.weight) requestBody.weight = inputState.weight;
             if (inputState.reps) requestBody.reps = inputState.reps;
             if (inputState.rounds) requestBody.rounds = inputState.rounds;
@@ -117,12 +113,15 @@ const UpdateSession = (props) => {
                     body: JSON.stringify(requestBody),
                 }
             );
-            console.log(response);
             const responseData = await response.json();
-            console.log(responseData);
         } catch (err) {}
-        props.refreshSessions();
-        props.updateChangeHandler(null);
+        if(props.sessionType === "all"){
+            props.updateMode();
+            props.onUpdate();
+        } else {
+            props.updateMode();
+            props.refreshSessions();
+        }
     };
 
     useEffect(() => {
@@ -141,8 +140,6 @@ const UpdateSession = (props) => {
                 const responseData = await response.json();
                 setWorkoutToUpdate(responseData.session);
                 workout = responseData.session;
-                console.log(responseData.session);
-                console.log(workout);
             } catch (err) {}
         };
         getSessionToUpdate();
@@ -159,13 +156,19 @@ const UpdateSession = (props) => {
                             <FormLabel
                                 fontSize="xs"
                                 color="white"
-                                htmlFor="movement"
+                                htmlFor="exercise"
                             >
                                 Movement
                             </FormLabel>
-                            <Text color="white">
-                                {workoutToUpdate.exercise}
-                            </Text>
+                            <Input
+                                    onChange={changeHandler}
+                                    placeholder={workoutToUpdate.exercise}
+                                    value={inputState.exercise}
+                                    name="exercise"
+                                    type="text"
+                                    color="white"
+                                    fontSize="xs"
+                                />
                         </FormControl>
                         {workoutToUpdate.weight && (
                             <FormControl>
