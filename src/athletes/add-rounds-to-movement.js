@@ -1,13 +1,18 @@
 import React, { useContext, useReducer, useState } from "react";
-import {
-    Box,
-    Text,
-} from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import AddRoundsToMovementForm from "./add-rounds-to-movement-form";
+import LastSessionForSelectedMovement from "./last-session-for-selected-movement";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 import LoadingSpinner from "../shared/loading-spinner";
 
-const AddRoundsToMovement = ({movement, removeMovement, refreshSessions, user}) => {
+const AddRoundsToMovement = ({
+    movement,
+    removeMovement,
+    refreshSessions,
+    allSessions,
+    addRoundsType,
+    user,
+}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [currentMovement, setCurrentMovement] = useState("");
     const auth = useContext(LoginRegisterContext);
@@ -99,7 +104,7 @@ const AddRoundsToMovement = ({movement, removeMovement, refreshSessions, user}) 
     };
 
     const addSession = async (event) => {
-        setIsLoading(true)
+        setIsLoading(true);
         const userID = auth.userID;
         event.preventDefault();
         try {
@@ -132,15 +137,30 @@ const AddRoundsToMovement = ({movement, removeMovement, refreshSessions, user}) 
                 type: "CLEAR_FORM",
                 movement: currentMovement,
             });
-            if(refreshSessions){
-                refreshSessions()
+            if (refreshSessions) {
+                refreshSessions();
             }
         } catch (err) {}
-        setIsLoading(false)
+        setIsLoading(false);
     };
 
+    // if (addRoundsType === "previousMovement") {
+    //     return (
+    //         <AddRoundsToMovementForm
+    //             movement={movement}
+    //             movementHandler={movementHandler}
+    //             inputState={inputState}
+    //             changeHandler={changeHandler}
+    //             convertToKG={convertToKG}
+    //             convertToPounds={convertToPounds}
+    //             addSession={addSession}
+    //             removeMovementHandler={removeMovementHandler}
+    //         />
+    //     );
+    // }
+
     return (
-        <React.Fragment>
+        <>
             {movement.map((m, index) => (
                 <React.Fragment key={index}>
                     <Box>
@@ -148,7 +168,9 @@ const AddRoundsToMovement = ({movement, removeMovement, refreshSessions, user}) 
                             <strong>{m}</strong>
                         </Text>
                     </Box>
-                    {isLoading && <LoadingSpinner text={"Sending your session data"} />}
+                    {isLoading && (
+                        <LoadingSpinner text={"Sending your session data"} />
+                    )}
                     <AddRoundsToMovementForm
                         movement={m}
                         movementHandler={movementHandler}
@@ -162,7 +184,14 @@ const AddRoundsToMovement = ({movement, removeMovement, refreshSessions, user}) 
                     />
                 </React.Fragment>
             ))}
-        </React.Fragment>
+            {movement.length > 0 && (
+                <LastSessionForSelectedMovement
+                    allSessions={allSessions}
+                    selectedMovement={movement}
+                    onRemovement={removeMovementHandler}
+                />
+            )}
+        </>
     );
 };
 

@@ -8,6 +8,7 @@ import React, {
 import {
     Box,
     Text,
+    Flex,
     VStack,
     Button,
     Stack,
@@ -17,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 import AddRoundsToMovement from "./add-rounds-to-movement";
 import TestSessionCard from "./test-session-card";
+import LastSessionForSelectedMovement from "./last-session-for-selected-movement";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
 const AddMovement = ({ workouts, allWorkouts, refreshSessions }) => {
@@ -306,7 +308,9 @@ const AddMovement = ({ workouts, allWorkouts, refreshSessions }) => {
                                                 : "1px"
                                         }
                                         onClick={() =>
-                                            handleSelectMovement({movement: movement})
+                                            handleSelectMovement({
+                                                movement: movement,
+                                            })
                                         }
                                         _hover={{ bg: "gray.100" }}
                                         cursor="pointer"
@@ -328,15 +332,36 @@ const AddMovement = ({ workouts, allWorkouts, refreshSessions }) => {
                             removeMovement={removeMovementHandler}
                             refreshSessions={refreshSessions}
                             user={user}
-                        />
-                    )}
-                    {workouts && (
-                        <TestSessionCard
-                            refreshSessions={refreshSessions}
-                            workouts={workouts}
+                            allSessions={allWorkouts}
                         />
                     )}
                 </Stack>
+                {/* {selectedMovement.length > 0 || newMovement.length > 0 && <LastSessionForSelectedMovement
+                                        allSessions={workouts}
+                                        selectedMovement={[
+                                            ...newMovement,
+                                            ...selectedMovement,
+                                        ]}
+                                    />} */}
+                <Flex overflowY="auto">
+                    {workouts && (
+                            <TestSessionCard
+                                refreshSessions={refreshSessions}
+                                workouts={workouts}
+                            />
+                    )}
+                    {/* {selectedMovement.length > 0 ||
+                                newMovement.length > 0 && (
+                                    <LastSessionForSelectedMovement
+                                        allSessions={workouts}
+                                        selectedMovement={[
+                                            ...newMovement,
+                                            ...selectedMovement,
+                                        ]}
+                                    />
+                                )} */}
+                </Flex>
+                {/* </Stack> */}
             </Box>
         </React.Fragment>
     );
