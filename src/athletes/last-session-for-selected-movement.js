@@ -2,32 +2,32 @@ import React from "react";
 import { Box, Text, Stack, Heading } from "@chakra-ui/react";
 
 const LastSessionForSelectedMovement = ({ selectedMovement, allSessions }) => {
-    console.log("Selected movement LastSession component: ", selectedMovement);
     let previousSessionsForMovement = [];
-    let currentDaysSession = [];
     const findRecentSessions = (allSessions, selectedMovement) => {
+        let found = false;
         const date = new Date();
-        const currentDay = date.getDate();
+        const currentDateString = date.toISOString().split("T")[0];
         for (let month of allSessions) {
+            if(found) break
             for (let days of month.months) {
+                if(found) break
                 for (let dayData of days.days) {
-                    console.log("dayData in finRecentSessions: ", dayData)
-                    const movementsPreviousSession = dayData.sessions.filter((s) => {
-                        return s.movement === selectedMovement[0];
-                    });
-                    console.log("findRecentSessions function: ", movementsPreviousSession);
-                    if (movementsPreviousSession.length > 0) {
-                        if(dayData.day === currentDay){
-                            currentDaysSession = movementsPreviousSession
-                        } else {
-                            previousSessionsForMovement = movementsPreviousSession;
+                    const movementsPreviousSession = dayData.sessions.filter(
+                        (s) => {
+                            return s.movement === selectedMovement[0];
                         }
-                        // break; // Found the most recent day with the movement, so break out of loop.
+                    );
+                    if (movementsPreviousSession.length > 0) {
+                        // Convert dayData.date to simplified format "YYYY-MM-DD"
+                        const dayDataDateString = new Date(dayData.date).toISOString().split('T')[0];
+                        if (dayDataDateString !== currentDateString) {
+                            previousSessionsForMovement = movementsPreviousSession
+                            found = true
+                            break // break out of the loop when the previousMovementsSession is found
+                        } 
                     }
                 }
-                // if (recentSessionsForMovement.length > 0) break; // Break out of outer loop
             }
-            // if (recentSessionsForMovement.length > 0) break; // Break out of outermost loop
         }
         return previousSessionsForMovement;
     };
@@ -38,7 +38,7 @@ const LastSessionForSelectedMovement = ({ selectedMovement, allSessions }) => {
             <Box>
                 <Heading color="white">Previous session</Heading>
                 <Text color="white" fontSize="large" fontWeight="bold">
-                    Movement: {selectedMovement}
+                    {selectedMovement}
                 </Text>
                 {previousSessionsForMovement.map((s, index) => {
                     return (
@@ -49,6 +49,7 @@ const LastSessionForSelectedMovement = ({ selectedMovement, allSessions }) => {
                             border="1px solid grey"
                             width="90%"
                             fontSize="xs"
+                            key={index}
                         >
                             {s.weight && (
                                 <Text color="white">Weight: {s.weight}</Text>
