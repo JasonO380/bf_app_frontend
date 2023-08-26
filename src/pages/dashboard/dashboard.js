@@ -27,11 +27,8 @@ const Dashboard = () => {
     const user = auth.userID;
     const name = auth.userName;
     const navigate = useNavigate();
-    console.log(user);
     const [view, setView] = useState("default");
     const { allSessions, todaysSessions, sessionsLoading } = useGetSessions(user, refreshSessions);
-    console.log(todaysSessions);
-    console.log(allSessions);
 
     const handleCloseClick = () => {
         setView("default");
@@ -58,7 +55,6 @@ const Dashboard = () => {
     };
 
     const handleRefreshSessions = () => {
-        console.log("handleRefreshSessions called");
         setRefreshSessions(prev => prev + 1);
     }
 

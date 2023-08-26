@@ -5,7 +5,7 @@ import UpdateSession from "../shared/update-session";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 import LoadingSpinner from "../shared/loading-spinner";
 
-const TestSessionCard = ({ workouts, refreshSessions }) => {
+const ShowTodaysSession = ({ workouts, refreshSessions }) => {
     console.log(workouts);
     const auth = useContext(LoginRegisterContext);
     const [update, setUpdate] = useState();
@@ -78,7 +78,7 @@ const TestSessionCard = ({ workouts, refreshSessions }) => {
     };
     const currentDate = new Date();
     const options = {
-        weekday: "long",
+        weekday: "short",
         month: "long",
         day: "numeric",
     };
@@ -101,16 +101,18 @@ const TestSessionCard = ({ workouts, refreshSessions }) => {
                             />
                         ) : (
                             <>
+                            <Flex
+                            padding="7px"
+                            borderRadius="10px"
+                            gap="7px"
+                            justifyContent="space-between"
+                            border="1px solid grey"
+                            width="90%">
                                 <Stack
-                                    padding="7px"
-                                    borderRadius="10px"
-                                    border="1px solid grey"
-                                    width="90%"
                                     fontSize="xs"
                                 >
-                                    <Text color="white">
-                                        Movement:
-                                        {" " + s.movement}
+                                    <Stack>
+                                        <Text color="white">{" " + s.movement}</Text>
                                         {isLoading && addRoundID === s.id  && <LoadingSpinner text={"Adding round to movement"} />}
                                         {isDeleting && deleteRoundID === s.id && <LoadingSpinner text={"Deleting round"} />}
                                         {s.weight !== null &&
@@ -139,9 +141,9 @@ const TestSessionCard = ({ workouts, refreshSessions }) => {
                                         )}
                                         Rounds:
                                         {" " + s.rounds}
-                                    </Text>
+                                    </Stack>
                                 </Stack>
-                                <Flex gap="7px" marginTop="5px">
+                                <Stack gap="7px" marginTop="5px">
                                     <Button
                                         color="white"
                                         borderRadius="50"
@@ -171,6 +173,7 @@ const TestSessionCard = ({ workouts, refreshSessions }) => {
                                     >
                                         +1 Round
                                     </Button>
+                                </Stack>
                                 </Flex>
                             </>
                         )}
@@ -181,4 +184,4 @@ const TestSessionCard = ({ workouts, refreshSessions }) => {
     );
 };
 
-export default TestSessionCard;
+export default ShowTodaysSession;

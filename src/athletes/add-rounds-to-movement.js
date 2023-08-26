@@ -4,6 +4,7 @@ import AddRoundsToMovementForm from "./add-rounds-to-movement-form";
 import LastSessionForSelectedMovement from "./last-session-for-selected-movement";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 import LoadingSpinner from "../shared/loading-spinner";
+import { AnimatePresence } from "framer-motion";
 
 const AddRoundsToMovement = ({
     movement,
@@ -144,23 +145,9 @@ const AddRoundsToMovement = ({
         setIsLoading(false);
     };
 
-    // if (addRoundsType === "previousMovement") {
-    //     return (
-    //         <AddRoundsToMovementForm
-    //             movement={movement}
-    //             movementHandler={movementHandler}
-    //             inputState={inputState}
-    //             changeHandler={changeHandler}
-    //             convertToKG={convertToKG}
-    //             convertToPounds={convertToPounds}
-    //             addSession={addSession}
-    //             removeMovementHandler={removeMovementHandler}
-    //         />
-    //     );
-    // }
-
     return (
         <>
+            <AnimatePresence>
             {movement.map((m, index) => (
                 <React.Fragment key={index}>
                     <Box>
@@ -184,13 +171,15 @@ const AddRoundsToMovement = ({
                     />
                 </React.Fragment>
             ))}
-            {movement.length > 0 && (
+            {movement.length > 0 ? (
                 <LastSessionForSelectedMovement
                     allSessions={allSessions}
                     selectedMovement={movement}
                     onRemovement={removeMovementHandler}
+                    key="LastSessionForSelectedMovement"
                 />
-            )}
+            ) : null}
+            </AnimatePresence>
         </>
     );
 };

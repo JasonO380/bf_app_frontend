@@ -17,7 +17,7 @@ import {
     Input,
 } from "@chakra-ui/react";
 import AddRoundsToMovement from "./add-rounds-to-movement";
-import TestSessionCard from "./test-session-card";
+import ShowTodaysSession from "./show-todays-session";
 import LastSessionForSelectedMovement from "./last-session-for-selected-movement";
 import { LoginRegisterContext } from "../authentication/login-register-context";
 
@@ -345,7 +345,7 @@ const AddMovement = ({ workouts, allWorkouts, refreshSessions }) => {
                                     />} */}
                 <Flex overflowY="auto">
                     {workouts && (
-                            <TestSessionCard
+                            <ShowTodaysSession
                                 refreshSessions={refreshSessions}
                                 workouts={workouts}
                             />
