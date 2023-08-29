@@ -147,7 +147,6 @@ const AddRoundsToMovement = ({
 
     return (
         <>
-            <AnimatePresence>
             {movement.map((m, index) => (
                 <React.Fragment key={index}>
                     <Box>
@@ -172,14 +171,15 @@ const AddRoundsToMovement = ({
                 </React.Fragment>
             ))}
             {movement.length > 0 ? (
+                <AnimatePresence key="LastSessionForSelectedMovement">
                 <LastSessionForSelectedMovement
                     allSessions={allSessions}
                     selectedMovement={movement}
                     onRemovement={removeMovementHandler}
                     key="LastSessionForSelectedMovement"
                 />
+                </AnimatePresence>
             ) : null}
-            </AnimatePresence>
         </>
     );
 };

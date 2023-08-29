@@ -139,8 +139,10 @@ const ShowTodaysSession = ({ workouts, refreshSessions }) => {
                                                 {" " + s.time}
                                             </Text>
                                         )}
-                                        Rounds:
-                                        {" " + s.rounds}
+                                        <Text color="white">
+                                                Rounds:
+                                                {" " + s.rounds}
+                                            </Text>
                                     </Stack>
                                 </Stack>
                                 <Stack gap="7px" marginTop="5px">

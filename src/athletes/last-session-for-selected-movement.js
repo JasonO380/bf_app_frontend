@@ -1,9 +1,13 @@
-import React, { useEffect } from "react";
-import { Box, Text, Stack, Heading } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+import React, { useEffect, useState } from "react";
+import { Box, Text, Stack, Heading, Flex } from "@chakra-ui/react";
+import { motion, AnimatePresence } from "framer-motion";
+import { setSelectionRange } from "@testing-library/user-event/dist/utils";
 
 const LastSessionForSelectedMovement = ({ selectedMovement, allSessions }) => {
-    let previousSessionsForMovement = [];
+    // let previousSessionsForMovement = [];
+    const [isLastMovementFound, setIsLastMovementFound] = useState(false);
+    const [previousSessionsForMovement, setPreviousSessionsForMovement] = useState([]);
+    const [selectedMovementName, setSelectedMovementName] = useState(null);
     const containerVariants = {
         hidden: { opacity: 0, y: "-20px" },
         visible: {
@@ -23,9 +27,11 @@ const LastSessionForSelectedMovement = ({ selectedMovement, allSessions }) => {
         exit: { opacity: 0, y: '-20px', transition: { staggerChildren: .9 } }
     };
     const MotionBox = motion(Box);
-    const MotionStack = motion(Stack)
+    const MotionStack = motion(Stack);
+    const MotionFlex = motion(Flex);
     const findRecentSessions = (allSessions, selectedMovement) => {
         let found = false;
+        let newPreviousSessionsForMovement = []; 
         const date = new Date();
         const currentDateString = date.toISOString().split("T")[0];
         for (let month of allSessions) {
@@ -44,7 +50,7 @@ const LastSessionForSelectedMovement = ({ selectedMovement, allSessions }) => {
                             .toISOString()
                             .split("T")[0];
                         if (dayDataDateString !== currentDateString) {
-                            previousSessionsForMovement =
+                            newPreviousSessionsForMovement =
                                 movementsPreviousSession;
                             found = true;
                             break; // break out of the loop when the previousMovementsSession is found
@@ -53,13 +59,29 @@ const LastSessionForSelectedMovement = ({ selectedMovement, allSessions }) => {
                 }
             }
         }
-        return previousSessionsForMovement;
+        setPreviousSessionsForMovement(newPreviousSessionsForMovement)
+        setSelectedMovementName(selectedMovement[0])
+        setIsLastMovementFound(true);
+        // return previousSessionsForMovement;
     };
-    findRecentSessions(allSessions, selectedMovement);
+    // findRecentSessions(allSessions, selectedMovement);
+    useEffect(()=>{
+        // Check if a new movement is selected
+        const isNewMovementSelected = selectedMovementName !== selectedMovement[0];
+        
+        // Only call findRecentSessions if a new movement is selected or last movement is not found
+        if (!isLastMovementFound || isNewMovementSelected) {
+            findRecentSessions(allSessions, selectedMovement);
+            
+            // Update the state variables
+            // setIsLastMovementFound(previousSessionsForMovement.length > 0);
+            // setSelectedMovementName(selectedMovement[0]);
+        }
+    },[selectedMovement])
 
     if (previousSessionsForMovement.length > 0) {
         return (
-            <MotionBox initial="hidden" animate="visible" variants={containerVariants}>
+            <MotionBox initial="hidden" animate="visible" exit="exit" variants={containerVariants}>
                 <Heading color="white">Previous session</Heading>
                 <Text color="white" fontSize="large" fontWeight="bold">
                     {selectedMovement}
@@ -74,6 +96,9 @@ const LastSessionForSelectedMovement = ({ selectedMovement, allSessions }) => {
                             width="90%"
                             fontSize="xs"
                             variants={itemVariants}
+                            // initial="hidden"
+                            // animate="visible"
+                            // exit="exit"
                             key={index}
                         >
                             {s.weight && (
