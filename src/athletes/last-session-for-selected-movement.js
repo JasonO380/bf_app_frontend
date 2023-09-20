@@ -71,6 +71,7 @@ const LastSessionForSelectedMovement = ({ selectedMovement, allSessions }) => {
         
         // Only call findRecentSessions if a new movement is selected or last movement is not found
         if (!isLastMovementFound || isNewMovementSelected) {
+            console.log("findRecentSessions triggered")
             findRecentSessions(allSessions, selectedMovement);
             
             // Update the state variables
